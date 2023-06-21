@@ -1,0 +1,54 @@
+{
+  "kind": "collectionType",
+  "collectionName": "spots",
+  "info": {
+    "singularName": "spot",
+    "pluralName": "spots",
+    "displayName": "観光スポット",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "categoryId"
+    },
+    "spotId": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::model-course.model-course",
+      "inversedBy": "spots"
+    },
+    "spotIdOriginal": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::original-course.original-course",
+      "inversedBy": "spots"
+    },
+    "photo": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "latitude": {
+      "type": "decimal"
+    },
+    "longitude": {
+      "type": "decimal"
+    }
+  }
+}
