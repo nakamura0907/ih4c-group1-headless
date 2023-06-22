@@ -1,11 +1,8 @@
 import axios from "axios";
 import { Course, CourseApi } from "../types";
-import { StrapiGetEntriesResponse, StrapiGetEntryResponse, StrapiModelCourse, strapiBaseUrl, strapiToken } from "../../../utils/fetcher/strapi";
-import { translateStrapiSpotToSpot } from "../../spot/api/external";
+import { StrapiGetEntriesResponse, StrapiGetEntryResponse, StrapiModelCourse, strapiBaseUrl, strapiToken } from "@/utils/fetcher/strapi";
+import { translateStrapiSpotToSpot } from "../../spot/api/strapi";
 
-type FetchModelCourseByIdResponse = {
-    course: Course
-}
 
 export const externalCourseApi = (): CourseApi => {
     const fetchModelCourseList = async (): Promise<Course[]> => {

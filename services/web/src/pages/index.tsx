@@ -1,8 +1,8 @@
-import type { NextPage } from "next";
-import Layout from "@/components/template/layout";
 import { Spot, SpotImage, SpotList, services } from "@/features/spot";
+import Layout from "@/components/template/layout";
 import Link from "next/link";
 import React from "react";
+import type { NextPage } from "next";
 
 type State = {
   spots: Spot[];
@@ -15,6 +15,9 @@ const initialState: State = {
 const Home: NextPage = () => {
   const [spots, setSpots] = React.useState(initialState.spots);
 
+  /**
+   * 観光スポット一覧を取得する
+   */
   React.useEffect(() => {
     (async () => {
       const spots = await services.fetchSpotList();

@@ -21,6 +21,9 @@ const OriginalCourseCreate: NextPage = () => {
     initialState.selectedSpots
   );
 
+  /**
+   * 観光スポット一覧を取得する
+   */
   React.useEffect(() => {
     (async () => {
       const spots = await services.fetchSpotList();
@@ -28,6 +31,9 @@ const OriginalCourseCreate: NextPage = () => {
     })();
   }, []);
 
+  /**
+   * オリジナルコースに追加するスポットを選択する
+   */
   const toggleSpotSelection = (spotId: string) => {
     // selectedSpotsにspotIdが含まれていれば、selectedSpotsからspotIdを削除する
     // なければ、selectedSpotsにspotIdを追加する
@@ -38,7 +44,10 @@ const OriginalCourseCreate: NextPage = () => {
     setSelectedSpots(newSelectedSpots);
   };
 
-  const handleClick = async () => {
+  /**
+   * オリジナルコースを作成する
+   */
+  const handleCreateOriginalCourse = async () => {
     const url = `${strapiBaseUrl}/original-courses`;
     const response = await axios.post(
       url,
@@ -76,7 +85,9 @@ const OriginalCourseCreate: NextPage = () => {
         ))}
       </SpotList>
       <div>ページネーション</div>
-      <button onClick={handleClick}>オリジナルコースの作成</button>
+      <button onClick={handleCreateOriginalCourse}>
+        オリジナルコースの作成
+      </button>
     </Layout>
   );
 };

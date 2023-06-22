@@ -1,4 +1,4 @@
-import { externalCourseApi } from "./api/external";
+import { externalCourseApi } from "./api/strapi";
 import { CourseApi } from "./types";
 
 export type { Course } from "./types";

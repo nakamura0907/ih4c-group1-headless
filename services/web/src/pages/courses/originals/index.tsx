@@ -3,11 +3,12 @@ import { NextPage } from "next";
 import Layout from "@/components/template/layout";
 import Link from "next/link";
 import { fetch } from "@/utils/fetcher/strapi";
-import { translateStrapiSpotToSpot } from "@/features/spot/api/external";
+import { translateStrapiSpotToSpot } from "@/features/spot/api/strapi";
 import { SpotImage, SpotList } from "@/features/spot";
+import { Course } from "@/features/course";
 
 type State = {
-  courses: any[];
+  courses: Course[];
 };
 
 const initialState: State = {
@@ -17,6 +18,9 @@ const initialState: State = {
 const OriginalCourseList: NextPage = () => {
   const [courses, setCourses] = React.useState(initialState.courses);
 
+  /**
+   * オリジナルコース一覧を取得する
+   */
   React.useEffect(() => {
     (async () => {
       const response = await fetch.get(

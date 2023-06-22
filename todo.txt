@@ -21,3 +21,5 @@
 
 
 lat&lon = null許可、photo=null許可
+axiosからfetchに移行する???
+エラーハンドリング

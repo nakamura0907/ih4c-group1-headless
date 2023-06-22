@@ -1,9 +1,10 @@
-import { NextPage } from "next";
-import React from "react";
-import Layout from "@/components/template/layout";
-import Image from "next/image";
-import { useRouter } from "next/router";
 import { Spot, services } from "@/features/spot";
+import { useRouter } from "next/router";
+import Image from "next/image";
+import Layout from "@/components/template/layout";
+import React from "react";
+import { travelBrochuresSpotsStorage } from "@/utils/storage";
+import type { NextPage } from "next";
 
 type State = {
   spot?: Spot;
@@ -15,9 +16,11 @@ const initialState: State = {
 
 const SpotDetail: NextPage = () => {
   const router = useRouter();
-
   const [spot, setSpot] = React.useState(initialState.spot);
 
+  /**
+   * 観光スポット詳細を取得する
+   */
   React.useEffect(() => {
     (async () => {
       if (!router.isReady) return;
@@ -29,29 +32,14 @@ const SpotDetail: NextPage = () => {
     })();
   }, [router]);
 
-  const handleClick = () => {
-    // ローカルストレージに配列として保存する
-    const key = "travel-brochures-spots";
-    const storedSpots = localStorage.getItem(key);
-
-    if (storedSpots) {
-      const parsedSpots = JSON.parse(storedSpots);
-      if (!Array.isArray(parsedSpots)) {
-        throw new Error("データが正しくありません");
-      }
-      if (parsedSpots.includes(router.query.spotId)) {
-        return;
-      }
-      const newSpots = [...parsedSpots, router.query.spotId];
-
-      localStorage.setItem(key, JSON.stringify(newSpots));
-    } else {
-      localStorage.setItem(key, JSON.stringify([router.query.spotId]));
-    }
+  /**
+   * 旅のしおりにスポットを追加する
+   */
+  const handleAddBrochure = () => {
+    travelBrochuresSpotsStorage.set(router.query.spotId!.toString());
   };
 
   if (!spot) return null;
-
   return (
     <Layout>
       <Image
@@ -70,7 +58,7 @@ const SpotDetail: NextPage = () => {
         {spot.geometry.location.lng}
       </p>
 
-      <button onClick={handleClick}>しおりに追加</button>
+      <button onClick={handleAddBrochure}>しおりに追加</button>
     </Layout>
   );
 };

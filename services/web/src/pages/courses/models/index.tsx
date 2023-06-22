@@ -16,6 +16,9 @@ const initialState: State = {
 const ModelCourseList: NextPage = () => {
   const [courses, setCourses] = React.useState(initialState.courses);
 
+  /**
+   * モデルコース一覧を取得する
+   */
   React.useEffect(() => {
     (async () => {
       const result = await services.fetchModelCourseList();

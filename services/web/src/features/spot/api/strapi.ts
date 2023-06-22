@@ -1,13 +1,19 @@
 import axios from "axios";
-import { Spot, SpotApi } from "../types"
-import { StrapiGetEntriesResponse, StrapiGetEntryResponse, StrapiSpot, strapiBaseUrl, strapiToken } from "../../../utils/fetcher/strapi";
+import { FetchSpotListOptions, Spot, SpotApi } from "../types"
+import { StrapiGetEntriesResponse, StrapiGetEntryResponse, StrapiSpot, strapiBaseUrl, strapiToken } from "@/utils/fetcher/strapi";
 
-export const externalSpotApi = (): SpotApi => {
-    const fetchSpotList = async () => {
+export const strapiSpotApi = (): SpotApi => {
+    const fetchSpotList = async (options?: FetchSpotListOptions) => {
+        const filters = toStrapiFilters(options?.filter);
+
         const response = await axios.get<StrapiGetEntriesResponse<StrapiSpot>>(
-            `${strapiBaseUrl}/spots?populate=photo,category`,{
+            `${strapiBaseUrl}/spots`,{
                 headers: {
                     Authorization: `Bearer ${strapiToken}`
+                },
+                params: {
+                    populate: "photo,category",
+                    filters
                 }
             }
         );
@@ -16,13 +22,28 @@ export const externalSpotApi = (): SpotApi => {
     }
 
     const fetchSpotById = async (id: string) => {
-        const response = await axios.get<StrapiGetEntryResponse<StrapiSpot>>(`${strapiBaseUrl}/spots/${id}?populate=photo,category`, {
+        const response = await axios.get<StrapiGetEntryResponse<StrapiSpot>>(`${strapiBaseUrl}/spots/${id}`, {
             headers: {
                 Authorization: `Bearer ${strapiToken}`
+            },
+            params: {
+                populate: "photo,category"
             }
         });
         
         return translateStrapiSpotToSpot(response.data.data);
+    }
+
+    const toStrapiFilters = (filter: FetchSpotListOptions['filter']) => {
+        if (!filter || filter.id.length === 0) {
+            return undefined;
+        }
+
+        return {
+            id: {
+                $in: filter.id
+            }
+        }
     }
 
     return {

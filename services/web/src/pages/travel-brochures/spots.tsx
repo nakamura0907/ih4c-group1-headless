@@ -2,12 +2,11 @@ import { NextPage } from "next";
 import React from "react";
 import Layout from "@/components/template/layout";
 import Link from "next/link";
-import { fetch } from "@/utils/fetcher/strapi";
-import { translateStrapiSpotToSpot } from "@/features/spot/api/external";
-import { SpotImage, SpotList } from "@/features/spot";
+import { Spot, SpotImage, SpotList, services } from "@/features/spot";
+import { travelBrochuresSpotsStorage } from "@/utils/storage";
 
 type State = {
-  spots: any[]; // FIXME: any
+  spots: Spot[];
 };
 
 const initialState: State = {
@@ -17,42 +16,28 @@ const initialState: State = {
 const TravelBrochure: NextPage = () => {
   const [spots, setSpots] = React.useState(initialState.spots);
 
+  /**
+   * 旅のしおりに登録されている観光スポット一覧を取得する
+   */
   React.useEffect(() => {
     (async () => {
-      const key = "travel-brochures-spots";
-      const storedSpots = localStorage.getItem(key);
+      const spotIds = travelBrochuresSpotsStorage.get();
+      if (spotIds.length === 0) return;
 
-      if (!storedSpots) return;
-
-      const parsedSpots = JSON.parse(storedSpots);
-      if (!Array.isArray(parsedSpots) || parsedSpots.length === 0) return;
-
-      const response = await fetch.get("/spots", {
-        params: {
-          filters: {
-            id: {
-              $in: parsedSpots,
-            },
-          },
-          populate: "photo,category",
+      const result = await services.fetchSpotList({
+        filter: {
+          id: spotIds,
         },
       });
-      setSpots(response.data.data.map(translateStrapiSpotToSpot));
+      setSpots(result);
     })();
   }, []);
 
-  const handleClick = (spotId: string) => {
-    const key = "travel-brochures-spots";
-    const storedSpots = localStorage.getItem(key);
-
-    if (!storedSpots) return;
-
-    const parsedSpots = JSON.parse(storedSpots);
-    if (!Array.isArray(parsedSpots)) return;
-
-    const newSpots = parsedSpots.filter((spot: string) => spot != spotId);
-
-    localStorage.setItem(key, JSON.stringify(newSpots));
+  /**
+   * 旅のしおりからスポットを削除する
+   */
+  const handleRemoveBrochure = (spotId: string) => {
+    travelBrochuresSpotsStorage.remove(spotId);
     setSpots(spots.filter((spot) => spot.id != spotId));
   };
 
@@ -71,7 +56,9 @@ const TravelBrochure: NextPage = () => {
                 <Link href={`/spots/${spot.id}`}>
                   <span className="text-blue-500">詳細</span>
                 </Link>
-                <button onClick={() => handleClick(spot.id)}>削除</button>
+                <button onClick={() => handleRemoveBrochure(spot.id)}>
+                  削除
+                </button>
               </div>
             </li>
           );

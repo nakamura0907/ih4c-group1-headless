@@ -12,7 +12,14 @@ export type Spot = {
     }
 }
 
+export type FetchSpotListOptions = {
+    filter?: {
+        id: Spot['id'][]
+    }
+}
 export type SpotApi = {
-    fetchSpotList: () => Promise<Spot[]>
+    /** 観光スポット一覧取得API */
+    fetchSpotList: (options?: FetchSpotListOptions) => Promise<Spot[]>
+    /** 観光スポット詳細取得API */
     fetchSpotById: (id: string) => Promise<Spot>
 }
