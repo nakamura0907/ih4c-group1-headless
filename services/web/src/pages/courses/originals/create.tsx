@@ -1,9 +1,8 @@
 import { NextPage } from "next";
 import React from "react";
-import Layout from "../../../components/template/layout";
-import Image from "next/image";
-import { Spot, services } from "../../../features/spot";
-import { strapiBaseUrl, strapiToken } from "../../../utils/fetcher/strapi";
+import Layout from "@/components/template/layout";
+import { Spot, SpotImage, SpotList, services } from "@/features/spot";
+import { strapiBaseUrl, strapiToken } from "@/utils/fetcher/strapi";
 import axios from "axios";
 
 type State = {
@@ -68,21 +67,14 @@ const OriginalCourseCreate: NextPage = () => {
       <select>
         <option>カテゴリ選択</option>
       </select>
-      <ul className="grid gap-8 grid-flow-row grid-cols-[repeat(2,1fr)]">
+      <SpotList>
         {spots.map((spot) => (
           <li key={spot.id} onClick={() => toggleSpotSelection(spot.id)}>
-            <Image
-              src="/no-image.png"
-              alt={spot.name}
-              width={1980}
-              height={1150}
-              sizes={"100vw"}
-              className="rounded-sm"
-            />
+            <SpotImage src="/no-image.png" alt={spot.name} />
             <span>{spot.name}</span>
           </li>
         ))}
-      </ul>
+      </SpotList>
       <div>ページネーション</div>
       <button onClick={handleClick}>オリジナルコースの作成</button>
     </Layout>

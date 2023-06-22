@@ -1,10 +1,10 @@
 import { NextPage } from "next";
 import React from "react";
-import Layout from "../../components/template/layout";
-import Image from "next/image";
+import Layout from "@/components/template/layout";
 import Link from "next/link";
-import { fetch } from "../../utils/fetcher/strapi";
-import { translateStrapiSpotToSpot } from "../../features/spot/api/external";
+import { fetch } from "@/utils/fetcher/strapi";
+import { translateStrapiSpotToSpot } from "@/features/spot/api/external";
+import { SpotImage, SpotList } from "@/features/spot";
 
 type State = {
   spots: any[]; // FIXME: any
@@ -37,7 +37,6 @@ const TravelBrochure: NextPage = () => {
           populate: "photo,category",
         },
       });
-      console.log(response.data.data);
       setSpots(response.data.data.map(translateStrapiSpotToSpot));
     })();
   }, []);
@@ -54,7 +53,6 @@ const TravelBrochure: NextPage = () => {
     const newSpots = parsedSpots.filter((spot: string) => spot != spotId);
 
     localStorage.setItem(key, JSON.stringify(newSpots));
-    // setSpots(localSpotsData.filter((spot) => newSpots.includes(spot.id)));
     setSpots(spots.filter((spot) => spot.id != spotId));
   };
 
@@ -63,18 +61,11 @@ const TravelBrochure: NextPage = () => {
       <select>
         <option>すべてのスポット</option>
       </select>
-      <ul className="grid gap-8 grid-flow-row grid-cols-[repeat(2,1fr)]">
+      <SpotList>
         {spots.map((spot) => {
           return (
             <li key={spot.id}>
-              <Image
-                src="/no-image.png"
-                alt={spot.name}
-                width={1980}
-                height={1150}
-                sizes={"100vw"}
-                className="rounded-sm"
-              />
+              <SpotImage src={spot.photo} alt={spot.name} />
               <p>{spot.name}</p>
               <div className="flex">
                 <Link href={`/spots/${spot.id}`}>
@@ -85,7 +76,7 @@ const TravelBrochure: NextPage = () => {
             </li>
           );
         })}
-      </ul>
+      </SpotList>
     </Layout>
   );
 };

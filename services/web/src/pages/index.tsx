@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
-import Layout from "../components/template/layout";
-import { Spot, services } from "../features/spot";
-import Image from "next/image";
+import Layout from "@/components/template/layout";
+import { Spot, SpotImage, SpotList, services } from "@/features/spot";
 import Link from "next/link";
 import React from "react";
 
@@ -30,23 +29,16 @@ const Home: NextPage = () => {
         <select>
           <option>カテゴリ選択</option>
         </select>
-        <ul className="grid gap-8 grid-flow-row grid-cols-[repeat(2,1fr)]">
+        <SpotList>
           {spots.map((spot) => (
             <li key={spot.id}>
               <Link href={`/spots/${spot.id}`}>
-                <Image
-                  src="/no-image.png"
-                  alt={spot.name}
-                  width={1980}
-                  height={1150}
-                  sizes={"100vw"}
-                  className="rounded-sm"
-                />
+                <SpotImage src={spot.photo} alt={spot.name} />
                 <span>{spot.name}</span>
               </Link>
             </li>
           ))}
-        </ul>
+        </SpotList>
         <div>ページネーション</div>
       </article>
     </Layout>

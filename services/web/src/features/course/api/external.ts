@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Course, CourseApi } from "../types";
-import { StrapiGetEntriesResponse, StrapiModelCourse, strapiBaseUrl, strapiToken } from "../../../utils/fetcher/strapi";
+import { StrapiGetEntriesResponse, StrapiGetEntryResponse, StrapiModelCourse, strapiBaseUrl, strapiToken } from "../../../utils/fetcher/strapi";
 import { translateStrapiSpotToSpot } from "../../spot/api/external";
 
 type FetchModelCourseByIdResponse = {
@@ -28,10 +28,20 @@ export const externalCourseApi = (): CourseApi => {
     }
 
     const fetchModelCourseById = async (id: string) => {
-        const url = `model-courses/${id}?populate=*`;
+        const url = `model-courses/${id}?populate[spots][populate][0]=photo,category`;
 
-        const response = await axios.get<FetchModelCourseByIdResponse>(url);
-        return response.data.course;
+        const response = await axios.get<StrapiGetEntryResponse<StrapiModelCourse>>(`${strapiBaseUrl}/${url}`, {
+            headers: {
+                Authorization: `Bearer ${strapiToken}`
+            }
+        });
+        const responseData = response.data.data;
+
+        const course: Course = {
+            id: responseData.id.toString(),
+            route: responseData.attributes.spots.data.map(translateStrapiSpotToSpot)
+        }
+        return course
     }
 
     return {

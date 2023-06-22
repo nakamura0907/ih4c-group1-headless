@@ -21,9 +21,9 @@
     },
     "spots": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToMany",
       "target": "api::spot.spot",
-      "mappedBy": "spotId"
+      "mappedBy": "spotIds"
     }
   }
 }

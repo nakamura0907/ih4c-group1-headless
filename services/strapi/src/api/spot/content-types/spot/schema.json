@@ -25,30 +25,31 @@
       "target": "api::category.category",
       "inversedBy": "categoryId"
     },
-    "spotId": {
+    "spot_id_originals": {
       "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::model-course.model-course",
-      "inversedBy": "spots"
-    },
-    "spotIdOriginal": {
-      "type": "relation",
-      "relation": "manyToOne",
+      "relation": "manyToMany",
       "target": "api::original-course.original-course",
       "inversedBy": "spots"
     },
     "photo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "latitude": {
       "type": "decimal"
     },
     "longitude": {
       "type": "decimal"
+    },
+    "spotIds": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::model-course.model-course",
+      "inversedBy": "spots"
     }
   }
 }

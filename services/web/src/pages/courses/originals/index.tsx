@@ -1,10 +1,10 @@
 import React from "react";
 import { NextPage } from "next";
-import Layout from "../../../components/template/layout";
+import Layout from "@/components/template/layout";
 import Link from "next/link";
-import Image from "next/image";
-import { fetch } from "../../../utils/fetcher/strapi";
-import { translateStrapiSpotToSpot } from "../../../features/spot/api/external";
+import { fetch } from "@/utils/fetcher/strapi";
+import { translateStrapiSpotToSpot } from "@/features/spot/api/external";
+import { SpotImage, SpotList } from "@/features/spot";
 
 type State = {
   courses: any[];
@@ -39,18 +39,14 @@ const OriginalCourseList: NextPage = () => {
   return (
     <Layout>
       <h2>オリジナルコース一覧</h2>
-      <ul className="grid gap-8 grid-flow-row grid-cols-[repeat(2,1fr)]">
+      <SpotList>
         {courses.map((course) => {
           return (
             <li key={course.id}>
               <Link href={`/courses/originals/${course.id}`}>
-                <Image
+                <SpotImage
                   src="/no-image.png"
                   alt={`オリジナルコース ${course.id}`}
-                  width={1980}
-                  height={1150}
-                  sizes={"100vw"}
-                  className="rounded-sm"
                 />
                 <span>
                   {course.route.map((spot: any) => spot!.name).join("→")}
@@ -60,7 +56,7 @@ const OriginalCourseList: NextPage = () => {
             </li>
           );
         })}
-      </ul>
+      </SpotList>
     </Layout>
   );
 };

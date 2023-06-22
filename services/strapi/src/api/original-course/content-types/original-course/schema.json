@@ -16,14 +16,14 @@
       "type": "string",
       "required": true
     },
-    "spots": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::spot.spot",
-      "mappedBy": "spotIdOriginal"
-    },
     "description": {
       "type": "text"
+    },
+    "spots": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::spot.spot",
+      "mappedBy": "spot_id_originals"
     }
   }
 }

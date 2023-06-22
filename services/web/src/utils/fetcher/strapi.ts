@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const strapiBaseUrl = 'http://localhost:1337/api';
+export const strapiBaseUrl = `${process.env.NEXT_PUBLIC_STRAPI_URL}/api`;
 export const strapiToken = process.env.NEXT_PUBLIC_STRAPI_API_KEY;
 
 export type StrapiGetEntriesResponse<T> = {

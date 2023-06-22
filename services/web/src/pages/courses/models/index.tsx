@@ -1,9 +1,9 @@
 import { NextPage } from "next";
 import React from "react";
-import Layout from "../../../components/template/layout";
+import Layout from "@/components/template/layout";
 import Link from "next/link";
-import Image from "next/image";
-import { Course, services } from "../../../features/course";
+import { Course, services } from "@/features/course";
+import { SpotImage, SpotList } from "@/features/spot";
 
 type State = {
   courses: Course[];
@@ -26,18 +26,14 @@ const ModelCourseList: NextPage = () => {
   return (
     <Layout>
       <h2>モデルコース一覧</h2>
-      <ul className="grid gap-8 grid-flow-row grid-cols-[repeat(2,1fr)]">
+      <SpotList>
         {courses.map((course) => {
           return (
             <li key={course.id}>
               <Link href={`/courses/models/${course.id}`}>
-                <Image
+                <SpotImage
                   src="/no-image.png"
                   alt={`モデルコース ${course.id}`}
-                  width={1980}
-                  height={1150}
-                  sizes={"100vw"}
-                  className="rounded-sm"
                 />
                 <span>
                   {course.route.map((spot) => spot!.name).join("→")}
@@ -47,7 +43,7 @@ const ModelCourseList: NextPage = () => {
             </li>
           );
         })}
-      </ul>
+      </SpotList>
     </Layout>
   );
 };

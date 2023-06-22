@@ -1,9 +1,9 @@
 import { NextPage } from "next";
 import React from "react";
-import Layout from "../../components/template/layout";
+import Layout from "@/components/template/layout";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Spot, services } from "../../features/spot";
+import { Spot, services } from "@/features/spot";
 
 type State = {
   spot?: Spot;
