@@ -5,6 +5,7 @@ import Layout from "@/components/template/layout";
 import React from "react";
 import { travelBrochuresSpotsStorage } from "@/utils/storage";
 import type { NextPage } from "next";
+import { PrimaryButton } from "@/components/ui/button";
 
 type State = {
   spot?: Spot;
@@ -58,7 +59,7 @@ const SpotDetail: NextPage = () => {
         {spot.geometry.location.lng}
       </p>
 
-      <button onClick={handleAddBrochure}>しおりに追加</button>
+      <PrimaryButton onClick={handleAddBrochure}>しおりに追加</PrimaryButton>
     </Layout>
   );
 };

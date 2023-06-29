@@ -1,16 +1,12 @@
-import axios from "axios";
 import { FetchSpotListOptions, Spot, SpotApi } from "../types"
-import { StrapiGetEntriesResponse, StrapiGetEntryResponse, StrapiSpot, strapiBaseUrl, strapiToken } from "@/utils/fetcher/strapi";
+import { StrapiGetEntriesResponse, StrapiGetEntryResponse, StrapiSpot, fetch, strapiBaseUrl, strapiToken } from "@/utils/fetcher/strapi";
 
 export const strapiSpotApi = (): SpotApi => {
     const fetchSpotList = async (options?: FetchSpotListOptions) => {
         const filters = toStrapiFilters(options?.filter);
 
-        const response = await axios.get<StrapiGetEntriesResponse<StrapiSpot>>(
+        const response = await fetch.get<StrapiGetEntriesResponse<StrapiSpot>>(
             `${strapiBaseUrl}/spots`,{
-                headers: {
-                    Authorization: `Bearer ${strapiToken}`
-                },
                 params: {
                     populate: "photo,category",
                     filters
@@ -22,10 +18,7 @@ export const strapiSpotApi = (): SpotApi => {
     }
 
     const fetchSpotById = async (id: string) => {
-        const response = await axios.get<StrapiGetEntryResponse<StrapiSpot>>(`${strapiBaseUrl}/spots/${id}`, {
-            headers: {
-                Authorization: `Bearer ${strapiToken}`
-            },
+        const response = await fetch.get<StrapiGetEntryResponse<StrapiSpot>>(`${strapiBaseUrl}/spots/${id}`, {
             params: {
                 populate: "photo,category"
             }

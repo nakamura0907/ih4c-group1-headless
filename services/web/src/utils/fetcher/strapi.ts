@@ -1,3 +1,4 @@
+import { message } from "antd";
 import axios from "axios";
 
 export const strapiBaseUrl = `${process.env.NEXT_PUBLIC_STRAPI_URL}/api`;
@@ -37,7 +38,7 @@ export type StrapiSpot = {
         photo: {
             data: {
                 attributes: {
-                    /* e.g. /uploads/no_image_06ce5a6ad1.png */
+                    /** e.g. /uploads/no_image_06ce5a6ad1.png */
                     url: string
                 }
             } | null,
@@ -63,3 +64,18 @@ export const fetch = axios.create({
         Authorization: `Bearer ${strapiToken}`
     }
 });
+fetch.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response?.status !== 404 && process.env.NODE_ENV === "development") console.error(error);
+        return Promise.reject(error);
+    }
+);
+
+export const errorHandler = (error: unknown) => {
+    return (
+        !axios.isAxiosError(error) ||
+        !error.response ||
+        error.response.status >= 500
+    )
+}

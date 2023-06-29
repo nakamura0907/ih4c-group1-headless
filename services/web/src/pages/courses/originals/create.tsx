@@ -4,6 +4,7 @@ import Layout from "@/components/template/layout";
 import { Spot, SpotImage, SpotList, services } from "@/features/spot";
 import { strapiBaseUrl, strapiToken } from "@/utils/fetcher/strapi";
 import axios from "axios";
+import { PrimaryButton } from "@/components/ui/button";
 
 type State = {
   spots: Spot[];
@@ -85,9 +86,9 @@ const OriginalCourseCreate: NextPage = () => {
         ))}
       </SpotList>
       <div>ページネーション</div>
-      <button onClick={handleCreateOriginalCourse}>
+      <PrimaryButton onClick={handleCreateOriginalCourse}>
         オリジナルコースの作成
-      </button>
+      </PrimaryButton>
     </Layout>
   );
 };
