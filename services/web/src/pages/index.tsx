@@ -11,6 +11,7 @@ import {
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { fetch } from "@/utils/fetcher/strapi";
+import { translateStrapiSpotToSpot } from "@/features/spot/api/strapi";
 
 type RefactorResponse = StrapiGetEntriesResponse<StrapiSpot>;
 
@@ -34,6 +35,7 @@ const initialState: State = {
 
 const Home: NextPage = () => {
   const router = useRouter();
+
   const [spots, setSpots] = React.useState(initialState.spots);
   const [pagination, setPagination] = React.useState(initialState.pagination);
 
@@ -44,22 +46,31 @@ const Home: NextPage = () => {
     (async () => {
       if (!router.isReady) return;
 
-      // TODO: カテゴリー検索
       // TODO: features移動
       const { page, category } = router.query;
       const response = await fetch.get<RefactorResponse>("/spots", {
         params: {
           populate: "photo,category",
           "pagination[page]": isNaN(Number(page)) ? 1 : Number(page),
+          filters: {
+            category:
+              category === "*"
+                ? undefined
+                : {
+                    id: {
+                      $eq: category,
+                    },
+                  },
+          },
         },
       });
+      const spots = response.data.data.map(translateStrapiSpotToSpot);
+
       setPagination({
         current: response.data.meta.pagination.page,
         pageSize: response.data.meta.pagination.pageSize,
         total: response.data.meta.pagination.total,
       });
-
-      const spots = await services.fetchSpotList();
       setSpots(spots);
     })().catch((error) => {
       const msg = "観光スポット一覧の取得に失敗しました。";
@@ -72,40 +83,51 @@ const Home: NextPage = () => {
     });
   }, [router]);
 
+  if (!router.isReady) return null;
   return (
     <Layout>
       <article>
         <h2>観光スポット一覧</h2>
         <Select
           className="w-[120px]"
-          defaultValue={"*"}
+          defaultValue={router.query.category || "*"}
           options={[
             { label: "すべて", value: "*" },
             {
               label: "歴史・文化",
-              value: "歴史・文化",
+              value: "3",
             },
             {
               label: "自然・景観",
-              value: "自然・景観",
+              value: "4",
             },
             {
               label: "博物館・美術館",
-              value: "博物館・美術館",
+              value: "2",
             },
             {
               label: "レジャー・スポーツ・体験施設",
-              value: "レジャー・スポーツ・体験施設",
+              value: "1",
             },
             {
               label: "お土産・物産",
-              value: "お土産・物産",
+              value: "5",
             },
             {
               label: "宿泊",
-              value: "宿泊",
+              value: "6",
             },
           ]}
+          onChange={(value) => {
+            router.push(
+              {
+                pathname: router.pathname,
+                query: { ...router.query, category: value, page: 1 },
+              },
+              undefined,
+              { shallow: true }
+            );
+          }}
         />
         <SpotList>
           {spots.map((spot) => (
