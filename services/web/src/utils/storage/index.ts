@@ -18,6 +18,10 @@ export const travelBrochuresSpotsStorage = {
         return parsedSpots;
     },
     set: (spotId: string) => {
+        if (travelBrochuresSpotsStorage.has(spotId)) {
+            return;
+        }
+
         const storedSpots = travelBrochuresSpotsStorage.get();
         const updatedSpots = [...storedSpots, spotId];
         localStorage.setItem(travelBrochuresSpotsStorage.key, JSON.stringify(updatedSpots));
@@ -26,6 +30,14 @@ export const travelBrochuresSpotsStorage = {
         const storedSpots = travelBrochuresSpotsStorage.get();
         const updatedSpots = storedSpots.filter((storedSpotId) => storedSpotId !== spotId);
         localStorage.setItem(travelBrochuresSpotsStorage.key, JSON.stringify(updatedSpots));
+    },
+    has: (spotId: string) => {
+        const storedSpots = travelBrochuresSpotsStorage.get();
+        return storedSpots.includes(spotId);
+    },
+    count: () => {
+        const storedSpots = travelBrochuresSpotsStorage.get();
+        return storedSpots.length;
     },
     init: () => {
         localStorage.setItem(travelBrochuresSpotsStorage.key, JSON.stringify([]));

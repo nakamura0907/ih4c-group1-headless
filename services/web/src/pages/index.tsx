@@ -17,6 +17,7 @@ type RefactorResponse = StrapiGetEntriesResponse<StrapiSpot>;
 
 type State = {
   spots: Spot[];
+  category: string;
   pagination: {
     current: number;
     pageSize: number;
@@ -26,6 +27,7 @@ type State = {
 
 const initialState: State = {
   spots: [],
+  category: "*",
   pagination: {
     current: 1,
     pageSize: 25,
@@ -37,6 +39,7 @@ const Home: NextPage = () => {
   const router = useRouter();
 
   const [spots, setSpots] = React.useState(initialState.spots);
+  const [category, setCategory] = React.useState(initialState.category);
   const [pagination, setPagination] = React.useState(initialState.pagination);
 
   /**
@@ -66,12 +69,13 @@ const Home: NextPage = () => {
       });
       const spots = response.data.data.map(translateStrapiSpotToSpot);
 
+      setSpots(spots);
+      if (category) setCategory(category.toString());
       setPagination({
         current: response.data.meta.pagination.page,
         pageSize: response.data.meta.pagination.pageSize,
         total: response.data.meta.pagination.total,
       });
-      setSpots(spots);
     })().catch((error) => {
       const msg = "観光スポット一覧の取得に失敗しました。";
       if (errorHandler(error)) {
@@ -83,14 +87,13 @@ const Home: NextPage = () => {
     });
   }, [router]);
 
-  if (!router.isReady) return null;
   return (
     <Layout>
       <article>
         <h2>観光スポット一覧</h2>
         <Select
           className="w-[120px]"
-          defaultValue={router.query.category || "*"}
+          value={category}
           options={[
             { label: "すべて", value: "*" },
             {

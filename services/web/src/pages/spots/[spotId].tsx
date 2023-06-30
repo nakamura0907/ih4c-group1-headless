@@ -1,23 +1,31 @@
+import { errorHandler } from "@/utils/fetcher/strapi";
+import { message } from "antd";
+import { PrimaryButton } from "@/components/ui/button";
 import { Spot, services } from "@/features/spot";
+import { travelBrochuresSpotsStorage } from "@/utils/storage";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Layout from "@/components/template/layout";
 import React from "react";
-import { travelBrochuresSpotsStorage } from "@/utils/storage";
 import type { NextPage } from "next";
-import { PrimaryButton } from "@/components/ui/button";
 
 type State = {
   spot?: Spot;
+  isAddedBrochure: boolean;
 };
 
 const initialState: State = {
   spot: undefined,
+  isAddedBrochure: false,
 };
 
 const SpotDetail: NextPage = () => {
   const router = useRouter();
+
   const [spot, setSpot] = React.useState(initialState.spot);
+  const [isAddedBrochure, setIsAddedBrochure] = React.useState(
+    initialState.isAddedBrochure
+  );
 
   /**
    * 観光スポット詳細を取得する
@@ -30,14 +38,34 @@ const SpotDetail: NextPage = () => {
 
       const result = await services.fetchSpotById(spotId.toString());
       setSpot(result);
-    })();
+      setIsAddedBrochure(travelBrochuresSpotsStorage.has(spotId.toString()));
+    })().catch((error) => {
+      const msg = "観光スポットの取得に失敗しました";
+      if (errorHandler(error)) {
+        message.error(msg);
+        return;
+      }
+      if (error.response.status === 404) {
+        router.push("/404");
+        return;
+      }
+      message.error(error.response.data.message || msg);
+    });
   }, [router]);
 
   /**
-   * 旅のしおりにスポットを追加する
+   * 旅のしおりにスポットを追加・削除する
    */
-  const handleAddBrochure = () => {
+  const handleToggleBrochure = () => {
+    if (isAddedBrochure) {
+      travelBrochuresSpotsStorage.remove(router.query.spotId!.toString());
+      setIsAddedBrochure(false);
+      message.success("旅のしおりから削除しました");
+      return;
+    }
     travelBrochuresSpotsStorage.set(router.query.spotId!.toString());
+    setIsAddedBrochure(true);
+    message.success("旅のしおりに追加しました");
   };
 
   if (!spot) return null;
@@ -59,7 +87,9 @@ const SpotDetail: NextPage = () => {
         {spot.geometry.location.lng}
       </p>
 
-      <PrimaryButton onClick={handleAddBrochure}>しおりに追加</PrimaryButton>
+      <PrimaryButton onClick={handleToggleBrochure}>
+        {isAddedBrochure ? "旅のしおりから削除" : "旅のしおりに追加"}
+      </PrimaryButton>
     </Layout>
   );
 };
