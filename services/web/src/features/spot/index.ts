@@ -6,3 +6,4 @@ export const services: SpotApi = strapiSpotApi();
 
 export * from "./components/SpotImage"
 export * from "./components/SpotList"
+export * from "./components/StrapiCategories"

@@ -4,6 +4,8 @@ import Layout from "@/components/template/layout";
 import Link from "next/link";
 import { Spot, SpotImage, SpotList, services } from "@/features/spot";
 import { travelBrochuresSpotsStorage } from "@/utils/storage";
+import { errorHandler } from "@/utils/fetcher/strapi";
+import { message } from "antd";
 
 type State = {
   spots: Spot[];
@@ -30,7 +32,15 @@ const TravelBrochure: NextPage = () => {
         },
       });
       setSpots(result);
-    })();
+    })().catch((error) => {
+      const msg = "旅のしおりの取得に失敗しました";
+      if (errorHandler(error)) {
+        message.error(msg);
+        return;
+      }
+      if (error.response.status === 404) return;
+      message.error(error.response.data.message || msg);
+    });
   }, []);
 
   /**
@@ -39,13 +49,11 @@ const TravelBrochure: NextPage = () => {
   const handleRemoveBrochure = (spotId: string) => {
     travelBrochuresSpotsStorage.remove(spotId);
     setSpots(spots.filter((spot) => spot.id != spotId));
+    message.success("旅のしおりから削除しました");
   };
 
   return (
     <Layout>
-      <select>
-        <option>すべてのスポット</option>
-      </select>
       <SpotList>
         {spots.map((spot) => {
           return (

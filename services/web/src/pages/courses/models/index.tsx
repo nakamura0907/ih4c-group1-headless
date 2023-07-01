@@ -4,6 +4,8 @@ import Layout from "@/components/template/layout";
 import Link from "next/link";
 import { Course, services } from "@/features/course";
 import { SpotImage, SpotList } from "@/features/spot";
+import { errorHandler } from "@/utils/fetcher/strapi";
+import { message } from "antd";
 
 type State = {
   courses: Course[];
@@ -23,7 +25,14 @@ const ModelCourseList: NextPage = () => {
     (async () => {
       const result = await services.fetchModelCourseList();
       setCourses(result);
-    })();
+    })().catch((error) => {
+      const msg = "モデルコース一覧の取得に失敗しました";
+      if (errorHandler(error)) {
+        message.error(msg);
+        return;
+      }
+      message.error(error.response.data.message || msg);
+    });
   }, []);
 
   return (
