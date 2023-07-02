@@ -1,10 +1,10 @@
 import { NextPage } from "next";
-import React from "react";
-import Layout from "@/components/template/layout";
+import { PrimaryButton } from "@/components/ui/button";
 import { Spot, SpotImage, SpotList, services } from "@/features/spot";
 import { strapiBaseUrl, strapiToken } from "@/utils/fetcher/strapi";
 import axios from "axios";
-import { PrimaryButton } from "@/components/ui/button";
+import Layout from "@/components/template/layout";
+import React from "react";
 
 type State = {
   spots: Spot[];

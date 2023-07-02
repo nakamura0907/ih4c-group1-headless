@@ -28,7 +28,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               モデルコース一覧
             </Link>
             <Link href="/courses/models/1" className="text-blue-500">
-              モデルコース詳細 例1（TODO: 実装）
+              モデルコース詳細 例1
             </Link>
             <Link href="/courses/originals" className="text-blue-500">
               オリジナルコース一覧
@@ -36,8 +36,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <Link href="/courses/originals/create" className="text-blue-500">
               オリジナルコース作成
             </Link>
-            <Link href="/courses/originals/1" className="text-blue-500">
-              オリジナルコース詳細 例1（TODO: 実装）
+            <Link href="/courses/originals/5" className="text-blue-500">
+              オリジナルコース詳細 例1
             </Link>
           </div>
         </header>
