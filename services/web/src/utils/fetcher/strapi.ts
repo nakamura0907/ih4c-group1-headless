@@ -1,4 +1,3 @@
-import { message } from "antd";
 import axios from "axios";
 
 export const strapiBaseUrl = `${process.env.NEXT_PUBLIC_STRAPI_URL}/api`;
@@ -18,6 +17,9 @@ export type StrapiGetEntriesResponse<T> = {
 export type StrapiGetEntryResponse<T> = {
     data: T
 };
+export type StrapiPostEntryResponse<T> = {
+    data: T
+}
 
 export type StrapiCategory = {
     attributes: {
@@ -57,6 +59,7 @@ export type StrapiModelCourse = {
     },
     id: number
 }
+export type StrapiOriginalCourse = StrapiModelCourse;
 
 export const fetch = axios.create({
     baseURL: strapiBaseUrl,

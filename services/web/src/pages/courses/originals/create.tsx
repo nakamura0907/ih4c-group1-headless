@@ -1,4 +1,8 @@
-import { fetch } from "@/utils/fetcher/strapi";
+import {
+  StrapiOriginalCourse,
+  StrapiPostEntryResponse,
+  fetch,
+} from "@/utils/fetcher/strapi";
 import { PrimaryButton } from "@/components/ui/button";
 import { translateStrapiSpotToSpot } from "@/features/spot/api/strapi";
 import { useRouter } from "next/router";
@@ -125,7 +129,9 @@ const OriginalCourseCreate: NextPage = () => {
    */
   const handleFinish = async (values: FormValues) => {
     const url = `${strapiBaseUrl}/original-courses`;
-    const response = await fetch.post(url, {
+    const response = await fetch.post<
+      StrapiPostEntryResponse<StrapiOriginalCourse>
+    >(url, {
       data: {
         name: values.name,
         spots: {
