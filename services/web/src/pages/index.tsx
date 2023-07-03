@@ -14,10 +14,10 @@ import {
   StrapiSpot,
   errorHandler,
 } from "@/utils/fetcher/strapi";
-import type { NextPage } from "next";
-import { useRouter } from "next/router";
 import { fetch } from "@/utils/fetcher/strapi";
 import { translateStrapiSpotToSpot } from "@/features/spot/api/strapi";
+import { useRouter } from "next/router";
+import type { NextPage } from "next";
 
 type RefactorResponse = StrapiGetEntriesResponse<StrapiSpot>;
 
@@ -93,23 +93,33 @@ const Home: NextPage = () => {
     });
   }, [router]);
 
+  const handleCategoryChange = (value: any) => {
+    router.push(
+      {
+        pathname: router.pathname,
+        query: { ...router.query, category: value, page: 1 },
+      },
+      undefined,
+      { shallow: true }
+    );
+  };
+
+  const handlePageChange = (page: number) => {
+    router.push(
+      {
+        pathname: router.pathname,
+        query: { ...router.query, page },
+      },
+      undefined,
+      { shallow: true }
+    );
+  };
+
   return (
     <Layout>
       <article>
         <h2>観光スポット一覧</h2>
-        <CategorySelect
-          value={category}
-          onChange={(value) => {
-            router.push(
-              {
-                pathname: router.pathname,
-                query: { ...router.query, category: value, page: 1 },
-              },
-              undefined,
-              { shallow: true }
-            );
-          }}
-        />
+        <CategorySelect value={category} onChange={handleCategoryChange} />
         <SpotList>
           {spots.map((spot) => (
             <li key={spot.id}>
@@ -124,16 +134,7 @@ const Home: NextPage = () => {
           current={pagination.current}
           pageSize={pagination.pageSize}
           total={pagination.total}
-          onChange={(page) => {
-            router.push(
-              {
-                pathname: router.pathname,
-                query: { ...router.query, page },
-              },
-              undefined,
-              { shallow: true }
-            );
-          }}
+          onChange={handlePageChange}
         />
       </article>
     </Layout>

@@ -1,6 +1,7 @@
 /** 旅のしおり-観光スポット版ストレージ */
 export const travelBrochuresSpotsStorage = {
     key: 'travel-brochures-spots',
+    maxSize: 10,
     isValidObject: (object: any): object is Array<string> => {
         return Array.isArray(object) && object.every((item) => typeof item === 'string');
     },

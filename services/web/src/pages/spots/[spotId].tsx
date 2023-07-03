@@ -1,10 +1,9 @@
 import { errorHandler } from "@/utils/fetcher/strapi";
 import { message } from "antd";
 import { PrimaryButton } from "@/components/ui/button";
-import { Spot, services } from "@/features/spot";
+import { Spot, SpotImage, services } from "@/features/spot";
 import { travelBrochuresSpotsStorage } from "@/utils/storage";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import Layout from "@/components/template/layout";
 import React from "react";
 import type { NextPage } from "next";
@@ -63,6 +62,15 @@ const SpotDetail: NextPage = () => {
       message.success("旅のしおりから削除しました");
       return;
     }
+    if (
+      travelBrochuresSpotsStorage.count() >= travelBrochuresSpotsStorage.maxSize
+    ) {
+      message.info(
+        `旅のしおりは${travelBrochuresSpotsStorage.maxSize}件まで登録できます`
+      );
+      return;
+    }
+
     travelBrochuresSpotsStorage.set(router.query.spotId!.toString());
     setIsAddedBrochure(true);
     message.success("旅のしおりに追加しました");
@@ -71,13 +79,7 @@ const SpotDetail: NextPage = () => {
   if (!spot) return null;
   return (
     <Layout>
-      <Image
-        src="/no-image.png"
-        alt={spot.name}
-        width={1980}
-        height={1150}
-        sizes={"100vw"}
-      />
+      <SpotImage src={spot.photo} alt={spot.name} noRounded />
       <h2>{spot.name}</h2>
 
       <p>{spot.description}</p>

@@ -121,29 +121,6 @@ const OriginalCourseCreate: NextPage = () => {
   /**
    * オリジナルコースを作成する
    */
-  const handleCreateOriginalCourse = async () => {
-    const url = `${strapiBaseUrl}/original-courses`;
-    const response = await axios.post(
-      url,
-      {
-        data: {
-          name: "TODO: 入力フォームから取得する",
-          spots: {
-            connect: selectedSpots.map((spotId) => spotId),
-          },
-        },
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${strapiToken}`,
-        },
-      }
-    );
-
-    console.log(response);
-    setSelectedSpots(initialState.selectedSpots);
-  };
-
   const handleFinish = async (values: FormValues) => {
     const url = `${strapiBaseUrl}/original-courses`;
     const response = await axios.post(
@@ -169,22 +146,32 @@ const OriginalCourseCreate: NextPage = () => {
     router.push(`/courses/originals/${response.data.data.id}`);
   };
 
+  const handleCategoryChange = (value: string) => {
+    router.push(
+      {
+        pathname: router.pathname,
+        query: { ...router.query, category: value, page: 1 },
+      },
+      undefined,
+      { shallow: true }
+    );
+  };
+
+  const handlePageChange = (page: number) => {
+    router.push(
+      {
+        pathname: router.pathname,
+        query: { ...router.query, page },
+      },
+      undefined,
+      { shallow: true }
+    );
+  };
+
   return (
     <Layout>
       <h2>オリジナルコース</h2>
-      <CategorySelect
-        value={category}
-        onChange={(value) => {
-          router.push(
-            {
-              pathname: router.pathname,
-              query: { ...router.query, category: value, page: 1 },
-            },
-            undefined,
-            { shallow: true }
-          );
-        }}
-      />
+      <CategorySelect value={category} onChange={handleCategoryChange} />
       <SpotList>
         {spots.map((spot) => {
           const index = selectedSpots.indexOf(spot.id);
@@ -202,16 +189,7 @@ const OriginalCourseCreate: NextPage = () => {
         current={pagination.current}
         pageSize={pagination.pageSize}
         total={pagination.total}
-        onChange={(page) => {
-          router.push(
-            {
-              pathname: router.pathname,
-              query: { ...router.query, page },
-            },
-            undefined,
-            { shallow: true }
-          );
-        }}
+        onChange={handlePageChange}
       />
       <Form form={form} onFinish={handleFinish}>
         <Form.Item label="オリジナルコース名" name="name" required>

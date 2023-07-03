@@ -46,6 +46,7 @@ const OriginalCourseList: NextPage = () => {
         {
           params: {
             "pagination[page]": isNaN(Number(page)) ? 1 : Number(page),
+            "sort[0]": "id:desc",
           },
         }
       );
@@ -77,6 +78,17 @@ const OriginalCourseList: NextPage = () => {
     });
   }, [router]);
 
+  const handlePageChange = (page: number) => {
+    router.push(
+      {
+        pathname: router.pathname,
+        query: { ...router.query, page },
+      },
+      undefined,
+      { shallow: true }
+    );
+  };
+
   return (
     <Layout>
       <h2>オリジナルコース一覧</h2>
@@ -102,16 +114,7 @@ const OriginalCourseList: NextPage = () => {
         current={pagination.current}
         pageSize={pagination.pageSize}
         total={pagination.total}
-        onChange={(page) => {
-          router.push(
-            {
-              pathname: router.pathname,
-              query: { ...router.query, page },
-            },
-            undefined,
-            { shallow: true }
-          );
-        }}
+        onChange={handlePageChange}
       />
     </Layout>
   );

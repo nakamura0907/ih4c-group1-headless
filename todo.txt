@@ -1,25 +1,7 @@
-- xオリジナルコース登録
-- xオリジナルコース一覧
-- オリジナルコース詳細
-- モデルコース詳細
-
-- x旅のしおり - 観光スポット
-- 旅のしおり - モデルコース
-- ページネーション、カテゴリ検索
-    - https://strapi.io/blog/deep-filtering-alpha-26
-    - https://docs.strapi.io/dev-docs/api/rest/sort-pagination#pagination
-
-- strapiフィールド追加
-- 型編集
-- xAPIトークン
-
-- ベタ書き修正
 - ビジネスルールの反映
     - 最大ルート数
     - 名前条件
     など
-
-
-lat&lon = null許可、photo=null許可
-axiosからfetchに移行する???
-エラーハンドリング
+- デザイン適用
+- リファクタリング
+    - 型修正
