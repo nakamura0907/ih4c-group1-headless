@@ -1,11 +1,11 @@
-import { NextPage } from "next";
-import React from "react";
-import Layout from "@/components/template/layout";
-import Link from "next/link";
+import { errorHandler } from "@/utils/fetcher/strapi";
 import { Spot, SpotImage, SpotList, services } from "@/features/spot";
 import { travelBrochuresSpotsStorage } from "@/utils/storage";
-import { errorHandler } from "@/utils/fetcher/strapi";
-import { message } from "antd";
+import Layout from "@/components/template/layout";
+import Link from "@/components/ui/link";
+import message from "@/components/ui/message";
+import React from "react";
+import type { NextPage } from "next";
 
 type State = {
   spots: Spot[];

@@ -1,6 +1,6 @@
-import React from "react";
 import { Course } from "@/features/course";
-import type { NextPage } from "next";
+import { SpotImage } from "@/features/spot";
+import { translateStrapiSpotToSpot } from "@/features/spot/api/strapi";
 import { useRouter } from "next/router";
 import {
   StrapiGetEntryResponse,
@@ -8,10 +8,10 @@ import {
   errorHandler,
   fetch,
 } from "@/utils/fetcher/strapi";
-import { message } from "antd";
-import { translateStrapiSpotToSpot } from "@/features/spot/api/strapi";
 import Layout from "@/components/template/layout";
-import { SpotImage } from "@/features/spot";
+import message from "@/components/ui/message";
+import React from "react";
+import type { NextPage } from "next";
 
 type State = {
   course?: Course;

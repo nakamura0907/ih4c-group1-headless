@@ -1,6 +1,6 @@
 import { errorHandler } from "@/utils/fetcher/strapi";
-import { message } from "antd";
 import { PrimaryButton } from "@/components/ui/button";
+import message from "@/components/ui/message";
 import { Spot, SpotImage, services } from "@/features/spot";
 import { travelBrochuresSpotsStorage } from "@/utils/storage";
 import { useRouter } from "next/router";

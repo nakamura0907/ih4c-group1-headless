@@ -1,3 +1,6 @@
+import { fetch } from "@/utils/fetcher/strapi";
+import { translateStrapiSpotToSpot } from "@/features/spot/api/strapi";
+import { useRouter } from "next/router";
 import {
   CategorySelect,
   Spot,
@@ -5,18 +8,16 @@ import {
   SpotList,
   defaultCategory,
 } from "@/features/spot";
-import Layout from "@/components/template/layout";
-import Link from "next/link";
-import React from "react";
-import { Pagination, message } from "antd";
 import {
   StrapiGetEntriesResponse,
   StrapiSpot,
   errorHandler,
 } from "@/utils/fetcher/strapi";
-import { fetch } from "@/utils/fetcher/strapi";
-import { translateStrapiSpotToSpot } from "@/features/spot/api/strapi";
-import { useRouter } from "next/router";
+import Layout from "@/components/template/layout";
+import Link from "@/components/ui/link";
+import message from "@/components/ui/message";
+import Pagination from "@/components/ui/pagination";
+import React from "react";
 import type { NextPage } from "next";
 
 type RefactorResponse = StrapiGetEntriesResponse<StrapiSpot>;

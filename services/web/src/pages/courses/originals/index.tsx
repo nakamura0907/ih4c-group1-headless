@@ -1,13 +1,14 @@
 import { Course } from "@/features/course";
 import { errorHandler, fetch } from "@/utils/fetcher/strapi";
-import { NextPage } from "next";
-import { Pagination, message } from "antd";
 import { SpotImage, SpotList } from "@/features/spot";
 import { translateStrapiSpotToSpot } from "@/features/spot/api/strapi";
 import { useRouter } from "next/router";
 import Layout from "@/components/template/layout";
-import Link from "next/link";
+import Link from "@/components/ui/link";
+import message from "@/components/ui/message";
+import Pagination from "@/components/ui/pagination";
 import React from "react";
+import type { NextPage } from "next";
 
 type State = {
   courses: Course[];

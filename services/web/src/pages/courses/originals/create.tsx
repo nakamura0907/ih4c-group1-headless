@@ -1,5 +1,7 @@
-import { NextPage } from "next";
+import { fetch } from "@/utils/fetcher/strapi";
 import { PrimaryButton } from "@/components/ui/button";
+import { translateStrapiSpotToSpot } from "@/features/spot/api/strapi";
+import { useRouter } from "next/router";
 import {
   CategorySelect,
   Spot,
@@ -12,15 +14,15 @@ import {
   StrapiSpot,
   errorHandler,
   strapiBaseUrl,
-  strapiToken,
 } from "@/utils/fetcher/strapi";
-import axios from "axios";
 import Layout from "@/components/template/layout";
+import Badge from "@/components/ui/badge";
+import Form from "@/components/ui/form";
+import Input from "@/components/ui/input";
+import message from "@/components/ui/message";
+import Pagination from "@/components/ui/pagination";
 import React from "react";
-import { useRouter } from "next/router";
-import { Badge, Form, Input, Pagination, message } from "antd";
-import { fetch } from "@/utils/fetcher/strapi";
-import { translateStrapiSpotToSpot } from "@/features/spot/api/strapi";
+import type { NextPage } from "next";
 
 type RefactorResponse = StrapiGetEntriesResponse<StrapiSpot>;
 
@@ -123,22 +125,14 @@ const OriginalCourseCreate: NextPage = () => {
    */
   const handleFinish = async (values: FormValues) => {
     const url = `${strapiBaseUrl}/original-courses`;
-    const response = await axios.post(
-      url,
-      {
-        data: {
-          name: values.name,
-          spots: {
-            connect: selectedSpots.map((spotId) => spotId),
-          },
+    const response = await fetch.post(url, {
+      data: {
+        name: values.name,
+        spots: {
+          connect: selectedSpots.map((spotId) => spotId),
         },
       },
-      {
-        headers: {
-          Authorization: `Bearer ${strapiToken}`,
-        },
-      }
-    );
+    });
 
     setSelectedSpots(initialState.selectedSpots);
     form.resetFields();

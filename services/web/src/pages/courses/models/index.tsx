@@ -1,11 +1,11 @@
-import { NextPage } from "next";
-import React from "react";
-import Layout from "@/components/template/layout";
-import Link from "next/link";
 import { Course, services } from "@/features/course";
-import { SpotImage, SpotList } from "@/features/spot";
 import { errorHandler } from "@/utils/fetcher/strapi";
-import { message } from "antd";
+import { SpotImage, SpotList } from "@/features/spot";
+import Layout from "@/components/template/layout";
+import Link from "@/components/ui/link";
+import message from "@/components/ui/message";
+import React from "react";
+import type { NextPage } from "next";
 
 type State = {
   courses: Course[];
@@ -48,7 +48,7 @@ const ModelCourseList: NextPage = () => {
                   alt={`モデルコース ${course.id}`}
                 />
                 <span>
-                  {course.route.map((spot) => spot!.name).join("→")}
+                  {course.route.map((spot) => spot.name).join("→")}
                   （本来はモデルコース名）
                 </span>
               </Link>
