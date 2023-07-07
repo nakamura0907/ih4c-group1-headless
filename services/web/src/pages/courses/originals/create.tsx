@@ -200,7 +200,21 @@ const OriginalCourseCreate: NextPage = () => {
         onChange={handlePageChange}
       />
       <Form form={form} onFinish={handleFinish}>
-        <Form.Item label="オリジナルコース名" name="name" required>
+        <Form.Item
+          label="オリジナルコース名"
+          name="name"
+          required
+          rules={[
+            {
+              required: true,
+              message: "オリジナルコース名を入力してください",
+            },
+            {
+              max: 50,
+              message: "オリジナルコース名は50文字以内で入力してください",
+            },
+          ]}
+        >
           <Input placeholder="オリジナルコース名" />
         </Form.Item>
         <Form.Item>
