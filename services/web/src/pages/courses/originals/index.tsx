@@ -43,7 +43,7 @@ const OriginalCourseList: NextPage = () => {
 
       const { page } = router.query;
       const response = await fetch.get(
-        "/original-courses?populate[spots][populate][0]=photo,category",
+        "/original-courses?populate[spots][populate][0]=photo,categories,holidayIds",
         {
           params: {
             "pagination[page]": isNaN(Number(page)) ? 1 : Number(page),

@@ -2,7 +2,7 @@ export type Spot = {
     id: string
     name: string
     description: string
-    category: string
+    categories: string[]
     photo: string
     geometry: {
         location: {

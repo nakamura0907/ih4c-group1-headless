@@ -39,7 +39,7 @@ const OriginalCourseDetail: NextPage = () => {
         StrapiGetEntryResponse<StrapiModelCourse>
       >(`/original-courses/${courseId}`, {
         params: {
-          "populate[spots][populate][0]": "photo,category",
+          "populate[spots][populate][0]": "photo,categories,holidayIds",
         },
       });
       const course = {

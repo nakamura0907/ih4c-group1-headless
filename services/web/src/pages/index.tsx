@@ -56,14 +56,13 @@ const Home: NextPage = () => {
     (async () => {
       if (!router.isReady) return;
 
-      // TODO: features移動
       const { page, category } = router.query;
       const response = await fetch.get<RefactorResponse>("/spots", {
         params: {
-          populate: "photo,category",
+          populate: "photo,categories,holidayIds",
           "pagination[page]": isNaN(Number(page)) ? 1 : Number(page),
           filters: {
-            category:
+            categories:
               category === "*"
                 ? undefined
                 : {

@@ -8,7 +8,7 @@ export const strapiSpotApi = (): SpotApi => {
         const response = await fetch.get<StrapiGetEntriesResponse<StrapiSpot>>(
             `${strapiBaseUrl}/spots`,{
                 params: {
-                    populate: "photo,category",
+                    populate: "photo,categories,holidayIds",
                     filters
                 }
             }
@@ -20,7 +20,7 @@ export const strapiSpotApi = (): SpotApi => {
     const fetchSpotById = async (id: string) => {
         const response = await fetch.get<StrapiGetEntryResponse<StrapiSpot>>(`${strapiBaseUrl}/spots/${id}`, {
             params: {
-                populate: "photo,category"
+                populate: "photo,categories,holidayIds"
             }
         });
         
@@ -49,7 +49,7 @@ export const translateStrapiSpotToSpot = (spot: StrapiSpot): Spot => ({
     id: spot.id.toString(),
     name: spot.attributes.name,
     description: spot.attributes.description,
-    category: spot.attributes.category.data.attributes.name,
+    categories: spot.attributes.categories.data.map(category => category.attributes.name),
     photo: spot.attributes.photo.data?.attributes.url ?? "",
     geometry: {
         location: {
