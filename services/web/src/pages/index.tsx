@@ -1,9 +1,7 @@
 import { fetch } from "@/utils/fetcher/strapi";
-import { translateStrapiSpotToSpot } from "@/features/spot/api/strapi";
 import { useRouter } from "next/router";
 import {
   CategorySelect,
-  Spot,
   SpotImage,
   SpotList,
   defaultCategory,
@@ -23,7 +21,7 @@ import type { NextPage } from "next";
 type RefactorResponse = StrapiGetEntriesResponse<StrapiSpot>;
 
 type State = {
-  spots: Spot[];
+  spots: StrapiSpot[];
   category: string;
   pagination: {
     current: number;
@@ -73,9 +71,8 @@ const Home: NextPage = () => {
           },
         },
       });
-      const spots = response.data.data.map(translateStrapiSpotToSpot);
 
-      setSpots(spots);
+      setSpots(response.data.data);
       if (category) setCategory(category.toString());
       setPagination({
         current: response.data.meta.pagination.page,
@@ -124,8 +121,11 @@ const Home: NextPage = () => {
           {spots.map((spot) => (
             <li key={spot.id}>
               <Link href={`/spots/${spot.id}`}>
-                <SpotImage src={spot.photo} alt={spot.name} />
-                <span>{spot.name}</span>
+                <SpotImage
+                  src={spot.attributes.photo.data?.attributes.url}
+                  alt={spot.attributes.name}
+                />
+                <span>{spot.attributes.name}</span>
               </Link>
             </li>
           ))}

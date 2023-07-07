@@ -1,20 +1,19 @@
 import React from "react";
-import { Course } from "@/features/course";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import {
   StrapiGetEntryResponse,
   StrapiModelCourse,
+  StrapiOriginalCourse,
   errorHandler,
   fetch,
 } from "@/utils/fetcher/strapi";
 import { message } from "antd";
-import { translateStrapiSpotToSpot } from "@/features/spot/api/strapi";
 import Layout from "@/components/template/layout";
 import { SpotImage } from "@/features/spot";
 
 type State = {
-  course?: Course;
+  course?: StrapiOriginalCourse;
 };
 
 const initialState: State = {
@@ -42,14 +41,8 @@ const OriginalCourseDetail: NextPage = () => {
           "populate[spots][populate][0]": "photo,categories,holidayIds",
         },
       });
-      const course = {
-        id: response.data.data.id.toString(),
-        route: response.data.data.attributes.spots.data.map(
-          translateStrapiSpotToSpot
-        ),
-      };
 
-      setCourse(course);
+      setCourse(response.data.data);
     })().catch((error) => {
       const msg = "オリジナルコースの取得に失敗しました";
       if (errorHandler(error)) {
@@ -69,10 +62,14 @@ const OriginalCourseDetail: NextPage = () => {
     <Layout>
       <article>
         <h2>オリジナルコース</h2>
-        {course.route.map((spot) => (
+        <p>{course.attributes.name}</p>
+        {course.attributes.spots.data.map((spot) => (
           <div key={spot.id}>
-            <SpotImage src={spot.photo} alt={spot.name} />
-            <span>{spot.name}</span>
+            <SpotImage
+              src={spot.attributes.photo.data?.attributes.url}
+              alt={spot.attributes.name}
+            />
+            <span>{spot.attributes.name}</span>
           </div>
         ))}
       </article>

@@ -4,11 +4,9 @@ import {
   fetch,
 } from "@/utils/fetcher/strapi";
 import { PrimaryButton } from "@/components/ui/button";
-import { translateStrapiSpotToSpot } from "@/features/spot/api/strapi";
 import { useRouter } from "next/router";
 import {
   CategorySelect,
-  Spot,
   SpotImage,
   SpotList,
   defaultCategory,
@@ -31,7 +29,7 @@ import type { NextPage } from "next";
 type RefactorResponse = StrapiGetEntriesResponse<StrapiSpot>;
 
 type State = {
-  spots: Spot[];
+  spots: StrapiSpot[];
   selectedSpots: string[];
   category: string;
   pagination: {
@@ -91,9 +89,7 @@ const OriginalCourseCreate: NextPage = () => {
           },
         },
       });
-      const spots = response.data.data.map(translateStrapiSpotToSpot);
-
-      setSpots(spots);
+      setSpots(response.data.data);
       if (category) setCategory(category.toString());
       setPagination({
         current: response.data.meta.pagination.page,
@@ -181,13 +177,19 @@ const OriginalCourseCreate: NextPage = () => {
       <CategorySelect value={category} onChange={handleCategoryChange} />
       <SpotList>
         {spots.map((spot) => {
-          const index = selectedSpots.indexOf(spot.id);
+          const index = selectedSpots.indexOf(spot.id.toString());
           return (
-            <li key={spot.id} onClick={() => toggleSpotSelection(spot.id)}>
+            <li
+              key={spot.id}
+              onClick={() => toggleSpotSelection(spot.id.toString())}
+            >
               <SelectBadge index={index + 1}>
-                <SpotImage src="/no-image.png" alt={spot.name} />
+                <SpotImage
+                  src={spot.attributes.photo.data?.attributes.url}
+                  alt={spot.attributes.name}
+                />
               </SelectBadge>
-              <span>{spot.name}</span>
+              <span>{spot.attributes.name}</span>
             </li>
           );
         })}

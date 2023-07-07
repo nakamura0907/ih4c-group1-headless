@@ -1,5 +1,9 @@
-import { Course, services } from "@/features/course";
-import { errorHandler } from "@/utils/fetcher/strapi";
+import {
+  fetch,
+  StrapiModelCourse,
+  errorHandler,
+  StrapiGetEntriesResponse,
+} from "@/utils/fetcher/strapi";
 import { SpotImage, SpotList } from "@/features/spot";
 import Layout from "@/components/template/layout";
 import Link from "@/components/ui/link";
@@ -8,7 +12,7 @@ import React from "react";
 import type { NextPage } from "next";
 
 type State = {
-  courses: Course[];
+  courses: StrapiModelCourse[];
 };
 
 const initialState: State = {
@@ -23,8 +27,14 @@ const ModelCourseList: NextPage = () => {
    */
   React.useEffect(() => {
     (async () => {
-      const result = await services.fetchModelCourseList();
-      setCourses(result);
+      const response = await fetch.get<
+        StrapiGetEntriesResponse<StrapiModelCourse>
+      >("/model-courses", {
+        params: {
+          "populate[spots][populate][0]": "photo,categories,holidayIds",
+        },
+      });
+      setCourses(response.data.data);
     })().catch((error) => {
       const msg = "モデルコース一覧の取得に失敗しました";
       if (errorHandler(error)) {
@@ -44,13 +54,13 @@ const ModelCourseList: NextPage = () => {
             <li key={course.id}>
               <Link href={`/courses/models/${course.id}`}>
                 <SpotImage
-                  src="/no-image.png"
+                  src={
+                    course.attributes.spots.data[0].attributes.photo.data
+                      ?.attributes.url
+                  }
                   alt={`モデルコース ${course.id}`}
                 />
-                <span>
-                  {course.route.map((spot) => spot.name).join("→")}
-                  （本来はモデルコース名）
-                </span>
+                <span>{course.attributes.name}</span>
               </Link>
             </li>
           );

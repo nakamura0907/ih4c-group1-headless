@@ -1,7 +1,10 @@
-import { Course } from "@/features/course";
-import { errorHandler, fetch } from "@/utils/fetcher/strapi";
+import {
+  StrapiGetEntriesResponse,
+  StrapiOriginalCourse,
+  errorHandler,
+  fetch,
+} from "@/utils/fetcher/strapi";
 import { SpotImage, SpotList } from "@/features/spot";
-import { translateStrapiSpotToSpot } from "@/features/spot/api/strapi";
 import { useRouter } from "next/router";
 import Layout from "@/components/template/layout";
 import Link from "@/components/ui/link";
@@ -11,7 +14,7 @@ import React from "react";
 import type { NextPage } from "next";
 
 type State = {
-  courses: Course[];
+  courses: StrapiOriginalCourse[];
   pagination: {
     current: number;
     pageSize: number;
@@ -42,27 +45,17 @@ const OriginalCourseList: NextPage = () => {
       if (!router.isReady) return;
 
       const { page } = router.query;
-      const response = await fetch.get(
-        "/original-courses?populate[spots][populate][0]=photo,categories,holidayIds",
-        {
-          params: {
-            "pagination[page]": isNaN(Number(page)) ? 1 : Number(page),
-            "sort[0]": "id:desc",
-          },
-        }
-      );
-      const courses = response.data.data.map((course: any) => {
-        const route = course.attributes.spots.data.map(
-          translateStrapiSpotToSpot
-        );
-
-        return {
-          id: course.id.toString(),
-          route,
-        };
+      const response = await fetch.get<
+        StrapiGetEntriesResponse<StrapiOriginalCourse>
+      >("/original-courses", {
+        params: {
+          "populate[spots][populate][0]": "photo,categories,holidayIds",
+          "pagination[page]": isNaN(Number(page)) ? 1 : Number(page),
+          "sort[0]": "id:desc",
+        },
       });
 
-      setCourses(courses);
+      setCourses(response.data.data);
       setPagination({
         current: response.data.meta.pagination.page,
         pageSize: response.data.meta.pagination.pageSize,
@@ -99,13 +92,13 @@ const OriginalCourseList: NextPage = () => {
             <li key={course.id}>
               <Link href={`/courses/originals/${course.id}`}>
                 <SpotImage
-                  src="/no-image.png"
+                  src={
+                    course.attributes.spots.data[0].attributes.photo.data
+                      ?.attributes.url
+                  }
                   alt={`オリジナルコース ${course.id}`}
                 />
-                <span>
-                  {course.route.map((spot: any) => spot!.name).join("→")}
-                  （本来はオリジナルコース名）
-                </span>
+                <span>{course.attributes.name}</span>
               </Link>
             </li>
           );
