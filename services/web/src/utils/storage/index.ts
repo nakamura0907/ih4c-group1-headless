@@ -1,4 +1,8 @@
-/** 旅のしおり-観光スポット版ストレージ */
+/**
+ * 旅のしおり-観光スポット版ストレージ
+ *
+ * @example key: "[1, 5, 10]" // 観光スポットID
+ */
 export const travelBrochuresSpotsStorage = {
     key: 'travel-brochures-spots',
     maxSize: 10,
