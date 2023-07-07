@@ -117,11 +117,18 @@ const OriginalCourseCreate: NextPage = () => {
   const toggleSpotSelection = (spotId: string) => {
     // selectedSpotsにspotIdが含まれていれば、selectedSpotsからspotIdを削除する
     // なければ、selectedSpotsにspotIdを追加する
-    const newSelectedSpots = selectedSpots.includes(spotId)
-      ? selectedSpots.filter((selectedSpot) => selectedSpot != spotId)
-      : [...selectedSpots, spotId];
+    if (selectedSpots.includes(spotId)) {
+      setSelectedSpots(
+        selectedSpots.filter((selectedSpot) => selectedSpot != spotId)
+      );
+    } else {
+      if (selectedSpots.length >= 6) {
+        message.info("最大経路数は6件です");
+        return;
+      }
 
-    setSelectedSpots(newSelectedSpots);
+      setSelectedSpots([...selectedSpots, spotId]);
+    }
   };
 
   /**
@@ -188,6 +195,7 @@ const OriginalCourseCreate: NextPage = () => {
       <Pagination
         current={pagination.current}
         pageSize={pagination.pageSize}
+        showSizeChanger={false}
         total={pagination.total}
         onChange={handlePageChange}
       />

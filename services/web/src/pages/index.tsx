@@ -133,6 +133,7 @@ const Home: NextPage = () => {
         <Pagination
           current={pagination.current}
           pageSize={pagination.pageSize}
+          showSizeChanger={false}
           total={pagination.total}
           onChange={handlePageChange}
         />
