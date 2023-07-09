@@ -10,6 +10,7 @@ import Layout from "@/components/template/layout";
 import message from "@/components/ui/message";
 import React from "react";
 import type { NextPage } from "next";
+import Headline from "@/components/module/headline";
 
 type State = {
   course?: StrapiModelCourse;
@@ -60,8 +61,7 @@ const ModelCourseDetail: NextPage = () => {
   return (
     <Layout>
       <article>
-        <h2>モデルコース</h2>
-        <p>{course.attributes.name}</p>
+        <Headline className="text-center">{course.attributes.name}</Headline>
         {course.attributes.spots.data.map((spot) => (
           <div key={spot.id}>
             <SpotImage

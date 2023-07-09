@@ -27,6 +27,7 @@ import React from "react";
 import type { NextPage } from "next";
 import Headline from "@/components/module/headline";
 import FormContainer from "@/components/module/form-container";
+import Typography from "@/components/ui/typography";
 
 type RefactorResponse = StrapiGetEntriesResponse<StrapiSpot>;
 
@@ -179,6 +180,9 @@ const OriginalCourseCreate: NextPage = () => {
         <Headline className="text-center">オリジナルコース</Headline>
         <FormContainer className="mb-5">
           <CategorySelect value={category} onChange={handleCategoryChange} />
+          <Typography.Text type="secondary">
+            &#8251; 最大6件まで選択できます
+          </Typography.Text>
         </FormContainer>
         <SpotList>
           {spots.map((spot) => {

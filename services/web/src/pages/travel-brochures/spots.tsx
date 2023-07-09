@@ -7,6 +7,7 @@ import message from "@/components/ui/message";
 import React from "react";
 import type { NextPage } from "next";
 import { Dropdown } from "antd";
+import Headline from "@/components/module/headline";
 
 type State = {
   spots: Spot[];
@@ -55,6 +56,7 @@ const TravelBrochure: NextPage = () => {
 
   return (
     <Layout>
+      <Headline className="text-center">旅のしおり</Headline>
       <SpotList>
         {spots.map((spot) => {
           return (
