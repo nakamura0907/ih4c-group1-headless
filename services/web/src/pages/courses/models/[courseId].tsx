@@ -49,7 +49,7 @@ const ModelCourseDetail: NextPage = () => {
         return;
       }
       if (error.response.status === 404) {
-        router.push("/404");
+        router.replace("/404");
         return;
       }
       message.error(error.response.data.message || msg);

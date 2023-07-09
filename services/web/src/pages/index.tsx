@@ -11,6 +11,8 @@ import {
   StrapiSpot,
   errorHandler,
 } from "@/utils/fetcher/strapi";
+import FormContainer from "@/components/module/form-container";
+import Headline from "@/components/module/headline";
 import Layout from "@/components/template/layout";
 import Link from "@/components/ui/link";
 import message from "@/components/ui/message";
@@ -115,8 +117,10 @@ const Home: NextPage = () => {
   return (
     <Layout>
       <article>
-        <h2>観光スポット一覧</h2>
-        <CategorySelect value={category} onChange={handleCategoryChange} />
+        <Headline className="text-center">観光スポット一覧</Headline>
+        <FormContainer className="mb-5">
+          <CategorySelect value={category} onChange={handleCategoryChange} />
+        </FormContainer>
         <SpotList>
           {spots.map((spot) => (
             <li key={spot.id}>
@@ -131,6 +135,7 @@ const Home: NextPage = () => {
           ))}
         </SpotList>
         <Pagination
+          className="mb-7 flex justify-center"
           current={pagination.current}
           pageSize={pagination.pageSize}
           showSizeChanger={false}

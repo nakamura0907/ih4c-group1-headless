@@ -6,7 +6,7 @@ export type SpotListProps = {
 
 export const SpotList: React.FC<SpotListProps> = ({ children }) => {
   return (
-    <ul className="grid gap-8 grid-flow-row grid-cols-[repeat(2,1fr)]">
+    <ul className="mb-6 grid gap-8 grid-flow-row grid-cols-[repeat(2,1fr)]">
       {children}
     </ul>
   );

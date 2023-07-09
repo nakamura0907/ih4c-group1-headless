@@ -42,6 +42,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           </div>
         </header>
         <main className="px-4 max-w-5xl mx-auto">{children}</main>
+        <footer className="py-3">
+          <small className="flex justify-center">
+            Copyright &copy; 2023 上越観光マップ
+          </small>
+        </footer>
       </div>
     </>
   );
