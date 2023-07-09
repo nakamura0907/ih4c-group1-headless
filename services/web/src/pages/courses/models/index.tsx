@@ -10,6 +10,7 @@ import Link from "@/components/ui/link";
 import message from "@/components/ui/message";
 import React from "react";
 import type { NextPage } from "next";
+import Headline from "@/components/module/headline";
 
 type State = {
   courses: StrapiModelCourse[];
@@ -47,25 +48,27 @@ const ModelCourseList: NextPage = () => {
 
   return (
     <Layout>
-      <h2>モデルコース一覧</h2>
-      <SpotList>
-        {courses.map((course) => {
-          return (
-            <li key={course.id}>
-              <Link href={`/courses/models/${course.id}`}>
-                <SpotImage
-                  src={
-                    course.attributes.spots.data[0].attributes.photo.data
-                      ?.attributes.url
-                  }
-                  alt={`モデルコース ${course.id}`}
-                />
-                <span>{course.attributes.name}</span>
-              </Link>
-            </li>
-          );
-        })}
-      </SpotList>
+      <article>
+        <Headline className="text-center">モデルコース一覧</Headline>
+        <SpotList>
+          {courses.map((course) => {
+            return (
+              <li key={course.id}>
+                <Link href={`/courses/models/${course.id}`}>
+                  <SpotImage
+                    src={
+                      course.attributes.spots.data[0].attributes.photo.data
+                        ?.attributes.url
+                    }
+                    alt={`モデルコース ${course.id}`}
+                  />
+                  <span>{course.attributes.name}</span>
+                </Link>
+              </li>
+            );
+          })}
+        </SpotList>
+      </article>
     </Layout>
   );
 };

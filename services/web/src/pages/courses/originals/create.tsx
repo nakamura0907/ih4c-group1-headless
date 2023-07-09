@@ -25,6 +25,8 @@ import message from "@/components/ui/message";
 import Pagination from "@/components/ui/pagination";
 import React from "react";
 import type { NextPage } from "next";
+import Headline from "@/components/module/headline";
+import FormContainer from "@/components/module/form-container";
 
 type RefactorResponse = StrapiGetEntriesResponse<StrapiSpot>;
 
@@ -173,58 +175,69 @@ const OriginalCourseCreate: NextPage = () => {
 
   return (
     <Layout>
-      <h2>オリジナルコース</h2>
-      <CategorySelect value={category} onChange={handleCategoryChange} />
-      <SpotList>
-        {spots.map((spot) => {
-          const index = selectedSpots.indexOf(spot.id.toString());
-          return (
-            <li
-              key={spot.id}
-              onClick={() => toggleSpotSelection(spot.id.toString())}
+      <article>
+        <Headline className="text-center">オリジナルコース</Headline>
+        <FormContainer className="mb-5">
+          <CategorySelect value={category} onChange={handleCategoryChange} />
+        </FormContainer>
+        <SpotList>
+          {spots.map((spot) => {
+            const index = selectedSpots.indexOf(spot.id.toString());
+            return (
+              <li
+                key={spot.id}
+                onClick={() => toggleSpotSelection(spot.id.toString())}
+              >
+                <SelectBadge index={index + 1}>
+                  <SpotImage
+                    src={spot.attributes.photo.data?.attributes.url}
+                    alt={spot.attributes.name}
+                  />
+                </SelectBadge>
+                <span>{spot.attributes.name}</span>
+              </li>
+            );
+          })}
+        </SpotList>
+        <Pagination
+          className="flex justify-center mb-4"
+          current={pagination.current}
+          pageSize={pagination.pageSize}
+          showSizeChanger={false}
+          total={pagination.total}
+          onChange={handlePageChange}
+        />
+        <FormContainer>
+          <Form form={form} layout="vertical" onFinish={handleFinish}>
+            <Form.Item
+              label="オリジナルコース名"
+              name="name"
+              required
+              rules={[
+                {
+                  required: true,
+                  message: "オリジナルコース名を入力してください",
+                },
+                {
+                  max: 50,
+                  message: "オリジナルコース名は50文字以内で入力してください",
+                },
+              ]}
             >
-              <SelectBadge index={index + 1}>
-                <SpotImage
-                  src={spot.attributes.photo.data?.attributes.url}
-                  alt={spot.attributes.name}
-                />
-              </SelectBadge>
-              <span>{spot.attributes.name}</span>
-            </li>
-          );
-        })}
-      </SpotList>
-      <Pagination
-        current={pagination.current}
-        pageSize={pagination.pageSize}
-        showSizeChanger={false}
-        total={pagination.total}
-        onChange={handlePageChange}
-      />
-      <Form form={form} onFinish={handleFinish}>
-        <Form.Item
-          label="オリジナルコース名"
-          name="name"
-          required
-          rules={[
-            {
-              required: true,
-              message: "オリジナルコース名を入力してください",
-            },
-            {
-              max: 50,
-              message: "オリジナルコース名は50文字以内で入力してください",
-            },
-          ]}
-        >
-          <Input placeholder="オリジナルコース名" />
-        </Form.Item>
-        <Form.Item>
-          <PrimaryButton disabled={selectedSpots.length == 0} htmlType="submit">
-            オリジナルコースの作成
-          </PrimaryButton>
-        </Form.Item>
-      </Form>
+              <Input placeholder="オリジナルコース名" />
+            </Form.Item>
+            <Form.Item>
+              <PrimaryButton
+                className="flex ml-auto"
+                disabled={selectedSpots.length == 0}
+                htmlType="submit"
+              >
+                オリジナルコースの作成
+              </PrimaryButton>
+            </Form.Item>
+          </Form>
+        </FormContainer>
+      </article>
     </Layout>
   );
 };

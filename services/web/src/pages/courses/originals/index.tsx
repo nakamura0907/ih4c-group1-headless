@@ -12,6 +12,7 @@ import message from "@/components/ui/message";
 import Pagination from "@/components/ui/pagination";
 import React from "react";
 import type { NextPage } from "next";
+import Headline from "@/components/module/headline";
 
 type State = {
   courses: StrapiOriginalCourse[];
@@ -85,31 +86,34 @@ const OriginalCourseList: NextPage = () => {
 
   return (
     <Layout>
-      <h2>オリジナルコース一覧</h2>
-      <SpotList>
-        {courses.map((course) => {
-          return (
-            <li key={course.id}>
-              <Link href={`/courses/originals/${course.id}`}>
-                <SpotImage
-                  src={
-                    course.attributes.spots.data[0].attributes.photo.data
-                      ?.attributes.url
-                  }
-                  alt={`オリジナルコース ${course.id}`}
-                />
-                <span>{course.attributes.name}</span>
-              </Link>
-            </li>
-          );
-        })}
-      </SpotList>
-      <Pagination
-        current={pagination.current}
-        pageSize={pagination.pageSize}
-        total={pagination.total}
-        onChange={handlePageChange}
-      />
+      <article>
+        <Headline className="text-center">オリジナルコース一覧</Headline>
+        <SpotList>
+          {courses.map((course) => {
+            return (
+              <li key={course.id}>
+                <Link href={`/courses/originals/${course.id}`}>
+                  <SpotImage
+                    src={
+                      course.attributes.spots.data[0].attributes.photo.data
+                        ?.attributes.url
+                    }
+                    alt={`オリジナルコース ${course.id}`}
+                  />
+                  <span>{course.attributes.name}</span>
+                </Link>
+              </li>
+            );
+          })}
+        </SpotList>
+        <Pagination
+          className="flex justify-center"
+          current={pagination.current}
+          pageSize={pagination.pageSize}
+          total={pagination.total}
+          onChange={handlePageChange}
+        />
+      </article>
     </Layout>
   );
 };
