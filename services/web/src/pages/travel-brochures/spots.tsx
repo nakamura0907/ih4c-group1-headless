@@ -6,6 +6,7 @@ import Link from "@/components/ui/link";
 import message from "@/components/ui/message";
 import React from "react";
 import type { NextPage } from "next";
+import { Dropdown } from "antd";
 
 type State = {
   spots: Spot[];
@@ -60,13 +61,33 @@ const TravelBrochure: NextPage = () => {
             <li key={spot.id}>
               <SpotImage src={spot.photo} alt={spot.name} />
               <p>{spot.name}</p>
-              <div className="flex">
+              <div className="flex justify-between">
                 <Link href={`/spots/${spot.id}`}>
                   <span className="text-blue-500">詳細</span>
                 </Link>
-                <button onClick={() => handleRemoveBrochure(spot.id)}>
+                {/* <button onClick={() => handleRemoveBrochure(spot.id)}>
                   削除
-                </button>
+                </button> */}
+                <Dropdown
+                  placement="bottomRight"
+                  menu={{
+                    items: [
+                      {
+                        key: "1",
+                        label: "削除",
+                        onClick: () => handleRemoveBrochure(spot.id),
+                        danger: true,
+                      },
+                    ],
+                  }}
+                >
+                  <a
+                    className="cursor-pointer"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    :
+                  </a>
+                </Dropdown>
               </div>
             </li>
           );

@@ -135,7 +135,7 @@ const Home: NextPage = () => {
           ))}
         </SpotList>
         <Pagination
-          className="mb-7 flex justify-center"
+          className="flex justify-center"
           current={pagination.current}
           pageSize={pagination.pageSize}
           showSizeChanger={false}

@@ -12,6 +12,8 @@ import Layout from "@/components/template/layout";
 import message from "@/components/ui/message";
 import React from "react";
 import type { NextPage } from "next";
+import Headline from "@/components/module/headline";
+import Typography from "@/components/ui/typography";
 
 type State = {
   spot?: StrapiSpot;
@@ -96,33 +98,54 @@ const SpotDetail: NextPage = () => {
         alt={spot.attributes.name}
         noRounded
       />
-      <h2>{spot.attributes.name}</h2>
 
-      <p>{spot.attributes.description}</p>
+      <Typography className="text-base">
+        <Headline className="!my-10 text-center">
+          <span className="leading-[3.5rem] pb-1 border-b-4 border-black">
+            {spot.attributes.name}
+          </span>
+        </Headline>
 
-      <div>
-        <p>{spot.attributes.address}</p>
-        <p>{spot.attributes.postCode}</p>
-        <p>{spot.attributes.contact}</p>
-        <p>{spot.attributes.businessHours}</p>
-        <p>
-          {spot.attributes.categories.data.map((category) => {
-            return category.attributes.name;
-          })}
-        </p>
-        <p>
-          {spot.attributes.holidayIds.data.map((holiday) => {
-            return holiday.attributes.name;
-          })}
-        </p>
-      </div>
+        <Typography.Paragraph>
+          {spot.attributes.description}
+        </Typography.Paragraph>
 
-      <p>
-        {spot.attributes.latitude}
-        {spot.attributes.longitude}
-      </p>
+        <Typography.Paragraph>
+          <div>
+            <Typography.Text className="mr-1">
+              &#12306;{spot.attributes.postCode}
+            </Typography.Text>
+            <Typography.Text>{spot.attributes.address}</Typography.Text>
+          </div>
+          <div>
+            <Typography.Text className="mr-1">お問い合わせ先:</Typography.Text>
+            <Typography.Text>{spot.attributes.contact}</Typography.Text>
+          </div>
+        </Typography.Paragraph>
 
-      <PrimaryButton onClick={handleToggleBrochure}>
+        <Typography.Paragraph>
+          <div>
+            <Typography.Text className="mr-1">営業日:</Typography.Text>
+            <Typography.Text>{spot.attributes.businessHours}</Typography.Text>
+          </div>
+          <div>
+            <Typography.Text className="mr-1">定休日:</Typography.Text>
+            <Typography.Text>
+              {spot.attributes.holidayIds.data.map((holiday, index) => {
+                return index === 0
+                  ? holiday.attributes.name
+                  : `, ${holiday.attributes.name}`;
+              })}
+            </Typography.Text>
+          </div>
+        </Typography.Paragraph>
+      </Typography>
+
+      <PrimaryButton
+        className="flex mx-auto"
+        size="large"
+        onClick={handleToggleBrochure}
+      >
         {isAddedBrochure ? "旅のしおりから削除" : "旅のしおりに追加"}
       </PrimaryButton>
     </Layout>
