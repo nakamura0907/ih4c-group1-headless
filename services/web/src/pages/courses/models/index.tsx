@@ -59,6 +59,8 @@ const ModelCourseList: NextPage = () => {
                     src={
                       course.attributes.spots.data[0].attributes.photo.data
                         ?.attributes.url
+                        ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${course.attributes.spots.data[0].attributes.photo.data?.attributes.url}`
+                        : undefined
                     }
                     alt={`モデルコース ${course.id}`}
                   />

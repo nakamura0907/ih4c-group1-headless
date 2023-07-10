@@ -50,7 +50,8 @@ export const translateStrapiSpotToSpot = (spot: StrapiSpot): Spot => ({
     name: spot.attributes.name,
     description: spot.attributes.description,
     categories: spot.attributes.categories.data.map(category => category.attributes.name),
-    photo: spot.attributes.photo.data?.attributes.url ?? "",
+    photo: spot.attributes.photo.data?.attributes.url ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${spot.attributes.photo.data?.attributes.url}`
+    : "",
     geometry: {
         location: {
             lat: spot.attributes.latitude ?? 0,

@@ -126,7 +126,11 @@ const Home: NextPage = () => {
             <li key={spot.id}>
               <Link href={`/spots/${spot.id}`}>
                 <SpotImage
-                  src={spot.attributes.photo.data?.attributes.url}
+                  src={
+                    spot.attributes.photo.data?.attributes.url
+                      ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${spot.attributes.photo.data?.attributes.url}`
+                      : undefined
+                  }
                   alt={spot.attributes.name}
                 />
                 <span>{spot.attributes.name}</span>

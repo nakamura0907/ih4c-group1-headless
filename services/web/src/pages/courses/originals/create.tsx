@@ -194,7 +194,11 @@ const OriginalCourseCreate: NextPage = () => {
               >
                 <SelectBadge index={index + 1}>
                   <SpotImage
-                    src={spot.attributes.photo.data?.attributes.url}
+                    src={
+                      spot.attributes.photo.data?.attributes.url
+                        ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${spot.attributes.photo.data?.attributes.url}`
+                        : undefined
+                    }
                     alt={spot.attributes.name}
                   />
                 </SelectBadge>

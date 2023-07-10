@@ -67,9 +67,6 @@ const TravelBrochure: NextPage = () => {
                 <Link href={`/spots/${spot.id}`}>
                   <span className="text-blue-500">詳細</span>
                 </Link>
-                {/* <button onClick={() => handleRemoveBrochure(spot.id)}>
-                  削除
-                </button> */}
                 <Dropdown
                   placement="bottomRight"
                   menu={{
