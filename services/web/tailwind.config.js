@@ -7,6 +7,12 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    colors: {
+      back: "#E7FFE3",
+      white: "#FFF",
+      start: "#FFD700",
+    },
+    boxShadow: { box: "4px 5px 6px #888" },
   },
   plugins: [],
 };

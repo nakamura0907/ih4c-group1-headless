@@ -60,22 +60,45 @@ const ModelCourseDetail: NextPage = () => {
   if (!course) return null;
   return (
     <Layout>
-      <article>
-        <Headline className="text-center">{course.attributes.name}</Headline>
-        {course.attributes.spots.data.map((spot) => (
-          <div key={spot.id}>
-            <SpotImage
-              src={
-                spot.attributes.photo.data?.attributes.url
-                  ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${spot.attributes.photo.data?.attributes.url}`
-                  : undefined
-              }
-              alt={spot.attributes.name}
-            />
-            <span>{spot.attributes.name}</span>
+      <div className="bg-white max-w-xl mx-auto my-0 py-4 block">
+        <article className="w-11/12 mx-auto my-0">
+          <Headline className="text-center text-2xl">
+            {course.attributes.name}
+          </Headline>
+          <div className="w-24 text-center mt-12">
+            <p className="py-2.5 px-0 bg-start rounded-xl shadow-box">
+              スタート!
+            </p>
+            <div className="w-5 h-20 mx-auto my-0 bg-start"></div>
           </div>
-        ))}
-      </article>
+          {course.attributes.spots.data.map((spot) => (
+            <div key={spot.id} className="flex w-full">
+              <section className="w-24 text-center">
+                <div className="rounded-xl shadow-box w-24 h-24">
+                  <SpotImage
+                    src={
+                      spot.attributes.photo.data?.attributes.url
+                        ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${spot.attributes.photo.data?.attributes.url}`
+                        : undefined
+                    }
+                    alt={spot.attributes.name}
+                  />
+                </div>
+                <div className="w-5 h-20 mx-auto my-0 bg-start"></div>
+              </section>
+
+              <div className="w-3/4 flex justify-around py-6">
+                <span className="text-center">{spot.attributes.name}</span>
+              </div>
+            </div>
+          ))}
+          <div className="w-24 text-center mb-12 block items-end">
+            <p className="py-2.5 px-0 bg-start rounded-xl shadow-box">
+              ゴール！
+            </p>
+          </div>
+        </article>
+      </div>
     </Layout>
   );
 };
