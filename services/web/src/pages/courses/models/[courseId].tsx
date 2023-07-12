@@ -131,7 +131,7 @@ const ModelCourseDetail: NextPage = () => {
           {course.attributes.spots.data.map((spot) => (
             <div key={spot.id} className="flex w-full">
               <section className="w-24 text-center">
-                <div className="rounded-xl shadow-box w-24 h-24">
+                <div className="rounded-xl shadow-box w-24 h-24 flex items-center">
                   <SpotImage
                     src={
                       spot.attributes.photo.data?.attributes.url
