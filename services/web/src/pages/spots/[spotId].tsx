@@ -14,6 +14,8 @@ import React from "react";
 import type { NextPage } from "next";
 import Headline from "@/components/module/headline";
 import Typography from "@/components/ui/typography";
+import MyMap from "@/components/ui/map";
+import { MarkerF } from "@react-google-maps/api";
 
 type State = {
   spot?: StrapiSpot;
@@ -144,6 +146,22 @@ const SpotDetail: NextPage = () => {
           </div>
         </Typography.Paragraph>
       </Typography>
+
+      <MyMap
+        mapContainerClassName="mb-4"
+        zoom={15}
+        center={{
+          lat: spot.attributes.latitude,
+          lng: spot.attributes.longitude,
+        }}
+      >
+        <MarkerF
+          position={{
+            lat: spot.attributes.latitude,
+            lng: spot.attributes.longitude,
+          }}
+        />
+      </MyMap>
 
       <PrimaryButton
         className="flex mx-auto"

@@ -11,6 +11,8 @@ import message from "@/components/ui/message";
 import React from "react";
 import type { NextPage } from "next";
 import Headline from "@/components/module/headline";
+import MyMap, { MyDirection } from "@/components/ui/map";
+import { MarkerF } from "@react-google-maps/api";
 
 type State = {
   course?: StrapiModelCourse;
@@ -57,6 +59,61 @@ const ModelCourseDetail: NextPage = () => {
     });
   }, [router]);
 
+  const renderRoute = (course: StrapiModelCourse) => {
+    const length = course.attributes.spots.data.length;
+    if (length == 1) {
+      return (
+        <MarkerF
+          position={{
+            lat: course.attributes.spots.data[0].attributes.latitude,
+            lng: course.attributes.spots.data[0].attributes.longitude,
+          }}
+          label={{
+            text: "1",
+          }}
+        />
+      );
+    }
+
+    const origin = {
+      lat: course.attributes.spots.data[0].attributes.latitude,
+      lng: course.attributes.spots.data[0].attributes.longitude,
+    };
+    const destination = {
+      lat: course.attributes.spots.data[course.attributes.spots.data.length - 1]
+        .attributes.latitude,
+      lng: course.attributes.spots.data[course.attributes.spots.data.length - 1]
+        .attributes.longitude,
+    };
+
+    const waypoints =
+      course.attributes.spots.data.length == 2
+        ? undefined
+        : course.attributes.spots.data
+            .slice(1, course.attributes.spots.data.length - 1)
+            .map((spot) => {
+              return {
+                location: {
+                  lat: spot.attributes.latitude,
+                  lng: spot.attributes.longitude,
+                },
+                stopover: true,
+              };
+            });
+
+    return (
+      <MyDirection
+        options={{
+          origin: origin,
+          destination: destination,
+          waypoints,
+          travelMode: "DRIVING" as any,
+          optimizeWaypoints: false,
+        }}
+      />
+    );
+  };
+
   if (!course) return null;
   return (
     <Layout>
@@ -98,6 +155,8 @@ const ModelCourseDetail: NextPage = () => {
             </p>
           </div>
         </article>
+
+        <MyMap>{renderRoute(course)}</MyMap>
       </div>
     </Layout>
   );
