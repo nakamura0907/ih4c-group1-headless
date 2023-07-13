@@ -22,6 +22,10 @@ export const SpotImage: React.FC<SpotImageProps> = ({
       height={1150}
       sizes={"100vw"}
       className={noRounded ? "" : "rounded-sm"}
+      style={{
+        aspectRatio: "1/1",
+        objectFit: "contain",
+      }}
       onError={() => {
         setImageSrc(DEFAULT_IMAGE);
       }}
