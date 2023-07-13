@@ -23,7 +23,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <>
       <Head>
-        <title>上越ナビ</title>
+        <title>上越観光マップ</title>
       </Head>
       <div>
         <header className="mb-7 border-b border-gray-200">

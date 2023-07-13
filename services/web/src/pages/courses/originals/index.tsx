@@ -6,16 +6,19 @@ import {
 } from "@/utils/fetcher/strapi";
 import { SpotImage, SpotList } from "@/features/spot";
 import { useRouter } from "next/router";
+import FormContainer from "@/components/module/form-container";
+import Headline from "@/components/module/headline";
+import Input from "@/components/ui/input";
 import Layout from "@/components/template/layout";
 import Link from "@/components/ui/link";
 import message from "@/components/ui/message";
 import Pagination from "@/components/ui/pagination";
 import React from "react";
 import type { NextPage } from "next";
-import Headline from "@/components/module/headline";
 
 type State = {
   courses: StrapiOriginalCourse[];
+  name: string;
   pagination: {
     current: number;
     pageSize: number;
@@ -25,6 +28,7 @@ type State = {
 
 const initialState: State = {
   courses: [],
+  name: "",
   pagination: {
     current: 1,
     pageSize: 25,
@@ -36,6 +40,7 @@ const OriginalCourseList: NextPage = () => {
   const router = useRouter();
 
   const [courses, setCourses] = React.useState(initialState.courses);
+  const [name, setName] = React.useState(initialState.name);
   const [pagination, setPagination] = React.useState(initialState.pagination);
 
   /**
@@ -45,7 +50,7 @@ const OriginalCourseList: NextPage = () => {
     (async () => {
       if (!router.isReady) return;
 
-      const { page } = router.query;
+      const { page, name } = router.query;
       const response = await fetch.get<
         StrapiGetEntriesResponse<StrapiOriginalCourse>
       >("/original-courses", {
@@ -53,6 +58,14 @@ const OriginalCourseList: NextPage = () => {
           "populate[spots][populate][0]": "photo,categories,holidayIds",
           "pagination[page]": isNaN(Number(page)) ? 1 : Number(page),
           "sort[0]": "id:desc",
+          filters: {
+            name:
+              name === initialState.name
+                ? undefined
+                : {
+                    $contains: name,
+                  },
+          },
         },
       });
 
@@ -62,6 +75,7 @@ const OriginalCourseList: NextPage = () => {
         pageSize: response.data.meta.pagination.pageSize,
         total: response.data.meta.pagination.total,
       });
+      if (name) setName(String(name));
     })().catch((error) => {
       const msg = "オリジナルコース一覧の取得に失敗しました";
       if (errorHandler(error)) {
@@ -88,6 +102,25 @@ const OriginalCourseList: NextPage = () => {
     <Layout>
       <article>
         <Headline className="text-center">オリジナルコース一覧</Headline>
+        <FormContainer className="mb-5">
+          <Input.Search
+            placeholder="検索キーワードを入力してください"
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+            onSearch={(value) => {
+              router.push(
+                {
+                  pathname: router.pathname,
+                  query: { ...router.query, name: value, page: 1 },
+                },
+                undefined,
+                { shallow: true }
+              );
+            }}
+          />
+        </FormContainer>
         <SpotList>
           {courses.map((course) => {
             return (

@@ -23,17 +23,18 @@ import Form from "@/components/ui/form";
 import Input from "@/components/ui/input";
 import message from "@/components/ui/message";
 import Pagination from "@/components/ui/pagination";
-import React from "react";
-import type { NextPage } from "next";
 import Headline from "@/components/module/headline";
 import FormContainer from "@/components/module/form-container";
 import Typography from "@/components/ui/typography";
+import React from "react";
+import type { NextPage } from "next";
 
 type RefactorResponse = StrapiGetEntriesResponse<StrapiSpot>;
 
 type State = {
   spots: StrapiSpot[];
   selectedSpots: string[];
+  name: string;
   category: string;
   pagination: {
     current: number;
@@ -45,6 +46,7 @@ type State = {
 const initialState: State = {
   spots: [],
   selectedSpots: [],
+  name: "",
   category: defaultCategory.value,
   pagination: {
     current: 1,
@@ -65,6 +67,7 @@ const OriginalCourseCreate: NextPage = () => {
   const [selectedSpots, setSelectedSpots] = React.useState(
     initialState.selectedSpots
   );
+  const [name, setName] = React.useState(initialState.name);
   const [category, setCategory] = React.useState(initialState.category);
   const [pagination, setPagination] = React.useState(initialState.pagination);
 
@@ -75,7 +78,7 @@ const OriginalCourseCreate: NextPage = () => {
     (async () => {
       if (!router.isReady) return;
 
-      const { page, category } = router.query;
+      const { page, category, name } = router.query;
       const response = await fetch.get<RefactorResponse>("/spots", {
         params: {
           populate: "photo,categories,holidayIds",
@@ -89,11 +92,18 @@ const OriginalCourseCreate: NextPage = () => {
                       $eq: category,
                     },
                   },
+            name:
+              name === initialState.name
+                ? undefined
+                : {
+                    $contains: name,
+                  },
           },
         },
       });
       setSpots(response.data.data);
       if (category) setCategory(category.toString());
+      if (name) setName(name.toString());
       setPagination({
         current: response.data.meta.pagination.page,
         pageSize: response.data.meta.pagination.pageSize,
@@ -152,17 +162,6 @@ const OriginalCourseCreate: NextPage = () => {
     router.push(`/courses/originals/${response.data.data.id}`);
   };
 
-  const handleCategoryChange = (value: string) => {
-    router.push(
-      {
-        pathname: router.pathname,
-        query: { ...router.query, category: value, page: 1 },
-      },
-      undefined,
-      { shallow: true }
-    );
-  };
-
   const handlePageChange = (page: number) => {
     router.push(
       {
@@ -179,7 +178,29 @@ const OriginalCourseCreate: NextPage = () => {
       <article>
         <Headline className="text-center">オリジナルコース</Headline>
         <FormContainer className="mb-5">
-          <CategorySelect value={category} onChange={handleCategoryChange} />
+          <Input.Search
+            placeholder="検索キーワードを入力してください"
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+            onSearch={(value) => {
+              router.push(
+                {
+                  pathname: router.pathname,
+                  query: { ...router.query, name: value, category, page: 1 },
+                },
+                undefined,
+                { shallow: true }
+              );
+            }}
+          />
+          <CategorySelect
+            value={category}
+            onChange={(value) => {
+              setCategory(value);
+            }}
+          />
           <Typography.Text type="secondary">
             &#8251; 最大6件まで選択できます
           </Typography.Text>

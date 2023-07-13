@@ -8,6 +8,8 @@ import React from "react";
 import type { NextPage } from "next";
 import { Dropdown } from "antd";
 import Headline from "@/components/module/headline";
+import MyMap from "@/components/ui/map";
+import { MarkerF } from "@react-google-maps/api";
 
 type State = {
   spots: Spot[];
@@ -92,6 +94,21 @@ const TravelBrochure: NextPage = () => {
           );
         })}
       </SpotList>
+      <MyMap>
+        {spots.map((spot, index) => {
+          // 10件まで
+          if (index > 9) return;
+          return (
+            <MarkerF
+              key={spot.id}
+              position={{
+                lat: spot.geometry.location.lat,
+                lng: spot.geometry.location.lng,
+              }}
+            />
+          );
+        })}
+      </MyMap>
     </Layout>
   );
 };
