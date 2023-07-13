@@ -35,5 +35,5 @@ export const defaultCategory = categories[0];
 
 export type CategorySelectProps = SelectProps;
 export const CategorySelect: React.FC<CategorySelectProps> = (props) => {
-  return <Select className="w-[250px]" options={categories} {...props} />;
+  return <Select className="w-full" options={categories} {...props} />;
 };

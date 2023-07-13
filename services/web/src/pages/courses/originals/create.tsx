@@ -4,11 +4,9 @@ import {
   fetch,
 } from "@/utils/fetcher/strapi";
 import { PrimaryButton } from "@/components/ui/button";
-import { translateStrapiSpotToSpot } from "@/features/spot/api/strapi";
 import { useRouter } from "next/router";
 import {
   CategorySelect,
-  Spot,
   SpotImage,
   SpotList,
   defaultCategory,
@@ -25,14 +23,18 @@ import Form from "@/components/ui/form";
 import Input from "@/components/ui/input";
 import message from "@/components/ui/message";
 import Pagination from "@/components/ui/pagination";
+import Headline from "@/components/module/headline";
+import FormContainer from "@/components/module/form-container";
+import Typography from "@/components/ui/typography";
 import React from "react";
 import type { NextPage } from "next";
 
 type RefactorResponse = StrapiGetEntriesResponse<StrapiSpot>;
 
 type State = {
-  spots: Spot[];
+  spots: StrapiSpot[];
   selectedSpots: string[];
+  name: string;
   category: string;
   pagination: {
     current: number;
@@ -44,6 +46,7 @@ type State = {
 const initialState: State = {
   spots: [],
   selectedSpots: [],
+  name: "",
   category: defaultCategory.value,
   pagination: {
     current: 1,
@@ -64,6 +67,7 @@ const OriginalCourseCreate: NextPage = () => {
   const [selectedSpots, setSelectedSpots] = React.useState(
     initialState.selectedSpots
   );
+  const [name, setName] = React.useState(initialState.name);
   const [category, setCategory] = React.useState(initialState.category);
   const [pagination, setPagination] = React.useState(initialState.pagination);
 
@@ -74,13 +78,13 @@ const OriginalCourseCreate: NextPage = () => {
     (async () => {
       if (!router.isReady) return;
 
-      const { page, category } = router.query;
+      const { page, category, name } = router.query;
       const response = await fetch.get<RefactorResponse>("/spots", {
         params: {
-          populate: "photo,category",
+          populate: "photo,categories,holidayIds",
           "pagination[page]": isNaN(Number(page)) ? 1 : Number(page),
           filters: {
-            category:
+            categories:
               category === "*"
                 ? undefined
                 : {
@@ -88,13 +92,18 @@ const OriginalCourseCreate: NextPage = () => {
                       $eq: category,
                     },
                   },
+            name:
+              name === initialState.name
+                ? undefined
+                : {
+                    $contains: name,
+                  },
           },
         },
       });
-      const spots = response.data.data.map(translateStrapiSpotToSpot);
-
-      setSpots(spots);
+      setSpots(response.data.data);
       if (category) setCategory(category.toString());
+      if (name) setName(name.toString());
       setPagination({
         current: response.data.meta.pagination.page,
         pageSize: response.data.meta.pagination.pageSize,
@@ -117,11 +126,18 @@ const OriginalCourseCreate: NextPage = () => {
   const toggleSpotSelection = (spotId: string) => {
     // selectedSpotsにspotIdが含まれていれば、selectedSpotsからspotIdを削除する
     // なければ、selectedSpotsにspotIdを追加する
-    const newSelectedSpots = selectedSpots.includes(spotId)
-      ? selectedSpots.filter((selectedSpot) => selectedSpot != spotId)
-      : [...selectedSpots, spotId];
+    if (selectedSpots.includes(spotId)) {
+      setSelectedSpots(
+        selectedSpots.filter((selectedSpot) => selectedSpot != spotId)
+      );
+    } else {
+      if (selectedSpots.length >= 6) {
+        message.info("最大経路数は6件です");
+        return;
+      }
 
-    setSelectedSpots(newSelectedSpots);
+      setSelectedSpots([...selectedSpots, spotId]);
+    }
   };
 
   /**
@@ -146,17 +162,6 @@ const OriginalCourseCreate: NextPage = () => {
     router.push(`/courses/originals/${response.data.data.id}`);
   };
 
-  const handleCategoryChange = (value: string) => {
-    router.push(
-      {
-        pathname: router.pathname,
-        query: { ...router.query, category: value, page: 1 },
-      },
-      undefined,
-      { shallow: true }
-    );
-  };
-
   const handlePageChange = (page: number) => {
     router.push(
       {
@@ -170,37 +175,98 @@ const OriginalCourseCreate: NextPage = () => {
 
   return (
     <Layout>
-      <h2>オリジナルコース</h2>
-      <CategorySelect value={category} onChange={handleCategoryChange} />
-      <SpotList>
-        {spots.map((spot) => {
-          const index = selectedSpots.indexOf(spot.id);
-          return (
-            <li key={spot.id} onClick={() => toggleSpotSelection(spot.id)}>
-              <SelectBadge index={index + 1}>
-                <SpotImage src="/no-image.png" alt={spot.name} />
-              </SelectBadge>
-              <span>{spot.name}</span>
-            </li>
-          );
-        })}
-      </SpotList>
-      <Pagination
-        current={pagination.current}
-        pageSize={pagination.pageSize}
-        total={pagination.total}
-        onChange={handlePageChange}
-      />
-      <Form form={form} onFinish={handleFinish}>
-        <Form.Item label="オリジナルコース名" name="name" required>
-          <Input placeholder="オリジナルコース名" />
-        </Form.Item>
-        <Form.Item>
-          <PrimaryButton disabled={selectedSpots.length == 0} htmlType="submit">
-            オリジナルコースの作成
-          </PrimaryButton>
-        </Form.Item>
-      </Form>
+      <article>
+        <Headline className="text-center">オリジナルコース</Headline>
+        <FormContainer className="mb-5">
+          <Input.Search
+            placeholder="検索キーワードを入力してください"
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+            onSearch={(value) => {
+              router.push(
+                {
+                  pathname: router.pathname,
+                  query: { ...router.query, name: value, category, page: 1 },
+                },
+                undefined,
+                { shallow: true }
+              );
+            }}
+          />
+          <CategorySelect
+            value={category}
+            onChange={(value) => {
+              setCategory(value);
+            }}
+          />
+          <Typography.Text type="secondary">
+            &#8251; 最大6件まで選択できます
+          </Typography.Text>
+        </FormContainer>
+        <SpotList>
+          {spots.map((spot) => {
+            const index = selectedSpots.indexOf(spot.id.toString());
+            return (
+              <li
+                key={spot.id}
+                onClick={() => toggleSpotSelection(spot.id.toString())}
+              >
+                <SelectBadge index={index + 1}>
+                  <SpotImage
+                    src={
+                      spot.attributes.photo.data?.attributes.url
+                        ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${spot.attributes.photo.data?.attributes.url}`
+                        : undefined
+                    }
+                    alt={spot.attributes.name}
+                  />
+                </SelectBadge>
+                <span>{spot.attributes.name}</span>
+              </li>
+            );
+          })}
+        </SpotList>
+        <Pagination
+          className="flex justify-center mb-4"
+          current={pagination.current}
+          pageSize={pagination.pageSize}
+          showSizeChanger={false}
+          total={pagination.total}
+          onChange={handlePageChange}
+        />
+        <FormContainer>
+          <Form form={form} layout="vertical" onFinish={handleFinish}>
+            <Form.Item
+              label="オリジナルコース名"
+              name="name"
+              required
+              rules={[
+                {
+                  required: true,
+                  message: "オリジナルコース名を入力してください",
+                },
+                {
+                  max: 50,
+                  message: "オリジナルコース名は50文字以内で入力してください",
+                },
+              ]}
+            >
+              <Input placeholder="オリジナルコース名" />
+            </Form.Item>
+            <Form.Item>
+              <PrimaryButton
+                className="flex ml-auto"
+                disabled={selectedSpots.length == 0}
+                htmlType="submit"
+              >
+                オリジナルコースの作成
+              </PrimaryButton>
+            </Form.Item>
+          </Form>
+        </FormContainer>
+      </article>
     </Layout>
   );
 };

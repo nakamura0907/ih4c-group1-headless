@@ -32,10 +32,21 @@ export type StrapiSpot = {
     attributes: {
         name: string,
         description: string,
-        latitude: number | null,
-        longitude: number | null,
-        category: {
-            data: StrapiCategory
+        latitude: number,
+        longitude: number,
+        postCode: string,
+        address: string,
+        contact: string | null,
+        businessHours: string | null,
+        categories: {
+            data: StrapiCategory[]
+        },
+        holidayIds: {
+            data: {
+                attributes: {
+                    name: string,
+                }
+            }[]
         },
         photo: {
             data: {

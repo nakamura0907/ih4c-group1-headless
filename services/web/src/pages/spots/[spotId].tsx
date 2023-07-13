@@ -1,15 +1,24 @@
-import { errorHandler } from "@/utils/fetcher/strapi";
+import {
+  fetch,
+  StrapiGetEntryResponse,
+  StrapiSpot,
+  errorHandler,
+} from "@/utils/fetcher/strapi";
 import { PrimaryButton } from "@/components/ui/button";
-import message from "@/components/ui/message";
-import { Spot, SpotImage, services } from "@/features/spot";
+import { SpotImage } from "@/features/spot";
 import { travelBrochuresSpotsStorage } from "@/utils/storage";
 import { useRouter } from "next/router";
 import Layout from "@/components/template/layout";
+import message from "@/components/ui/message";
 import React from "react";
 import type { NextPage } from "next";
+import Headline from "@/components/module/headline";
+import Typography from "@/components/ui/typography";
+import MyMap from "@/components/ui/map";
+import { MarkerF } from "@react-google-maps/api";
 
 type State = {
-  spot?: Spot;
+  spot?: StrapiSpot;
   isAddedBrochure: boolean;
 };
 
@@ -35,8 +44,15 @@ const SpotDetail: NextPage = () => {
       const spotId = router.query.spotId;
       if (!spotId) throw new Error("spotIdがありません");
 
-      const result = await services.fetchSpotById(spotId.toString());
-      setSpot(result);
+      const response = await fetch.get<StrapiGetEntryResponse<StrapiSpot>>(
+        `/spots/${spotId}`,
+        {
+          params: {
+            populate: "photo,categories,holidayIds",
+          },
+        }
+      );
+      setSpot(response.data.data);
       setIsAddedBrochure(travelBrochuresSpotsStorage.has(spotId.toString()));
     })().catch((error) => {
       const msg = "観光スポットの取得に失敗しました";
@@ -45,7 +61,7 @@ const SpotDetail: NextPage = () => {
         return;
       }
       if (error.response.status === 404) {
-        router.push("/404");
+        router.replace("/404");
         return;
       }
       message.error(error.response.data.message || msg);
@@ -79,17 +95,79 @@ const SpotDetail: NextPage = () => {
   if (!spot) return null;
   return (
     <Layout>
-      <SpotImage src={spot.photo} alt={spot.name} noRounded />
-      <h2>{spot.name}</h2>
+      <SpotImage
+        src={
+          spot.attributes.photo.data?.attributes.url
+            ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${spot.attributes.photo.data?.attributes.url}`
+            : undefined
+        }
+        alt={spot.attributes.name}
+        noRounded
+      />
 
-      <p>{spot.description}</p>
+      <Typography className="text-base">
+        <Headline className="!my-10 text-center">
+          <span className="leading-[3.5rem] pb-1 border-b-4 border-black">
+            {spot.attributes.name}
+          </span>
+        </Headline>
 
-      <p>
-        {spot.geometry.location.lat}
-        {spot.geometry.location.lng}
-      </p>
+        <Typography.Paragraph>
+          {spot.attributes.description}
+        </Typography.Paragraph>
 
-      <PrimaryButton onClick={handleToggleBrochure}>
+        <Typography.Paragraph>
+          <div>
+            <Typography.Text className="mr-1">
+              &#12306;{spot.attributes.postCode}
+            </Typography.Text>
+            <Typography.Text>{spot.attributes.address}</Typography.Text>
+          </div>
+          <div>
+            <Typography.Text className="mr-1">お問い合わせ先:</Typography.Text>
+            <Typography.Text>{spot.attributes.contact}</Typography.Text>
+          </div>
+        </Typography.Paragraph>
+
+        <Typography.Paragraph>
+          <div>
+            <Typography.Text className="mr-1">営業日:</Typography.Text>
+            <Typography.Text>{spot.attributes.businessHours}</Typography.Text>
+          </div>
+          <div>
+            <Typography.Text className="mr-1">定休日:</Typography.Text>
+            <Typography.Text>
+              {spot.attributes.holidayIds.data.map((holiday, index) => {
+                return index === 0
+                  ? holiday.attributes.name
+                  : `, ${holiday.attributes.name}`;
+              })}
+            </Typography.Text>
+          </div>
+        </Typography.Paragraph>
+      </Typography>
+
+      <MyMap
+        mapContainerClassName="mb-4"
+        zoom={15}
+        center={{
+          lat: spot.attributes.latitude,
+          lng: spot.attributes.longitude,
+        }}
+      >
+        <MarkerF
+          position={{
+            lat: spot.attributes.latitude,
+            lng: spot.attributes.longitude,
+          }}
+        />
+      </MyMap>
+
+      <PrimaryButton
+        className="flex mx-auto"
+        size="large"
+        onClick={handleToggleBrochure}
+      >
         {isAddedBrochure ? "旅のしおりから削除" : "旅のしおりに追加"}
       </PrimaryButton>
     </Layout>

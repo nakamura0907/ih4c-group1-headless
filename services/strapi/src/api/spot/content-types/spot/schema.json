@@ -19,12 +19,6 @@
     "description": {
       "type": "text"
     },
-    "category": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::category.category",
-      "inversedBy": "categoryId"
-    },
     "spot_id_originals": {
       "type": "relation",
       "relation": "manyToMany",
@@ -40,16 +34,42 @@
       ]
     },
     "latitude": {
-      "type": "decimal"
+      "type": "float",
+      "required": true
     },
     "longitude": {
-      "type": "decimal"
+      "type": "float",
+      "required": true
     },
     "spotIds": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::model-course.model-course",
       "inversedBy": "spots"
+    },
+    "postCode": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "contact": {
+      "type": "string"
+    },
+    "businessHours": {
+      "type": "string"
+    },
+    "holidayIds": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::holiday.holiday",
+      "mappedBy": "spotIds"
+    },
+    "categories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::category.category",
+      "mappedBy": "categoryIds"
     }
   }
 }

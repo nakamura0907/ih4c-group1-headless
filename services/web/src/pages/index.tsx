@@ -1,9 +1,7 @@
 import { fetch } from "@/utils/fetcher/strapi";
-import { translateStrapiSpotToSpot } from "@/features/spot/api/strapi";
 import { useRouter } from "next/router";
 import {
   CategorySelect,
-  Spot,
   SpotImage,
   SpotList,
   defaultCategory,
@@ -13,17 +11,21 @@ import {
   StrapiSpot,
   errorHandler,
 } from "@/utils/fetcher/strapi";
+import FormContainer from "@/components/module/form-container";
+import Headline from "@/components/module/headline";
 import Layout from "@/components/template/layout";
 import Link from "@/components/ui/link";
 import message from "@/components/ui/message";
 import Pagination from "@/components/ui/pagination";
+import Input from "@/components/ui/input";
 import React from "react";
 import type { NextPage } from "next";
 
 type RefactorResponse = StrapiGetEntriesResponse<StrapiSpot>;
 
 type State = {
-  spots: Spot[];
+  spots: StrapiSpot[];
+  name: string;
   category: string;
   pagination: {
     current: number;
@@ -34,6 +36,7 @@ type State = {
 
 const initialState: State = {
   spots: [],
+  name: "",
   category: defaultCategory.value,
   pagination: {
     current: 1,
@@ -46,6 +49,7 @@ const Home: NextPage = () => {
   const router = useRouter();
 
   const [spots, setSpots] = React.useState(initialState.spots);
+  const [name, setName] = React.useState(initialState.name);
   const [category, setCategory] = React.useState(initialState.category);
   const [pagination, setPagination] = React.useState(initialState.pagination);
 
@@ -56,14 +60,13 @@ const Home: NextPage = () => {
     (async () => {
       if (!router.isReady) return;
 
-      // TODO: features移動
-      const { page, category } = router.query;
+      const { page, category, name } = router.query;
       const response = await fetch.get<RefactorResponse>("/spots", {
         params: {
-          populate: "photo,category",
+          populate: "photo,categories,holidayIds",
           "pagination[page]": isNaN(Number(page)) ? 1 : Number(page),
           filters: {
-            category:
+            categories:
               category === "*"
                 ? undefined
                 : {
@@ -71,13 +74,19 @@ const Home: NextPage = () => {
                       $eq: category,
                     },
                   },
+            name:
+              name === initialState.name
+                ? undefined
+                : {
+                    $contains: name,
+                  },
           },
         },
       });
-      const spots = response.data.data.map(translateStrapiSpotToSpot);
 
-      setSpots(spots);
+      setSpots(response.data.data);
       if (category) setCategory(category.toString());
+      if (name) setName(name.toString());
       setPagination({
         current: response.data.meta.pagination.page,
         pageSize: response.data.meta.pagination.pageSize,
@@ -94,17 +103,6 @@ const Home: NextPage = () => {
     });
   }, [router]);
 
-  const handleCategoryChange = (value: any) => {
-    router.push(
-      {
-        pathname: router.pathname,
-        query: { ...router.query, category: value, page: 1 },
-      },
-      undefined,
-      { shallow: true }
-    );
-  };
-
   const handlePageChange = (page: number) => {
     router.push(
       {
@@ -119,21 +117,54 @@ const Home: NextPage = () => {
   return (
     <Layout>
       <article>
-        <h2>観光スポット一覧</h2>
-        <CategorySelect value={category} onChange={handleCategoryChange} />
+        <Headline className="text-center">観光スポット一覧</Headline>
+        <FormContainer className="mb-5">
+          <Input.Search
+            placeholder="検索キーワードを入力してください"
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+            onSearch={(value) => {
+              router.push(
+                {
+                  pathname: router.pathname,
+                  query: { ...router.query, name: value, category, page: 1 },
+                },
+                undefined,
+                { shallow: true }
+              );
+            }}
+          />
+          <CategorySelect
+            value={category}
+            onChange={(value) => {
+              setCategory(value);
+            }}
+          />
+        </FormContainer>
         <SpotList>
           {spots.map((spot) => (
             <li key={spot.id}>
               <Link href={`/spots/${spot.id}`}>
-                <SpotImage src={spot.photo} alt={spot.name} />
-                <span>{spot.name}</span>
+                <SpotImage
+                  src={
+                    spot.attributes.photo.data?.attributes.url
+                      ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${spot.attributes.photo.data?.attributes.url}`
+                      : undefined
+                  }
+                  alt={spot.attributes.name}
+                />
+                <span>{spot.attributes.name}</span>
               </Link>
             </li>
           ))}
         </SpotList>
         <Pagination
+          className="flex justify-center"
           current={pagination.current}
           pageSize={pagination.pageSize}
+          showSizeChanger={false}
           total={pagination.total}
           onChange={handlePageChange}
         />

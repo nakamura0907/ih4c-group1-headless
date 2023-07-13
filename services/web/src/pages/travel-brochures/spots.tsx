@@ -6,6 +6,10 @@ import Link from "@/components/ui/link";
 import message from "@/components/ui/message";
 import React from "react";
 import type { NextPage } from "next";
+import { Dropdown } from "antd";
+import Headline from "@/components/module/headline";
+import MyMap from "@/components/ui/map";
+import { MarkerF } from "@react-google-maps/api";
 
 type State = {
   spots: Spot[];
@@ -54,24 +58,57 @@ const TravelBrochure: NextPage = () => {
 
   return (
     <Layout>
+      <Headline className="text-center">旅のしおり</Headline>
       <SpotList>
         {spots.map((spot) => {
           return (
             <li key={spot.id}>
               <SpotImage src={spot.photo} alt={spot.name} />
               <p>{spot.name}</p>
-              <div className="flex">
+              <div className="flex justify-between">
                 <Link href={`/spots/${spot.id}`}>
                   <span className="text-blue-500">詳細</span>
                 </Link>
-                <button onClick={() => handleRemoveBrochure(spot.id)}>
-                  削除
-                </button>
+                <Dropdown
+                  placement="bottomRight"
+                  menu={{
+                    items: [
+                      {
+                        key: "1",
+                        label: "削除",
+                        onClick: () => handleRemoveBrochure(spot.id),
+                        danger: true,
+                      },
+                    ],
+                  }}
+                >
+                  <a
+                    className="cursor-pointer"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    :
+                  </a>
+                </Dropdown>
               </div>
             </li>
           );
         })}
       </SpotList>
+      <MyMap>
+        {spots.map((spot, index) => {
+          // 10件まで
+          if (index > 9) return;
+          return (
+            <MarkerF
+              key={spot.id}
+              position={{
+                lat: spot.geometry.location.lat,
+                lng: spot.geometry.location.lng,
+              }}
+            />
+          );
+        })}
+      </MyMap>
     </Layout>
   );
 };

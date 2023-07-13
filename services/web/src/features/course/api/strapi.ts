@@ -7,7 +7,7 @@ import { translateStrapiSpotToSpot } from "../../spot/api/strapi";
 export const externalCourseApi = (): CourseApi => {
     const fetchModelCourseList = async (): Promise<Course[]> => {
 
-        const response = await axios.get<StrapiGetEntriesResponse<StrapiModelCourse>>(`${strapiBaseUrl}/model-courses?populate[spots][populate][0]=photo,category`, {
+        const response = await axios.get<StrapiGetEntriesResponse<StrapiModelCourse>>(`${strapiBaseUrl}/model-courses?populate[spots][populate][0]=photo,categories,holidayIds`, {
             headers: {
                 Authorization: `Bearer ${strapiToken}`
             }

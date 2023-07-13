@@ -16,11 +16,11 @@
       "type": "string",
       "required": true
     },
-    "categoryId": {
+    "categoryIds": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToMany",
       "target": "api::spot.spot",
-      "mappedBy": "category"
+      "inversedBy": "categories"
     }
   }
 }

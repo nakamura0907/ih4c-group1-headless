@@ -1,14 +1,19 @@
-import { Course, services } from "@/features/course";
-import { errorHandler } from "@/utils/fetcher/strapi";
+import {
+  fetch,
+  StrapiModelCourse,
+  errorHandler,
+  StrapiGetEntriesResponse,
+} from "@/utils/fetcher/strapi";
 import { SpotImage, SpotList } from "@/features/spot";
 import Layout from "@/components/template/layout";
 import Link from "@/components/ui/link";
 import message from "@/components/ui/message";
 import React from "react";
 import type { NextPage } from "next";
+import Headline from "@/components/module/headline";
 
 type State = {
-  courses: Course[];
+  courses: StrapiModelCourse[];
 };
 
 const initialState: State = {
@@ -23,8 +28,14 @@ const ModelCourseList: NextPage = () => {
    */
   React.useEffect(() => {
     (async () => {
-      const result = await services.fetchModelCourseList();
-      setCourses(result);
+      const response = await fetch.get<
+        StrapiGetEntriesResponse<StrapiModelCourse>
+      >("/model-courses", {
+        params: {
+          "populate[spots][populate][0]": "photo,categories,holidayIds",
+        },
+      });
+      setCourses(response.data.data);
     })().catch((error) => {
       const msg = "モデルコース一覧の取得に失敗しました";
       if (errorHandler(error)) {
@@ -37,25 +48,29 @@ const ModelCourseList: NextPage = () => {
 
   return (
     <Layout>
-      <h2>モデルコース一覧</h2>
-      <SpotList>
-        {courses.map((course) => {
-          return (
-            <li key={course.id}>
-              <Link href={`/courses/models/${course.id}`}>
-                <SpotImage
-                  src="/no-image.png"
-                  alt={`モデルコース ${course.id}`}
-                />
-                <span>
-                  {course.route.map((spot) => spot.name).join("→")}
-                  （本来はモデルコース名）
-                </span>
-              </Link>
-            </li>
-          );
-        })}
-      </SpotList>
+      <article>
+        <Headline className="text-center">モデルコース一覧</Headline>
+        <SpotList>
+          {courses.map((course) => {
+            return (
+              <li key={course.id}>
+                <Link href={`/courses/models/${course.id}`}>
+                  <SpotImage
+                    src={
+                      course.attributes.spots.data[0].attributes.photo.data
+                        ?.attributes.url
+                        ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${course.attributes.spots.data[0].attributes.photo.data?.attributes.url}`
+                        : undefined
+                    }
+                    alt={`モデルコース ${course.id}`}
+                  />
+                  <span>{course.attributes.name}</span>
+                </Link>
+              </li>
+            );
+          })}
+        </SpotList>
+      </article>
     </Layout>
   );
 };
