@@ -9,12 +9,12 @@
     "build": "strapi build",
     "strapi": "strapi"
   },
-  "devDependencies": {},
   "dependencies": {
-    "@strapi/strapi": "4.11.5",
-    "@strapi/plugin-users-permissions": "4.11.5",
     "@strapi/plugin-i18n": "4.11.5",
-    "mysql": "2.18.1"
+    "@strapi/plugin-users-permissions": "4.11.5",
+    "@strapi/strapi": "4.11.5",
+    "mysql": "2.18.1",
+    "mysql2": "^3.5.1"
   },
   "author": {
     "name": "A Strapi developer"
@@ -26,5 +26,8 @@
     "node": ">=14.19.1 <=18.x.x",
     "npm": ">=6.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^5.88.1"
+  }
 }

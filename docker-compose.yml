@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  # web
+  # web:
+
+  # admin
+  admin:
+    build:
+      context: ./apps/admin
+    tty: true
+    volumes:
+      - ./apps/admin:/app
+      - /app/.cache
+      - /app/node_modules
+      - /app/dist
+      - /app/build
+    environment:
+      DATABASE_CLIENT: mysql2
+      DATABASE_HOST: mysql
+      DATABASE_PORT: 3306
+      DATABASE_NAME: myapp
+      DATABASE_USERNAME: username
+      DATABASE_PASSWORD: password
+    command: [ "sh", "-c", "npm run develop" ]
+    ports:
+      - 1337:1337
+    depends_on:
+      - mysql
+
+  # mysql
+  mysql:
+    image: mysql:8.0-debian
+    ports:
+      - 3306:3306
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: myapp
+      MYSQL_USER: username
+      MYSQL_PASSWORD: password
+      TZ: "Asia/Tokyo"
+    volumes:
+      - ./apps/database/data:/var/lib/mysql
+      - ./apps/database/sql:/docker-entrypoint-initdb.d
