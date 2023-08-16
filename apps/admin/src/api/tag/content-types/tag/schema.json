@@ -1,37 +1,31 @@
 {
   "kind": "collectionType",
-  "collectionName": "spots",
+  "collectionName": "tags",
   "info": {
-    "singularName": "spot",
-    "pluralName": "spots",
-    "displayName": "観光スポット"
+    "singularName": "tag",
+    "pluralName": "tags",
+    "displayName": "タグ"
   },
   "options": {
     "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
-    "name": {
+    "title": {
       "type": "string",
       "required": true
-    },
-    "categories": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::category.category",
-      "mappedBy": "spots"
     },
     "model_courses": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::model-course.model-course",
-      "mappedBy": "spots"
+      "mappedBy": "tags"
     },
     "original_courses": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::original-course.original-course",
-      "mappedBy": "spots"
+      "mappedBy": "tags"
     }
   }
 }

@@ -1,7 +1,5 @@
 services:
   # web
-  # web:
-
   # admin
   admin:
     build:
@@ -9,10 +7,10 @@ services:
       target: development
     tty: true
     volumes:
-      - ./apps/admin:/app
-      - /app/node_modules
-      - /app/dist
-      - /app/build
+      - ./apps/admin:/usr/src/app
+      - /usr/src/app/node_modules
+      - /usr/src/app/dist
+      - /usr/src/app/build
     environment:
       DATABASE_CLIENT: mysql2
       DATABASE_HOST: mariadb
