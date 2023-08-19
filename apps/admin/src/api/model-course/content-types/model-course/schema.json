@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "model_courses",
+  "info": {
+    "singularName": "model-course",
+    "pluralName": "model-courses",
+    "displayName": "モデルコース"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "tags": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::tag.tag",
+      "inversedBy": "model_courses"
+    },
+    "spots": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::spot.spot",
+      "inversedBy": "model_courses"
+    }
+  }
+}

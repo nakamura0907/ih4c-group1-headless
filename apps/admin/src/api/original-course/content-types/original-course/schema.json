@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "original_courses",
+  "info": {
+    "singularName": "original-course",
+    "pluralName": "original-courses",
+    "displayName": "オリジナルコース"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "tags": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::tag.tag",
+      "inversedBy": "original_courses"
+    },
+    "spots": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::spot.spot",
+      "inversedBy": "original_courses"
+    }
+  }
+}

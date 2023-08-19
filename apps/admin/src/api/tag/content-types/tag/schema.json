@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tags",
+  "info": {
+    "singularName": "tag",
+    "pluralName": "tags",
+    "displayName": "タグ"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "model_courses": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::model-course.model-course",
+      "mappedBy": "tags"
+    },
+    "original_courses": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::original-course.original-course",
+      "mappedBy": "tags"
+    }
+  }
+}

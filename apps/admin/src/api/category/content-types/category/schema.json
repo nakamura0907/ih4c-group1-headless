@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "categories",
+  "info": {
+    "singularName": "category",
+    "pluralName": "categories",
+    "displayName": "カテゴリー"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "spots": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::spot.spot",
+      "inversedBy": "categories"
+    }
+  }
+}

@@ -1,0 +1,58 @@
+services:
+  # web
+  web:
+    image: node:current-alpine3.18
+    working_dir: /usr/src/app
+    volumes:
+      - ./apps/web:/usr/src/app
+      - /usr/src/app/node_modules
+    command:
+      - sh
+      - -c
+      - |
+        if [ ! -f ~/.exec-once ]; then
+          npm install && touch ~/.exec-once
+        fi
+        npm run dev
+    ports:
+      - 3000:3000
+
+  # admin
+  admin:
+    build:
+      context: ./apps/admin
+      target: development
+    tty: true
+    volumes:
+      - ./apps/admin:/usr/src/app
+      - /usr/src/app/node_modules
+      - /usr/src/app/dist
+      - /usr/src/app/build
+    environment:
+      DATABASE_CLIENT: mysql2
+      DATABASE_HOST: mariadb
+      DATABASE_PORT: 3306
+      DATABASE_NAME: myapp
+      DATABASE_USERNAME: username
+      DATABASE_PASSWORD: password
+    command: ["sh", "-c", "npm run develop"]
+    ports:
+      - 1337:1337
+    depends_on:
+      - mariadb
+
+  # mariadb
+  mariadb:
+    image: mariadb:11.1.1-rc
+    ports:
+      - 3306:3306
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MARIADB_ROOT_PASSWORD: password
+      MARIADB_DATABASE: myapp
+      MARIADB_USER: username
+      MARIADB_PASSWORD: password
+      TZ: "Asia/Tokyo"
+    volumes:
+      - ./apps/database/data:/var/lib/mysql
+      - ./apps/database/sql:/docker-entrypoint-initdb.d
