@@ -1,0 +1,21 @@
+name: Pull Request Workflow
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  web-test:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./apps/web
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm ci
+        working-directory: ${{env.working-directory}}
+      - run: npm run lint
+        working-directory: ${{env.working-directory}}
