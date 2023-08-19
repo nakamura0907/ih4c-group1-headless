@@ -1,5 +1,7 @@
-export const useCategory = () => {
-  return {};
+const useCategory = () => {
+  return {
+    current: "すべて"
+  };
 };
 
 export default function Home() {
