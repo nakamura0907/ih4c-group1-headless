@@ -1,5 +1,22 @@
 services:
   # web
+  web:
+    image: node:current-alpine3.18
+    working_dir: /usr/src/app
+    volumes:
+      - ./apps/web:/usr/src/app
+      - /usr/src/app/node_modules
+    command:
+      - sh
+      - -c
+      - |
+        if [ ! -f ~/.exec-once ]; then
+          npm install && touch ~/.exec-once
+        fi
+        npm run dev
+    ports:
+      - 3000:3000
+
   # admin
   admin:
     build:
