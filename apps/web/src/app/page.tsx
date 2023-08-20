@@ -1,9 +1,5 @@
-const useCategory = () => {
-  return {
-    current: "すべて"
-  };
-};
+import Page from "@/pages/index/page";
 
 export default function Home() {
-  return <main className=""></main>;
+  return <Page />
 }
