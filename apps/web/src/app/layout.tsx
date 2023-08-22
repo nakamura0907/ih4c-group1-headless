@@ -1,6 +1,7 @@
 import "./globals.css";
 
-import RootStyleRegistry from "./emotion";
+import { ApolloWrapper } from "@/providers/apollo";
+import {RootStyleRegistry} from "@/providers/mantine";
 
 export const metadata = {
   title: "Create Next App",
@@ -16,7 +17,9 @@ export default function RootLayout({
     <html lang="ja">
       <body suppressHydrationWarning={true}>
         <RootStyleRegistry>
-          {children}
+          <ApolloWrapper>
+            {children}
+          </ApolloWrapper>
         </RootStyleRegistry>
       </body>
     </html>

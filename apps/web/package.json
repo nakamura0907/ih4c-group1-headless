@@ -12,6 +12,8 @@
     "test:watch": "jest --watchAll"
   },
   "dependencies": {
+    "@apollo/client": "^3.8.0-rc.2",
+    "@apollo/experimental-nextjs-app-support": "^0.4.1",
     "@emotion/react": "^11.11.1",
     "@mantine/core": "^6.0.19",
     "@mantine/form": "^6.0.19",
