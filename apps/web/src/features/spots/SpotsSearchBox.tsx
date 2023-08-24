@@ -1,11 +1,14 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useCategorySelect } from "../categories/useCategorySelect"
 
 export const SpotsSearchBox = () => {
-    const { current, CategorySelect } = useCategorySelect("B");
+    const searchParams = useSearchParams();
 
-    console.log(current)
+    const categorySearchParam = searchParams?.get("category") ?? undefined;
+    const { current, CategorySelect } = useCategorySelect(categorySearchParam);
+
     return(
         <div>
             検索エリア
