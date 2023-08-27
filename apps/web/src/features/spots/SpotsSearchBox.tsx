@@ -10,7 +10,7 @@ type FormValues = {
 }
 
 /**
- * 観光スポット検索フォーム
+ * 観光スポット検索フォームコンポーネント
  */
 export const SpotsSearchBox = () => {
     const router = useRouter();
