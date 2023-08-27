@@ -1,1 +1,1 @@
-export { Select } from "@mantine/core"
+export { Select } from "@mantine/core";

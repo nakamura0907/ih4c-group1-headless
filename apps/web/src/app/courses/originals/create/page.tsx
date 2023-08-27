@@ -1,11 +1,9 @@
 import { SpotsSearchBox } from "@/features/spots/SpotsSearchBox";
 
-const Page = () => {
+export default function Home() {
   return (
     <article>
       <SpotsSearchBox />
     </article>
   );
-};
-
-export default Page;
+}

@@ -21,9 +21,9 @@ export default function RootLayout({
       <body suppressHydrationWarning={true}>
         <RootStyleRegistry>
           <ApolloWrapper>
-            <div className="flex flex-col min-h-screen">
+            <div className="flex min-h-screen flex-col">
               <Header />
-              <main className="px-4 max-w-5xl w-full mx-auto mb-auto">
+              <main className="mx-auto mb-auto w-full max-w-5xl px-4">
                 {children}
               </main>
               <Footer />
@@ -36,7 +36,7 @@ export default function RootLayout({
 }
 
 const Header = () => {
-  return(
+  return (
     <header className="mb-7 border-0 border-b border-solid border-gray-200">
       <div>
         <h1
@@ -46,22 +46,28 @@ const Header = () => {
             alignItems: "center",
             justifyContent: "center",
           }}
-          >
+        >
           <Link href="/">
-            <Image src="/logo.png" alt={`${siteMeta.title} ロゴ`} width={350} height={75} />
+            <Image
+              src="/logo.png"
+              alt={`${siteMeta.title} ロゴ`}
+              width={350}
+              height={75}
+              priority
+            />
           </Link>
         </h1>
       </div>
     </header>
-  )
-}
+  );
+};
 
 const Footer = () => {
-  return(
+  return (
     <footer className="mt-7 py-3">
       <small className="flex justify-center">
         Copyright &copy; 2023 {siteMeta.title}
       </small>
     </footer>
-  )
-}
+  );
+};
