@@ -12,6 +12,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "workspaces": [
+    "apps/web"
+  ],
   "devDependencies": {
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1"
