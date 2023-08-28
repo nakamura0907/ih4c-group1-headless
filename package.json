@@ -1,0 +1,22 @@
+{
+  "name": "ih4c-group1-headless",
+  "version": "1.0.0",
+  "description": "## 計画",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "prepare": "husky install"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "workspaces": [
+    "apps/web"
+  ],
+  "devDependencies": {
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.1"
+  }
+}

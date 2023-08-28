@@ -1,0 +1,10 @@
+services:
+  web:
+    command:
+      - sh
+      - -c
+      - |
+        if [ ! -f ~/.exec-once ]; then
+          npm install && touch ~/.exec-once
+        fi
+        npm run test:watch
