@@ -1,9 +1,9 @@
 import { SpotsSearchBox } from "@/features/spots/SpotsSearchBox";
 
 export default function Home() {
-  return(
+  return (
     <article>
       <SpotsSearchBox />
     </article>
   );
-};
+}

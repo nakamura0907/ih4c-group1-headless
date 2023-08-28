@@ -1,6 +1,0 @@
-{
-    "./{src,__tests__}": [
-        "next lint",
-        "prettier --write"
-    ]
-}
