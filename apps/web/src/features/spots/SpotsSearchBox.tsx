@@ -17,7 +17,7 @@ type FormValues = {
  */
 export const SpotsSearchBox = () => {
   const router = useRouter();
-  const pathname = usePathname() ?? "/";
+  const pathname = usePathname();
 
   const searchParams = useSearchParams();
   const qSearchParam = searchParams?.get("q") ?? "";
