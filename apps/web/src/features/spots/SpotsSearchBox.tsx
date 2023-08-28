@@ -1,9 +1,12 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Container } from "@/components/ui/container";
+import { Flex } from "@/components/ui/flex";
+import { TextInput } from "@/components/ui/input";
 import { useCategorySelect } from "../categories/useCategorySelect";
-import { Button, Container, Flex, TextInput } from "@mantine/core";
 import { useForm } from "@/hooks/useMantine";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type FormValues = {
   q?: string;

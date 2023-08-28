@@ -1,10 +1,10 @@
 import "./globals.css";
 
-import { siteMeta } from "@/config";
 import { ApolloWrapper } from "@/providers/apollo";
+import { Image } from "@/components/ui/image"
+import { Link } from "@/components/ui/link";
 import { RootStyleRegistry } from "@/providers/mantine";
-import Image from "next/image";
-import Link from "next/link";
+import { siteMeta } from "@/config";
 
 export const metadata = {
   title: siteMeta.title,

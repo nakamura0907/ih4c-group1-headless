@@ -1,5 +1,9 @@
-import Page from "@/pages/index/page";
+import { SpotsSearchBox } from "@/features/spots/SpotsSearchBox";
 
 export default function Home() {
-  return <Page />;
+  return(
+    <article>
+      <SpotsSearchBox />
+    </article>
+  )
 }
