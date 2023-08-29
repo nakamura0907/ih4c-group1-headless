@@ -1,3 +1,3 @@
 export default function SpotsDetail() {
-  return <></>;
+  return <article></article>;
 }
