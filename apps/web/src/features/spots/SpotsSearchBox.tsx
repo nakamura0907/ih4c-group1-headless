@@ -7,6 +7,7 @@ import { TextInput } from "@/components/ui/input";
 import { useCategorySelect } from "../categories/useCategorySelect";
 import { useForm } from "@/hooks/useMantine";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { searchParams } from "../constants";
 
 type FormValues = {
   q?: string;
@@ -19,9 +20,9 @@ export const SpotsSearchBox = () => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const searchParams = useSearchParams();
-  const qSearchParam = searchParams?.get("q") ?? "";
-  const categorySearchParam = searchParams?.get("category") ?? undefined;
+  const searchParamsObj = useSearchParams();
+  const qSearchParam = searchParams.query.get(searchParamsObj);
+  const categorySearchParam = searchParams.category.get(searchParamsObj);
 
   const { current, CategorySelect } = useCategorySelect(categorySearchParam);
 

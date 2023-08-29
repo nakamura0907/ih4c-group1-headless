@@ -1,11 +1,5 @@
-import { SpotList } from "@/features/spots/SpotList";
-import { SpotsSearchBox } from "@/features/spots/SpotsSearchBox";
+import { Page } from "@/pages/courses/originals/create";
 
 export default function CoursesOriginalsCreate() {
-  return (
-    <article>
-      <SpotsSearchBox />
-      <SpotList />
-    </article>
-  );
+  return <Page />;
 }

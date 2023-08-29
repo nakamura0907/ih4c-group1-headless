@@ -8,20 +8,6 @@ import { searchParams } from "../constants";
 import { QuerySpotsArgs, SpotEntityResponseCollection } from "@/gen/actions";
 import React from "react";
 
-/**
- * 観光スポットリストコンポーネント
- */
-export const SpotList = () => {
-  return (
-    <ListWrapper>
-      {/* リンク版 */}
-      <HomeVer />
-      {/* オリジナルコース作成版 */}
-      <CreateVer />
-    </ListWrapper>
-  );
-};
-
 const limit = 10;
 const query = gql`
   query SpotList($filters: SpotFiltersInput!, $pagination: PaginationArg!) {
@@ -44,9 +30,14 @@ type TData = {
   spots: SpotEntityResponseCollection;
 };
 type OperationVariables = QuerySpotsArgs;
+export type SpotListInnerProps = {
+  data?: TData;
+};
 
-// TODO: SpotListに移動
-const ListWrapper: React.FC<React.PropsWithChildren> = ({ children }) => {
+/**
+ * 観光スポットリストコンポーネント
+ */
+export const SpotList: React.FC<React.PropsWithChildren> = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -116,33 +107,5 @@ const ListWrapper: React.FC<React.PropsWithChildren> = ({ children }) => {
         onChange={handlePageChange}
       />
     </div>
-  );
-};
-
-/**
- * ↓ childrenへのprops pass検証用
- * TOOD: 適切な配置場所に変更し、名前も変える
- */
-type Props = {
-  data?: TData;
-};
-const HomeVer: React.FC<Props> = (props) => {
-  return (
-    <ul>
-      <li>リンクVer</li>
-      {props.data?.spots.data.map((value) => {
-        return <li key={value.id}>{value.attributes?.name}</li>;
-      })}
-    </ul>
-  );
-};
-const CreateVer: React.FC<Props> = (props) => {
-  return (
-    <ul>
-      <li>Create Ver</li>
-      {props.data?.spots.data.map((value) => {
-        return <li key={value.id}>{value.attributes?.name}</li>;
-      })}
-    </ul>
   );
 };
