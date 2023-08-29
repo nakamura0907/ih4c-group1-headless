@@ -7,6 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
+    "gen:graphql": "graphql-codegen --config codegen.yml",
     "prepare": "husky install"
   },
   "keywords": [],
@@ -16,6 +17,9 @@
     "apps/web"
   ],
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/typescript": "^4.0.1",
+    "graphql": "^16.8.0",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1"
   }

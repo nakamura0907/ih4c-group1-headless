@@ -5,6 +5,7 @@ import { notifications } from "@/components/ui/notifications";
 import { gql, useQuery } from "@apollo/client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { searchParams } from "../constants";
+import { QuerySpotsArgs, SpotEntityResponseCollection } from "@/gen/actions";
 import React from "react";
 
 /**
@@ -40,38 +41,9 @@ const query = gql`
   }
 `;
 type TData = {
-  spots: {
-    data: {
-      id: string;
-      attributes: {
-        name: string;
-      };
-    }[];
-    meta: {
-      pagination: {
-        pageCount: number;
-      };
-    };
-  };
+  spots: SpotEntityResponseCollection;
 };
-type OperationVariables = {
-  filters: {
-    and: {
-      name: {
-        contains: string;
-      };
-    }[];
-    categories?: {
-      id: {
-        eq: string;
-      };
-    };
-  };
-  pagination: {
-    limit: number;
-    start: number;
-  };
-};
+type OperationVariables = QuerySpotsArgs;
 
 // TODO: SpotListに移動
 const ListWrapper: React.FC<React.PropsWithChildren> = ({ children }) => {
@@ -159,7 +131,7 @@ const HomeVer: React.FC<Props> = (props) => {
     <ul>
       <li>リンクVer</li>
       {props.data?.spots.data.map((value) => {
-        return <li key={value.id}>{value.attributes.name}</li>;
+        return <li key={value.id}>{value.attributes?.name}</li>;
       })}
     </ul>
   );
@@ -169,7 +141,7 @@ const CreateVer: React.FC<Props> = (props) => {
     <ul>
       <li>Create Ver</li>
       {props.data?.spots.data.map((value) => {
-        return <li key={value.id}>{value.attributes.name}</li>;
+        return <li key={value.id}>{value.attributes?.name}</li>;
       })}
     </ul>
   );
