@@ -13,7 +13,16 @@ export const searchParams = {
   },
   page: {
     name: "page",
-    get: (searchParamsObj: ReadonlyURLSearchParams) =>
-      searchParamsObj.get(searchParams.page.name) ?? "1",
+    get: (searchParamsObj: ReadonlyURLSearchParams) => {
+      const pageStr = searchParamsObj.get(searchParams.page.name);
+      const page = Number(pageStr);
+      if (isNaN(page)) {
+        return 1;
+      }
+      if (page < 1) {
+        return 1;
+      }
+      return page;
+    },
   },
 } as const;
