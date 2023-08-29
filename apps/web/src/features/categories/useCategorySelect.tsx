@@ -2,6 +2,7 @@
 
 import { notifications } from "@/components/ui/notifications";
 import { Select } from "@/components/ui/select";
+import { CategoryEntityResponseCollection } from "@/gen/actions";
 import { gql, useQuery } from "@apollo/client";
 import React from "react";
 
@@ -19,14 +20,7 @@ const query = gql`
 `;
 
 type TData = {
-  categories: {
-    data: {
-      id: string;
-      attributes: {
-        title: string;
-      };
-    }[];
-  };
+  categories: CategoryEntityResponseCollection;
 };
 
 /**
@@ -62,7 +56,7 @@ export const useCategorySelect = (initialValue?: string) => {
       <Select
         placeholder="カテゴリー選択なし"
         allowDeselect
-        data={items}
+        data={items ?? []}
         value={current}
         onChange={(value) => {
           setCurrent(value ?? undefined);
@@ -81,8 +75,8 @@ const toSelectItems = (data: TData) => {
   return data.categories.data.map((category) => {
     const { id, attributes } = category;
     return {
-      value: id,
-      label: attributes.title,
+      value: id ?? "",
+      label: attributes?.title ?? "",
     };
   });
 };
