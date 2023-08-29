@@ -656,6 +656,7 @@ input SpotFiltersInput {
   categories: CategoryFiltersInput
   model_courses: ModelCourseFiltersInput
   original_courses: OriginalCourseFiltersInput
+  description: StringFilterInput
   createdAt: DateTimeFilterInput
   updatedAt: DateTimeFilterInput
   and: [SpotFiltersInput]
@@ -668,6 +669,8 @@ input SpotInput {
   categories: [ID]
   model_courses: [ID]
   original_courses: [ID]
+  description: String
+  photo: ID
 }
 
 type Spot {
@@ -687,6 +690,8 @@ type Spot {
     pagination: PaginationArg = {}
     sort: [String] = []
   ): OriginalCourseRelationResponseCollection
+  description: String
+  photo: UploadFileEntityResponse
   createdAt: DateTime
   updatedAt: DateTime
 }

@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Image } from "@/components/ui/image";
 import { Text } from "@/components/ui/text";
 import { SpotEntity } from "@/gen/actions";
+import { SpotImage } from "./SpotImage";
 
 type SpotCardProps = {
   data: SpotEntity;
@@ -10,11 +11,13 @@ export const SpotCard: React.FC<SpotCardProps> = ({ data }) => {
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Card.Section>
-        <Image
-          src={"/no-image.png"}
-          fill
+        <SpotImage
+          src={
+            data.attributes?.photo?.data?.attributes?.url
+              ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${data.attributes?.photo?.data?.attributes?.url}`
+              : undefined
+          }
           alt={data.attributes?.name ?? "観光スポット サムネイル"}
-          className="!relative"
         />
       </Card.Section>
 
