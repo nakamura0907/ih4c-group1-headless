@@ -1,5 +1,4 @@
 import { Card } from "@/components/ui/card";
-import { Image } from "@/components/ui/image";
 import { Text } from "@/components/ui/text";
 import { SpotEntity } from "@/gen/actions";
 import { SpotImage } from "./SpotImage";
