@@ -5,13 +5,13 @@ import {
   Header as MantineHeader,
   AppShell,
 } from "@mantine/core";
-import { ActionIcon } from "@/components/ui/action-icon";
-import { Drawer } from "@/components/ui/drawer";
-import { Group } from "@/components/ui/group";
-import { Image } from "@/components/ui/image";
-import { Link } from "@/components/ui/link";
-import { Flex } from "@/components/ui/flex";
-import { IconMenu2 } from "@/components/ui/icon";
+import { ActionIcon } from "@/components/ui/ActionIcon";
+import { Drawer } from "@/components/ui/Drawer";
+import { Group } from "@/components/ui/Group";
+import { Image } from "@/components/ui/Image";
+import { Link } from "@/components/ui/Link";
+import { Flex } from "@/components/ui/Flex";
+import { IconMenu2 } from "@/components/ui/Icon";
 import { siteMeta } from "@/config";
 import { useDisclosure } from "@/hooks/useMantine";
 import React from "react";

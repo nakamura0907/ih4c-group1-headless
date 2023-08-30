@@ -1,6 +1,6 @@
 "use client";
 
-import { Notifications } from "@/components/ui/notifications";
+import { Notifications } from "@/components/ui/Notifications";
 import { useEmotionCache } from "@/hooks/useMantine";
 import { CacheProvider } from "@emotion/react";
 import { MantineProvider } from "@mantine/core";

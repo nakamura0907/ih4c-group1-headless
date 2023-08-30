@@ -1,9 +1,9 @@
 "use client";
 
-import { Center } from "@/components/ui/center";
-import { notifications } from "@/components/ui/notifications";
-import { Timeline } from "@/components/ui/timeline";
-import { Title } from "@/components/ui/title";
+import { Center } from "@/components/ui/Center";
+import { notifications } from "@/components/ui/Notifications";
+import { Timeline } from "@/components/ui/Timeline";
+import { Title } from "@/components/ui/Title";
 import { ModelCourseEntityResponse, QueryModelCourseArgs } from "@/gen/actions";
 import { gql, useQuery } from "@apollo/client";
 import React from "react";

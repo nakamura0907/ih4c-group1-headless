@@ -1,13 +1,13 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Container } from "@/components/ui/container";
-import { Flex } from "@/components/ui/flex";
-import { TextInput } from "@/components/ui/input";
-import { useCategorySelect } from "../categories/useCategorySelect";
+import { Button } from "@/components/ui/Button";
+import { Container } from "@/components/ui/Container";
+import { Flex } from "@/components/ui/Flex";
+import { TextInput } from "@/components/ui/Input";
+import { useCategorySelect } from "../../categories/useCategorySelect";
 import { useForm } from "@/hooks/useMantine";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { searchParams } from "../constants";
+import { searchParams } from "../../constants";
 
 type FormValues = {
   q?: string;

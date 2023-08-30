@@ -3,7 +3,7 @@
 import { SpotCard } from "@/features/spots/SpotCard";
 import { SpotList, SpotListInnerProps } from "@/features/spots/SpotList";
 import { SpotsSearchBox } from "@/features/spots/SpotsSearchBox";
-import { Link } from "@/components/ui/link";
+import { Link } from "@/components/ui/Link";
 import React from "react";
 
 const SpotListInner: React.FC<SpotListInnerProps> = ({ data }) => {

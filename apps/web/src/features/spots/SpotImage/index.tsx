@@ -1,5 +1,5 @@
 import React from "react";
-import { Image } from "@/components/ui/image";
+import { Image } from "@/components/ui/Image";
 
 type SpotImageProps = {
   src?: string;

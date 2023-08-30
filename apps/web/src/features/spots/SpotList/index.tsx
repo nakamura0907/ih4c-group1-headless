@@ -1,10 +1,10 @@
 "use client";
 
-import { Pagination } from "@/components/ui/pagination";
-import { notifications } from "@/components/ui/notifications";
+import { Pagination } from "@/components/ui/Pagination";
+import { notifications } from "@/components/ui/Notifications";
 import { gql, useQuery } from "@apollo/client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { searchParams } from "../constants";
+import { searchParams } from "../../constants";
 import { QuerySpotsArgs, SpotEntityResponseCollection } from "@/gen/actions";
 import React from "react";
 

@@ -4,10 +4,10 @@ import { SpotCard } from "@/features/spots/SpotCard";
 import { SpotList, SpotListInnerProps } from "@/features/spots/SpotList";
 import { SpotsSearchBox } from "@/features/spots/SpotsSearchBox";
 import { useForm } from "@/hooks/useMantine";
-import { TextInput } from "@/components/ui/input";
-import { Container } from "@/components/ui/container";
-import { Button } from "@/components/ui/button";
-import { notifications } from "@/components/ui/notifications";
+import { TextInput } from "@/components/ui/Input";
+import { Container } from "@/components/ui/Container";
+import { Button } from "@/components/ui/Button";
+import { notifications } from "@/components/ui/Notifications";
 import React from "react";
 import {
   Maybe,

@@ -1,9 +1,9 @@
 "use client";
 
-import { Card } from "@/components/ui/card";
-import { Link } from "@/components/ui/link";
-import { Text } from "@/components/ui/text";
-import { notifications } from "@/components/ui/notifications";
+import { Card } from "@/components/ui/Card";
+import { Link } from "@/components/ui/Link";
+import { Text } from "@/components/ui/Text";
+import { notifications } from "@/components/ui/Notifications";
 import { SpotImage } from "@/features/spots/SpotImage";
 import { ModelCourseEntityResponseCollection } from "@/gen/actions";
 import { gql, useQuery } from "@apollo/client";

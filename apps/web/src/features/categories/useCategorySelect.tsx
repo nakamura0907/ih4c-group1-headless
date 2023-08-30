@@ -1,7 +1,7 @@
 "use client";
 
-import { notifications } from "@/components/ui/notifications";
-import { Select } from "@/components/ui/select";
+import { notifications } from "@/components/ui/Notifications";
+import { Select } from "@/components/ui/Select";
 import { CategoryEntityResponseCollection } from "@/gen/actions";
 import { gql, useQuery } from "@apollo/client";
 import React from "react";

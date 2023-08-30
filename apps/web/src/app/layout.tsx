@@ -1,9 +1,9 @@
 import "./globals.css";
 
-import { ApolloWrapper } from "@/providers/apollo";
-import { RootStyleRegistry } from "@/providers/mantine";
+import { ApolloWrapper } from "@/providers/Apollo";
+import { RootStyleRegistry } from "@/providers/Mantine";
 import { siteMeta } from "@/config";
-import { Layout } from "@/components/template/layout";
+import { Layout } from "@/components/template/Layout";
 
 export const metadata = {
   title: siteMeta.title,

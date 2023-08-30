@@ -1,7 +1,7 @@
-import { Card } from "@/components/ui/card";
-import { Text } from "@/components/ui/text";
+import { Card } from "@/components/ui/Card";
+import { Text } from "@/components/ui/Text";
 import { SpotEntity } from "@/gen/actions";
-import { SpotImage } from "./SpotImage";
+import { SpotImage } from "../SpotImage";
 
 type SpotCardProps = {
   data: SpotEntity;

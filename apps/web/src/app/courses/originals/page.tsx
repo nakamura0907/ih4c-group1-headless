@@ -1,10 +1,10 @@
 "use client";
 
-import { Card } from "@/components/ui/card";
-import { Link } from "@/components/ui/link";
-import { Text } from "@/components/ui/text";
-import { TextInput } from "@/components/ui/input";
-import { notifications } from "@/components/ui/notifications";
+import { Card } from "@/components/ui/Card";
+import { Link } from "@/components/ui/Link";
+import { Text } from "@/components/ui/Text";
+import { TextInput } from "@/components/ui/Input";
+import { notifications } from "@/components/ui/Notifications";
 import {
   OriginalCourseEntityResponseCollection,
   QueryOriginalCoursesArgs,
@@ -15,10 +15,10 @@ import { SpotImage } from "@/features/spots/SpotImage";
 import { useForm } from "@/hooks/useMantine";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { searchParams } from "@/features/constants";
-import { Container } from "@/components/ui/container";
-import { Flex } from "@/components/ui/flex";
-import { Button } from "@/components/ui/button";
-import { Pagination } from "@/components/ui/pagination";
+import { Container } from "@/components/ui/Container";
+import { Flex } from "@/components/ui/Flex";
+import { Button } from "@/components/ui/Button";
+import { Pagination } from "@/components/ui/Pagination";
 
 const query = gql`
   query OriginalCourses(
