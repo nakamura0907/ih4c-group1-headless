@@ -4,6 +4,7 @@ import { ApolloWrapper } from "@/providers/Apollo";
 import { RootStyleRegistry } from "@/providers/Mantine";
 import { siteMeta } from "@/config";
 import { Layout } from "@/components/template/Layout";
+import ProgressBar from "@/components/template/Progress";
 
 export const metadata = {
   title: siteMeta.title,
@@ -20,6 +21,7 @@ export default function RootLayout({
       <body suppressHydrationWarning={true}>
         <RootStyleRegistry>
           <ApolloWrapper>
+            <ProgressBar />
             <Layout>{children}</Layout>
           </ApolloWrapper>
         </RootStyleRegistry>
