@@ -9,6 +9,7 @@ import { SpotCardContainer, SpotImage } from "@/features/spots";
 import { ModelCourseEntityResponseCollection } from "@/gen/actions";
 import { gql, useQuery } from "@apollo/client";
 import React from "react";
+import { routes } from "@/config";
 
 const query = gql`
   query ModelCourses {
@@ -58,7 +59,10 @@ export default function CoursesModelsPage() {
           const spot = value.attributes?.spots?.data[0];
           if (!spot) return null;
           return (
-            <Link href={`/courses/models/${value.id}`} key={value.id}>
+            <Link
+              href={routes.courses.models.slug.path(value.id ?? "-1")}
+              key={value.id}
+            >
               <Card shadow="sm" padding="lg" radius="md" withBorder>
                 <Card.Section>
                   <SpotImage

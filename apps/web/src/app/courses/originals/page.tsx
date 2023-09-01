@@ -21,6 +21,7 @@ import { Pagination } from "@/components/ui/Pagination";
 import React from "react";
 import { MainContainer } from "@/components/template/MainContainer";
 import { Center } from "@/components/ui/Center";
+import { routes } from "@/config";
 
 const query = gql`
   query OriginalCourses(
@@ -149,7 +150,10 @@ export default function CoursesOriginalsPage() {
           const spot = value.attributes?.spots?.data[0];
           if (!spot) return null;
           return (
-            <Link href={`/courses/originals/${value.id}`} key={value.id}>
+            <Link
+              href={routes.courses.originals.slug.path(value.id ?? "-1")}
+              key={value.id}
+            >
               <Card shadow="sm" padding="lg" radius="md" withBorder>
                 <Card.Section>
                   <SpotImage

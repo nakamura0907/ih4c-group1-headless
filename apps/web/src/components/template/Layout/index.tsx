@@ -12,7 +12,7 @@ import { Image } from "@/components/ui/Image";
 import { Link } from "@/components/ui/Link";
 import { Flex } from "@/components/ui/Flex";
 import { IconMenu2 } from "@/components/ui/Icon";
-import { siteMeta } from "@/config";
+import { localImages, routes, siteMeta } from "@/config";
 import { useDisclosure } from "@/hooks/useMantine";
 import React from "react";
 
@@ -22,10 +22,18 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
     <>
       <Drawer opened={opened} onClose={close}>
         <Flex gap="xl" direction="column">
-          <Link href="/">HOME</Link>
-          <Link href="/courses/models">モデルコース一覧</Link>
-          <Link href="/courses/originals">オリジナルコース一覧</Link>
-          <Link href="/courses/originals/create">オリジナルコース作成</Link>
+          <Link href={routes.index.path} onClick={close}>
+            {routes.index.name}
+          </Link>
+          <Link href={routes.courses.models.index.path} onClick={close}>
+            {routes.courses.models.index.name}
+          </Link>
+          <Link href={routes.courses.originals.index.path} onClick={close}>
+            {routes.courses.originals.index.name}
+          </Link>
+          <Link href={routes.courses.originals.create.path} onClick={close}>
+            {routes.courses.originals.create.name}
+          </Link>
         </Flex>
       </Drawer>
 
@@ -55,10 +63,10 @@ const Header: React.FC<HeaderProps> = ({ onClick }) => {
   return (
     <MantineHeader height={90}>
       <Group sx={{ height: "100%" }} px={20} position="apart">
-        <Link href="/" className="flex-1">
+        <Link href={routes.index.path} className="flex-1">
           <Image
-            src="/logo.png"
-            alt={`${siteMeta.title} ロゴ`}
+            src={localImages.logo.path}
+            alt={localImages.logo.alt}
             width={300}
             height={75}
             priority

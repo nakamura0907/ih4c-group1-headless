@@ -2,6 +2,7 @@
 
 import { MainContainer } from "@/components/template/MainContainer";
 import { Link } from "@/components/ui/Link";
+import { routes } from "@/config";
 import {
   SpotCard,
   SpotCardContainer,
@@ -16,7 +17,7 @@ const SpotListInner: React.FC<SpotListInnerProps> = ({ data }) => {
     <SpotCardContainer>
       {data?.spots.data.map((value) => {
         return (
-          <Link href={`/spots/${value.id}`} key={value.id}>
+          <Link href={routes.spots.slug.path(value.id ?? "-1")} key={value.id}>
             <SpotCard data={value} />
           </Link>
         );

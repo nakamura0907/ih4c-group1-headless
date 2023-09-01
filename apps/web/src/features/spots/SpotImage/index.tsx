@@ -1,11 +1,12 @@
 import React from "react";
 import { Image } from "@/components/ui/Image";
+import { localImages } from "@/config";
 
 type SpotImageProps = {
   src?: string;
   alt: string;
 };
-const DEFAULT_IMAGE = "/no-image.png";
+const DEFAULT_IMAGE = localImages.noImage.path;
 export const SpotImage: React.FC<SpotImageProps> = ({ src, alt }) => {
   const [imageSrc, setImageSrc] = React.useState(src);
   return (
