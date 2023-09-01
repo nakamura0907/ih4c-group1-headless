@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/Card";
 import { Link } from "@/components/ui/Link";
 import { Text } from "@/components/ui/Text";
 import { notifications } from "@/components/ui/Notifications";
-import { SpotImage } from "@/features/spots/SpotImage";
+import { SpotImage } from "@/features/spots";
 import { ModelCourseEntityResponseCollection } from "@/gen/actions";
 import { gql, useQuery } from "@apollo/client";
 import React from "react";

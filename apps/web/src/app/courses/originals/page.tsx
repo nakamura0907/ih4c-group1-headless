@@ -10,8 +10,7 @@ import {
   QueryOriginalCoursesArgs,
 } from "@/gen/actions";
 import { gql, useQuery } from "@apollo/client";
-import React from "react";
-import { SpotImage } from "@/features/spots/SpotImage";
+import { SpotImage } from "@/features/spots";
 import { useForm } from "@/hooks/useMantine";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { searchParams } from "@/features/constants";
@@ -19,6 +18,7 @@ import { Container } from "@/components/ui/Container";
 import { Flex } from "@/components/ui/Flex";
 import { Button } from "@/components/ui/Button";
 import { Pagination } from "@/components/ui/Pagination";
+import React from "react";
 
 const query = gql`
   query OriginalCourses(

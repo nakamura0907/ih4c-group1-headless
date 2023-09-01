@@ -1,8 +1,5 @@
 "use client";
 
-import { SpotCard } from "@/features/spots/SpotCard";
-import { SpotList, SpotListInnerProps } from "@/features/spots/SpotList";
-import { SpotsSearchBox } from "@/features/spots/SpotsSearchBox";
 import { useForm } from "@/hooks/useMantine";
 import { TextInput } from "@/components/ui/Input";
 import { Container } from "@/components/ui/Container";
@@ -16,6 +13,12 @@ import {
 } from "@/gen/actions";
 import { gql, useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
+import {
+  SpotCard,
+  SpotList,
+  SpotListInnerProps,
+  SpotsSearchBox,
+} from "@/features/spots";
 
 type BaseSpotListInnerProps = SpotListInnerProps & {
   onClick: (id: string) => void;

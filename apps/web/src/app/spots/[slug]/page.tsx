@@ -4,7 +4,7 @@ import { Center } from "@/components/ui/Center";
 import { notifications } from "@/components/ui/Notifications";
 import { Text } from "@/components/ui/Text";
 import { Title } from "@/components/ui/Title";
-import { SpotImage } from "@/features/spots/SpotImage";
+import { SpotImage } from "@/features/spots";
 import { QuerySpotArgs, SpotEntityResponse } from "@/gen/actions";
 import { gql, useQuery } from "@apollo/client";
 import React from "react";
