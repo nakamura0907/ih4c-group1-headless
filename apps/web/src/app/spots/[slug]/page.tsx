@@ -1,5 +1,6 @@
 "use client";
 
+import { MainContainer } from "@/components/template/MainContainer";
 import { Center } from "@/components/ui/Center";
 import { notifications } from "@/components/ui/Notifications";
 import { Text } from "@/components/ui/Text";
@@ -50,8 +51,8 @@ export default function SpotsDetail({ params }: { params: { slug: string } }) {
 
   if (loading || !data) return null;
   return (
-    <article>
-      <Center>
+    <MainContainer>
+      <Center mb="lg">
         <Title order={1}>{data.spot.data?.attributes?.name}</Title>
       </Center>
       {data.spot.data?.attributes?.photo?.data?.attributes?.url && (
@@ -64,7 +65,15 @@ export default function SpotsDetail({ params }: { params: { slug: string } }) {
           alt={data.spot.data?.attributes?.name ?? "観光スポット サムネイル"}
         />
       )}
-      <Text>{data.spot.data?.attributes?.description}</Text>
-    </article>
+      <Text
+        mt={
+          data.spot.data?.attributes?.photo?.data?.attributes?.url
+            ? "lg"
+            : undefined
+        }
+      >
+        {data.spot.data?.attributes?.description}
+      </Text>
+    </MainContainer>
   );
 }

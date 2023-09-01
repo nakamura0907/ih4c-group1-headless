@@ -7,6 +7,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { searchParams } from "../../constants";
 import { QuerySpotsArgs, SpotEntityResponseCollection } from "@/gen/actions";
 import React from "react";
+import { Center } from "@/components/ui/Center";
 
 const limit = 10;
 const query = gql`
@@ -101,11 +102,13 @@ export const SpotList: React.FC<React.PropsWithChildren> = ({ children }) => {
   return (
     <div>
       <div>{childrenWithProps}</div>
-      <Pagination
-        value={pageSearchParam}
-        total={data?.spots.meta.pagination.pageCount ?? 1}
-        onChange={handlePageChange}
-      />
+      <Center mt="md">
+        <Pagination
+          value={pageSearchParam}
+          total={data?.spots.meta.pagination.pageCount ?? 1}
+          onChange={handlePageChange}
+        />
+      </Center>
     </div>
   );
 };

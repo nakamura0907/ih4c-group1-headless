@@ -41,7 +41,7 @@ export const SpotsSearchBox = () => {
   };
 
   return (
-    <Container size="xs">
+    <Container size="xs" mb="lg">
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Flex>
           <TextInput

@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/Card";
+import { SimpleGrid } from "@/components/ui/Grid";
 import { Text } from "@/components/ui/Text";
 import { SpotEntity } from "@/gen/actions";
 import { SpotImage } from "../SpotImage";
@@ -25,6 +26,19 @@ export const SpotCard: React.FC<SpotCardProps> = ({ data }) => {
   );
 };
 
-export const SpotCardContainer = () => {
-  return <></>;
+export const SpotCardContainer: React.FC<React.PropsWithChildren> = ({
+  children,
+}) => {
+  return (
+    <SimpleGrid
+      breakpoints={[
+        {
+          minWidth: "xs",
+          cols: 2,
+        },
+      ]}
+    >
+      {children}
+    </SimpleGrid>
+  );
 };

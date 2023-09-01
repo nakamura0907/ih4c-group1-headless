@@ -10,7 +10,7 @@ import {
   QueryOriginalCoursesArgs,
 } from "@/gen/actions";
 import { gql, useQuery } from "@apollo/client";
-import { SpotImage } from "@/features/spots";
+import { SpotCardContainer, SpotImage } from "@/features/spots";
 import { useForm } from "@/hooks/useMantine";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { searchParams } from "@/features/constants";
@@ -19,6 +19,8 @@ import { Flex } from "@/components/ui/Flex";
 import { Button } from "@/components/ui/Button";
 import { Pagination } from "@/components/ui/Pagination";
 import React from "react";
+import { MainContainer } from "@/components/template/MainContainer";
+import { Center } from "@/components/ui/Center";
 
 const query = gql`
   query OriginalCourses(
@@ -129,8 +131,8 @@ export default function CoursesOriginalsPage() {
 
   if (loading || !data) return null;
   return (
-    <article>
-      <Container size="xs">
+    <MainContainer>
+      <Container size="xs" mb="lg">
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <Flex>
             <TextInput
@@ -142,37 +144,37 @@ export default function CoursesOriginalsPage() {
           </Flex>
         </form>
       </Container>
-      <ul>
+      <SpotCardContainer>
         {data.originalCourses.data.map((value) => {
           const spot = value.attributes?.spots?.data[0];
           if (!spot) return null;
           return (
-            <li key={value.id}>
-              <Link href={`/courses/originals/${value.id}`}>
-                <Card shadow="sm" padding="lg" radius="md" withBorder>
-                  <Card.Section>
-                    <SpotImage
-                      src={
-                        spot.attributes?.photo?.data?.attributes?.url
-                          ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${spot.attributes?.photo?.data?.attributes?.url}`
-                          : undefined
-                      }
-                      alt={spot.attributes?.name ?? "観光スポット サムネイル"}
-                    />
-                  </Card.Section>
+            <Link href={`/courses/originals/${value.id}`} key={value.id}>
+              <Card shadow="sm" padding="lg" radius="md" withBorder>
+                <Card.Section>
+                  <SpotImage
+                    src={
+                      spot.attributes?.photo?.data?.attributes?.url
+                        ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${spot.attributes?.photo?.data?.attributes?.url}`
+                        : undefined
+                    }
+                    alt={spot.attributes?.name ?? "観光スポット サムネイル"}
+                  />
+                </Card.Section>
 
-                  <Text weight={500}>{value.attributes?.title}</Text>
-                </Card>
-              </Link>
-            </li>
+                <Text weight={500}>{value.attributes?.title}</Text>
+              </Card>
+            </Link>
           );
         })}
-      </ul>
-      <Pagination
-        value={pageSearchParam}
-        total={data?.originalCourses.meta.pagination.pageCount ?? 1}
-        onChange={handlePageChange}
-      />
-    </article>
+      </SpotCardContainer>
+      <Center mt="md">
+        <Pagination
+          value={pageSearchParam}
+          total={data?.originalCourses.meta.pagination.pageCount ?? 1}
+          onChange={handlePageChange}
+        />
+      </Center>
+    </MainContainer>
   );
 }

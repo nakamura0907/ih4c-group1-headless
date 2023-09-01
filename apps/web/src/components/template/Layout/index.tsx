@@ -30,7 +30,7 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
       </Drawer>
 
       <AppShell
-        padding="md"
+        padding="xl"
         header={<Header onClick={open} />}
         footer={<Footer />}
         styles={(theme) => ({

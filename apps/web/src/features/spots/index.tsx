@@ -1,4 +1,4 @@
-export { SpotCard } from "./SpotCard";
+export { SpotCard, SpotCardContainer } from "./SpotCard";
 export { SpotImage } from "./SpotImage";
 export type { SpotListInnerProps } from "./SpotList";
 export { SpotList } from "./SpotList";

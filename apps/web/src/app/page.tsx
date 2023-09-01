@@ -1,8 +1,10 @@
 "use client";
 
+import { MainContainer } from "@/components/template/MainContainer";
 import { Link } from "@/components/ui/Link";
 import {
   SpotCard,
+  SpotCardContainer,
   SpotList,
   SpotListInnerProps,
   SpotsSearchBox,
@@ -11,27 +13,25 @@ import React from "react";
 
 const SpotListInner: React.FC<SpotListInnerProps> = ({ data }) => {
   return (
-    <ul>
+    <SpotCardContainer>
       {data?.spots.data.map((value) => {
         return (
-          <li key={value.id}>
-            <Link href={`/spots/${value.id}`}>
-              <SpotCard data={value} />
-            </Link>
-          </li>
+          <Link href={`/spots/${value.id}`} key={value.id}>
+            <SpotCard data={value} />
+          </Link>
         );
       })}
-    </ul>
+    </SpotCardContainer>
   );
 };
 
 export default function Home() {
   return (
-    <article>
+    <MainContainer>
       <SpotsSearchBox />
       <SpotList>
         <SpotListInner />
       </SpotList>
-    </article>
+    </MainContainer>
   );
 }

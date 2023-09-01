@@ -1,5 +1,6 @@
 "use client";
 
+import { MainContainer } from "@/components/template/MainContainer";
 import { Center } from "@/components/ui/Center";
 import { notifications } from "@/components/ui/Notifications";
 import { Timeline } from "@/components/ui/Timeline";
@@ -64,8 +65,8 @@ export default function CoursesOriginalsDetail({
   if (loading || !data) return null;
 
   return (
-    <article>
-      <Center>
+    <MainContainer>
+      <Center mb="lg">
         <Title order={1}>{data.originalCourse.data?.attributes?.title}</Title>
       </Center>
       <Timeline>
@@ -75,6 +76,6 @@ export default function CoursesOriginalsDetail({
           );
         })}
       </Timeline>
-    </article>
+    </MainContainer>
   );
 }

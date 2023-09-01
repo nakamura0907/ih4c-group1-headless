@@ -15,10 +15,13 @@ import { gql, useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import {
   SpotCard,
+  SpotCardContainer,
   SpotList,
   SpotListInnerProps,
   SpotsSearchBox,
 } from "@/features/spots";
+import { MainContainer } from "@/components/template/MainContainer";
+import { Flex } from "@/components/ui/Flex";
 
 type BaseSpotListInnerProps = SpotListInnerProps & {
   onClick: (id: string) => void;
@@ -30,17 +33,15 @@ const SpotListInner: React.FC<BaseSpotListInnerProps> = ({ data, onClick }) => {
   };
 
   return (
-    <ul>
+    <SpotCardContainer>
       {data?.spots.data.map((value) => {
         return (
-          <li key={value.id} onClick={() => handleClick(value.id)}>
-            <div>
-              <SpotCard data={value} />
-            </div>
-          </li>
+          <div key={value.id} onClick={() => handleClick(value.id)}>
+            <SpotCard data={value} />
+          </div>
         );
       })}
-    </ul>
+    </SpotCardContainer>
   );
 };
 
@@ -121,7 +122,7 @@ export default function CoursesOriginalsCreate() {
   };
 
   return (
-    <article>
+    <MainContainer>
       <SpotsSearchBox />
       <SpotList>
         <SpotListInner onClick={handleSelectSpot} />
@@ -132,13 +133,16 @@ export default function CoursesOriginalsCreate() {
             withAsterisk
             label="コース名"
             placeholder="XXコース"
+            mb="md"
             {...form.getInputProps("name")}
           />
-          <Button type="submit" disabled={selectedSpots.length == 0}>
-            オリジナルコース作成
-          </Button>
+          <Flex justify="end">
+            <Button type="submit" disabled={selectedSpots.length == 0}>
+              オリジナルコース作成
+            </Button>
+          </Flex>
         </form>
       </Container>
-    </article>
+    </MainContainer>
   );
 }

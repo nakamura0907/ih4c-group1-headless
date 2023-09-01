@@ -4,7 +4,8 @@ import { Card } from "@/components/ui/Card";
 import { Link } from "@/components/ui/Link";
 import { Text } from "@/components/ui/Text";
 import { notifications } from "@/components/ui/Notifications";
-import { SpotImage } from "@/features/spots";
+import { MainContainer } from "@/components/template/MainContainer";
+import { SpotCardContainer, SpotImage } from "@/features/spots";
 import { ModelCourseEntityResponseCollection } from "@/gen/actions";
 import { gql, useQuery } from "@apollo/client";
 import React from "react";
@@ -51,33 +52,31 @@ export default function CoursesModelsPage() {
 
   if (loading || !data) return null;
   return (
-    <article>
-      <ul>
+    <MainContainer>
+      <SpotCardContainer>
         {data.modelCourses.data.map((value) => {
           const spot = value.attributes?.spots?.data[0];
           if (!spot) return null;
           return (
-            <li key={value.id}>
-              <Link href={`/courses/models/${value.id}`}>
-                <Card shadow="sm" padding="lg" radius="md" withBorder>
-                  <Card.Section>
-                    <SpotImage
-                      src={
-                        spot.attributes?.photo?.data?.attributes?.url
-                          ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${spot.attributes?.photo?.data?.attributes?.url}`
-                          : undefined
-                      }
-                      alt={spot.attributes?.name ?? "観光スポット サムネイル"}
-                    />
-                  </Card.Section>
+            <Link href={`/courses/models/${value.id}`} key={value.id}>
+              <Card shadow="sm" padding="lg" radius="md" withBorder>
+                <Card.Section>
+                  <SpotImage
+                    src={
+                      spot.attributes?.photo?.data?.attributes?.url
+                        ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${spot.attributes?.photo?.data?.attributes?.url}`
+                        : undefined
+                    }
+                    alt={spot.attributes?.name ?? "観光スポット サムネイル"}
+                  />
+                </Card.Section>
 
-                  <Text weight={500}>{value.attributes?.title}</Text>
-                </Card>
-              </Link>
-            </li>
+                <Text weight={500}>{value.attributes?.title}</Text>
+              </Card>
+            </Link>
           );
         })}
-      </ul>
-    </article>
+      </SpotCardContainer>
+    </MainContainer>
   );
 }
