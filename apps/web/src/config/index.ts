@@ -4,12 +4,10 @@ export const siteMeta = {
   description: "上越市観光アプリケーション",
 } as const;
 
-export const generateTitle = (title: string) => `${title} | ${siteMeta.title}`;
 export const routes = {
   index: {
     path: "/",
     name: "ホーム",
-    title: generateTitle("ホーム"),
   },
   spots: {
     slug: {
@@ -21,7 +19,6 @@ export const routes = {
       index: {
         path: "/courses/models",
         name: "モデルコース一覧",
-        title: generateTitle("モデルコース一覧"),
       },
       slug: {
         path: (slug: string) => `/courses/models/${slug}`,
@@ -31,7 +28,6 @@ export const routes = {
       index: {
         path: "/courses/originals",
         name: "オリジナルコース一覧",
-        title: generateTitle("オリジナルコース一覧"),
       },
       slug: {
         path: (slug: string) => `/courses/originals/${slug}`,
@@ -39,7 +35,6 @@ export const routes = {
       create: {
         path: "/courses/originals/create",
         name: "オリジナルコース作成",
-        title: generateTitle("オリジナルコース作成"),
       },
     },
   },

@@ -7,7 +7,10 @@ import { Layout } from "@/components/template/Layout";
 import ProgressBar from "@/components/template/Progress";
 
 export const metadata = {
-  title: siteMeta.title,
+  title: {
+    default: siteMeta.title,
+    template: `%s | ${siteMeta.title}`,
+  },
   description: siteMeta.description,
 };
 
