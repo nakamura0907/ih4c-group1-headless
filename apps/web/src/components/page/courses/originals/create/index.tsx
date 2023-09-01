@@ -22,7 +22,7 @@ import {
 } from "@/features/spots";
 import { MainContainer } from "@/components/template/MainContainer";
 import { Flex } from "@/components/ui/Flex";
-import { Badge } from "@mantine/core";
+import { Badge } from "@/components/ui/Badge";
 
 type BaseSpotListInnerProps = SpotListInnerProps & {
   onClick: (id: string) => void;
