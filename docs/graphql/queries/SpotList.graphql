@@ -1,0 +1,15 @@
+query SpotList($filters: SpotFiltersInput!, $pagination: PaginationArg!) {
+  spots(filters: $filters, pagination: $pagination) {
+    data {
+      id
+      attributes {
+        name
+      }
+    }
+    meta {
+      pagination {
+        pageCount
+      }
+    }
+  }
+}

@@ -6,43 +6,11 @@ import { Link } from "@/components/ui/Link";
 import { notifications } from "@/components/ui/Notifications";
 import { Timeline } from "@/components/ui/Timeline";
 import { Title } from "@/components/ui/Title";
-import { ModelCourseEntityResponse, QueryModelCourseArgs } from "@/gen/actions";
-import { gql, useQuery } from "@apollo/client";
+import { useModelCourseQuery } from "@/gen/actions";
 import React from "react";
 
-const query = gql`
-  query ModelCourse($id: ID!) {
-    modelCourse(id: $id) {
-      data {
-        attributes {
-          title
-          spots {
-            data {
-              id
-              attributes {
-                name
-                photo {
-                  data {
-                    attributes {
-                      url
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-type TData = {
-  modelCourse: ModelCourseEntityResponse;
-};
-type OperationVariables = QueryModelCourseArgs;
-
 export function Page({ params }: { params: { slug: string } }) {
-  const { data, loading, error } = useQuery<TData, OperationVariables>(query, {
+  const { data, loading, error } = useModelCourseQuery({
     variables: {
       id: params.slug,
     },
@@ -60,10 +28,10 @@ export function Page({ params }: { params: { slug: string } }) {
   return (
     <MainContainer>
       <Center mb="lg">
-        <Title order={1}>{data.modelCourse.data?.attributes?.title}</Title>
+        <Title order={1}>{data.modelCourse?.data?.attributes?.title}</Title>
       </Center>
       <Timeline>
-        {data.modelCourse.data?.attributes?.spots?.data?.map((value) => {
+        {data.modelCourse?.data?.attributes?.spots?.data?.map((value) => {
           return (
             <Timeline.Item
               key={value.id}

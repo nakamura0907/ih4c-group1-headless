@@ -6,12 +6,7 @@ import { TextInput } from "@/components/ui/Input";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { notifications } from "@/components/ui/Notifications";
-import {
-  Maybe,
-  MutationCreateOriginalCourseArgs,
-  OriginalCourseEntityResponse,
-} from "@/gen/actions";
-import { gql, useMutation } from "@apollo/client";
+import { Maybe, useCreateOriginalCourseMutation } from "@/gen/actions";
 import { useRouter } from "next/navigation";
 import {
   SpotCard,
@@ -71,23 +66,8 @@ type FormValues = {
   name: string;
 };
 
-const mutation = gql`
-  mutation CreateOriginalCourse($data: OriginalCourseInput!) {
-    createOriginalCourse(data: $data) {
-      data {
-        id
-      }
-    }
-  }
-`;
-
-type TData = { createOriginalCourse: OriginalCourseEntityResponse };
-type OperationVariables = MutationCreateOriginalCourseArgs;
 export function Page() {
-  const [createOriginalCourse, { loading }] = useMutation<
-    TData,
-    OperationVariables
-  >(mutation);
+  const [createOriginalCourse, { loading }] = useCreateOriginalCourseMutation();
 
   const router = useRouter();
   const [selectedSpots, setSelectedSpots] = React.useState(
@@ -126,7 +106,7 @@ export function Page() {
           },
         },
       });
-      const id = result.data?.createOriginalCourse.data?.id;
+      const id = result.data?.createOriginalCourse?.data?.id;
       if (!id) throw new Error("IDが取得できませんでした");
 
       router.push(`/courses/originals/${id}`);

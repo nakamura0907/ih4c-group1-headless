@@ -2,26 +2,8 @@
 
 import { notifications } from "@/components/ui/Notifications";
 import { Select } from "@/components/ui/Select";
-import { CategoryEntityResponseCollection } from "@/gen/actions";
-import { gql, useQuery } from "@apollo/client";
+import { CategoriesQuery, useCategoriesQuery } from "@/gen/actions";
 import React from "react";
-
-const query = gql`
-  query Categories {
-    categories {
-      data {
-        id
-        attributes {
-          title
-        }
-      }
-    }
-  }
-`;
-
-type TData = {
-  categories: CategoryEntityResponseCollection;
-};
 
 /**
  * カテゴリー一覧フック
@@ -30,7 +12,7 @@ type TData = {
  */
 export const useCategorySelect = (initialValue?: string) => {
   const [current, setCurrent] = React.useState<string | undefined>(undefined);
-  const { data, loading, error } = useQuery<TData>(query);
+  const { data, loading, error } = useCategoriesQuery();
 
   const items = React.useMemo(() => {
     if (!data || loading) return [];
@@ -71,12 +53,14 @@ export const useCategorySelect = (initialValue?: string) => {
   };
 };
 
-const toSelectItems = (data: TData) => {
-  return data.categories.data.map((category) => {
-    const { id, attributes } = category;
-    return {
-      value: id ?? "",
-      label: attributes?.title ?? "",
-    };
-  });
+const toSelectItems = (data: CategoriesQuery) => {
+  return (
+    data.categories?.data.map((category) => {
+      const { id, attributes } = category;
+      return {
+        value: id ?? "",
+        label: attributes?.title ?? "",
+      };
+    }) ?? []
+  );
 };

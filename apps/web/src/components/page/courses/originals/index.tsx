@@ -5,11 +5,7 @@ import { Link } from "@/components/ui/Link";
 import { Text } from "@/components/ui/Text";
 import { TextInput } from "@/components/ui/Input";
 import { notifications } from "@/components/ui/Notifications";
-import {
-  OriginalCourseEntityResponseCollection,
-  QueryOriginalCoursesArgs,
-} from "@/gen/actions";
-import { gql, useQuery } from "@apollo/client";
+import { useOriginalCoursesQuery } from "@/gen/actions";
 import { SpotCardContainer, SpotImage } from "@/features/spots";
 import { useForm } from "@/hooks/useMantine";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -22,48 +18,6 @@ import React from "react";
 import { MainContainer } from "@/components/template/MainContainer";
 import { Center } from "@/components/ui/Center";
 import { routes } from "@/config";
-
-const query = gql`
-  query OriginalCourses(
-    $filters: OriginalCourseFiltersInput!
-    $pagination: PaginationArg!
-  ) {
-    originalCourses(
-      filters: $filters
-      sort: ["createdAt:desc"]
-      pagination: $pagination
-    ) {
-      data {
-        id
-        attributes {
-          title
-          spots(pagination: { limit: 1 }) {
-            data {
-              attributes {
-                photo {
-                  data {
-                    attributes {
-                      url
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-      meta {
-        pagination {
-          pageCount
-        }
-      }
-    }
-  }
-`;
-type TData = {
-  originalCourses: OriginalCourseEntityResponseCollection;
-};
-type OperationVariables = QueryOriginalCoursesArgs;
 
 type FormValues = {
   q?: string;
@@ -84,7 +38,7 @@ export function Page() {
     },
   });
 
-  const { data, loading, error } = useQuery<TData, OperationVariables>(query, {
+  const { data, loading, error } = useOriginalCoursesQuery({
     variables: {
       filters: {
         and: qSearchParam.split(/\s+/).map((value) => {
@@ -146,7 +100,7 @@ export function Page() {
         </form>
       </Container>
       <SpotCardContainer>
-        {data.originalCourses.data.map((value) => {
+        {data.originalCourses?.data.map((value) => {
           const spot = value.attributes?.spots?.data[0];
           if (!spot) return null;
           return (
@@ -175,7 +129,7 @@ export function Page() {
       <Center mt="md">
         <Pagination
           value={pageSearchParam}
-          total={data?.originalCourses.meta.pagination.pageCount ?? 1}
+          total={data?.originalCourses?.meta.pagination.pageCount ?? 1}
           onChange={handlePageChange}
         />
       </Center>

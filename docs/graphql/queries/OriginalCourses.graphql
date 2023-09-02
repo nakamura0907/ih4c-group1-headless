@@ -1,0 +1,36 @@
+query OriginalCourses(
+  $filters: OriginalCourseFiltersInput!
+  $pagination: PaginationArg!
+) {
+  originalCourses(
+    filters: $filters
+    sort: ["createdAt:desc"]
+    pagination: $pagination
+  ) {
+    data {
+      id
+      attributes {
+        title
+        spots(pagination: { limit: 1 }) {
+          data {
+            attributes {
+              name
+              photo {
+                data {
+                  attributes {
+                    url
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    meta {
+      pagination {
+        pageCount
+      }
+    }
+  }
+}

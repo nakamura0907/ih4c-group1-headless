@@ -1,0 +1,17 @@
+query Spot($id: ID!) {
+  spot(id: $id) {
+    data {
+      attributes {
+        name
+        description
+        photo {
+          data {
+            attributes {
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+}

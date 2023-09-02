@@ -1,0 +1,24 @@
+query ModelCourses {
+  modelCourses(sort: ["createdAt:desc"]) {
+    data {
+      id
+      attributes {
+        title
+        spots(pagination: { limit: 1 }) {
+          data {
+            attributes {
+              name
+              photo {
+                data {
+                  attributes {
+                    url
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
