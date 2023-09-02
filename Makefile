@@ -6,7 +6,6 @@ init-web:
 	@if [ ! -f apps/web/.env.local ]; then \
 		cp apps/web/.env.example apps/web/.env.local; \
 	fi
-	cd apps/web && npm install
 init-root:
 	npm install
 	npm run gen:graphql
