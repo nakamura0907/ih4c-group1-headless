@@ -6,42 +6,12 @@ import { Text } from "@/components/ui/Text";
 import { notifications } from "@/components/ui/Notifications";
 import { MainContainer } from "@/components/template/MainContainer";
 import { SpotCardContainer, SpotImage } from "@/features/spots";
-import { ModelCourseEntityResponseCollection } from "@/gen/actions";
-import { gql, useQuery } from "@apollo/client";
+import { useModelCoursesQuery } from "@/gen/actions";
 import React from "react";
 import { routes } from "@/config";
 
-const query = gql`
-  query ModelCourses {
-    modelCourses(sort: ["createdAt:desc"]) {
-      data {
-        id
-        attributes {
-          title
-          spots(pagination: { limit: 1 }) {
-            data {
-              attributes {
-                photo {
-                  data {
-                    attributes {
-                      url
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-type TData = {
-  modelCourses: ModelCourseEntityResponseCollection;
-};
-
 export function Page() {
-  const { data, loading, error } = useQuery<TData>(query);
+  const { data, loading, error } = useModelCoursesQuery({});
 
   React.useEffect(() => {
     if (!error) return;
@@ -55,7 +25,7 @@ export function Page() {
   return (
     <MainContainer>
       <SpotCardContainer>
-        {data.modelCourses.data.map((value) => {
+        {data.modelCourses?.data.map((value) => {
           const spot = value.attributes?.spots?.data[0];
           if (!spot) return null;
           return (

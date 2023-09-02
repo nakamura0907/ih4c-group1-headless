@@ -2,35 +2,17 @@
 
 import { Pagination } from "@/components/ui/Pagination";
 import { notifications } from "@/components/ui/Notifications";
-import { gql, useQuery } from "@apollo/client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { searchParams } from "../../constants";
-import { QuerySpotsArgs, SpotEntityResponseCollection } from "@/gen/actions";
-import React from "react";
+import { SpotEntityResponseCollection, useSpotListQuery } from "@/gen/actions";
 import { Center } from "@/components/ui/Center";
+import React from "react";
 
 const limit = 10;
-const query = gql`
-  query SpotList($filters: SpotFiltersInput!, $pagination: PaginationArg!) {
-    spots(filters: $filters, pagination: $pagination) {
-      data {
-        id
-        attributes {
-          name
-        }
-      }
-      meta {
-        pagination {
-          pageCount
-        }
-      }
-    }
-  }
-`;
+
 type TData = {
   spots: SpotEntityResponseCollection;
 };
-type OperationVariables = QuerySpotsArgs;
 export type SpotListInnerProps = {
   data?: TData;
 };
@@ -47,7 +29,7 @@ export const SpotList: React.FC<React.PropsWithChildren> = ({ children }) => {
   const categorySearchParam = searchParams.category.get(searchParamsObj);
   const pageSearchParam = searchParams.page.get(searchParamsObj);
 
-  const { data, loading, error } = useQuery<TData, OperationVariables>(query, {
+  const { data, loading, error } = useSpotListQuery({
     variables: {
       filters: {
         and: qSearchParam.split(/\s+/).map((value) => {
@@ -105,7 +87,7 @@ export const SpotList: React.FC<React.PropsWithChildren> = ({ children }) => {
       <Center mt="md">
         <Pagination
           value={pageSearchParam}
-          total={data?.spots.meta.pagination.pageCount ?? 1}
+          total={data?.spots?.meta.pagination.pageCount ?? 1}
           onChange={handlePageChange}
         />
       </Center>
