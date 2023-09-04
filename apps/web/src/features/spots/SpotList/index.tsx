@@ -4,7 +4,10 @@ import { Pagination } from "@/components/ui/Pagination";
 import { notifications } from "@/components/ui/Notifications";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { searchParams } from "../../constants";
-import { SpotEntityResponseCollection, useSpotListQuery } from "@/gen/actions";
+import {
+  SpotEntityResponseCollection,
+  useSpotsLookupQuery,
+} from "@/gen/actions";
 import { Center } from "@/components/ui/Center";
 import React from "react";
 
@@ -29,7 +32,7 @@ export const SpotList: React.FC<React.PropsWithChildren> = ({ children }) => {
   const categorySearchParam = searchParams.category.get(searchParamsObj);
   const pageSearchParam = searchParams.page.get(searchParamsObj);
 
-  const { data, loading, error } = useSpotListQuery({
+  const { data, loading, error } = useSpotsLookupQuery({
     variables: {
       filters: {
         and: qSearchParam.split(/\s+/).map((value) => {

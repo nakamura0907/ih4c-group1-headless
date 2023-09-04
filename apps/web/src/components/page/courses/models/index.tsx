@@ -6,12 +6,12 @@ import { Text } from "@/components/ui/Text";
 import { notifications } from "@/components/ui/Notifications";
 import { MainContainer } from "@/components/template/MainContainer";
 import { SpotCardContainer, SpotImage } from "@/features/spots";
-import { useModelCoursesQuery } from "@/gen/actions";
+import { useModelCoursesLookupQuery } from "@/gen/actions";
 import React from "react";
 import { routes } from "@/config";
 
 export function Page() {
-  const { data, loading, error } = useModelCoursesQuery({});
+  const { data, loading, error } = useModelCoursesLookupQuery({});
 
   React.useEffect(() => {
     if (!error) return;

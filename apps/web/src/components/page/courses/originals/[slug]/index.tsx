@@ -5,11 +5,11 @@ import { Center } from "@/components/ui/Center";
 import { notifications } from "@/components/ui/Notifications";
 import { Timeline } from "@/components/ui/Timeline";
 import { Title } from "@/components/ui/Title";
-import { useOriginalCourseQuery } from "@/gen/actions";
+import { useFetchOriginalCourseByIdQuery } from "@/gen/actions";
 import React from "react";
 
 export function Page({ params }: { params: { slug: string } }) {
-  const { data, loading, error } = useOriginalCourseQuery({
+  const { data, loading, error } = useFetchOriginalCourseByIdQuery({
     variables: {
       id: params.slug,
     },

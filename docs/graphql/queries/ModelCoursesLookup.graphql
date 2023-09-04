@@ -1,11 +1,11 @@
-query ModelCourse($id: ID!) {
-  modelCourse(id: $id) {
+query ModelCoursesLookup {
+  modelCourses(sort: ["createdAt:desc"]) {
     data {
+      id
       attributes {
         title
-        spots {
+        spots(pagination: { limit: 1 }) {
           data {
-            id
             attributes {
               name
               photo {

@@ -6,11 +6,11 @@ import { Link } from "@/components/ui/Link";
 import { notifications } from "@/components/ui/Notifications";
 import { Timeline } from "@/components/ui/Timeline";
 import { Title } from "@/components/ui/Title";
-import { useModelCourseQuery } from "@/gen/actions";
+import { useFetchModelCourseByIdQuery } from "@/gen/actions";
 import React from "react";
 
 export function Page({ params }: { params: { slug: string } }) {
-  const { data, loading, error } = useModelCourseQuery({
+  const { data, loading, error } = useFetchModelCourseByIdQuery({
     variables: {
       id: params.slug,
     },

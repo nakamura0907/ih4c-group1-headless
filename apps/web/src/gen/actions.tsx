@@ -134,8 +134,8 @@ export type CategoriesQueryResult = Apollo.QueryResult<
   CategoriesQuery,
   CategoriesQueryVariables
 >;
-export const ModelCourseDocument = gql`
-  query ModelCourse($id: ID!) {
+export const FetchModelCourseByIdDocument = gql`
+  query FetchModelCourseById($id: ID!) {
     modelCourse(id: $id) {
       data {
         attributes {
@@ -162,131 +162,57 @@ export const ModelCourseDocument = gql`
 `;
 
 /**
- * __useModelCourseQuery__
+ * __useFetchModelCourseByIdQuery__
  *
- * To run a query within a React component, call `useModelCourseQuery` and pass it any options that fit your needs.
- * When your component renders, `useModelCourseQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useFetchModelCourseByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFetchModelCourseByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useModelCourseQuery({
+ * const { data, loading, error } = useFetchModelCourseByIdQuery({
  *   variables: {
  *      id: // value for 'id'
  *   },
  * });
  */
-export function useModelCourseQuery(
+export function useFetchModelCourseByIdQuery(
   baseOptions: Apollo.QueryHookOptions<
-    ModelCourseQuery,
-    ModelCourseQueryVariables
+    FetchModelCourseByIdQuery,
+    FetchModelCourseByIdQueryVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<ModelCourseQuery, ModelCourseQueryVariables>(
-    ModelCourseDocument,
-    options,
-  );
+  return Apollo.useQuery<
+    FetchModelCourseByIdQuery,
+    FetchModelCourseByIdQueryVariables
+  >(FetchModelCourseByIdDocument, options);
 }
-export function useModelCourseLazyQuery(
+export function useFetchModelCourseByIdLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
-    ModelCourseQuery,
-    ModelCourseQueryVariables
+    FetchModelCourseByIdQuery,
+    FetchModelCourseByIdQueryVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<ModelCourseQuery, ModelCourseQueryVariables>(
-    ModelCourseDocument,
-    options,
-  );
+  return Apollo.useLazyQuery<
+    FetchModelCourseByIdQuery,
+    FetchModelCourseByIdQueryVariables
+  >(FetchModelCourseByIdDocument, options);
 }
-export type ModelCourseQueryHookResult = ReturnType<typeof useModelCourseQuery>;
-export type ModelCourseLazyQueryHookResult = ReturnType<
-  typeof useModelCourseLazyQuery
+export type FetchModelCourseByIdQueryHookResult = ReturnType<
+  typeof useFetchModelCourseByIdQuery
 >;
-export type ModelCourseQueryResult = Apollo.QueryResult<
-  ModelCourseQuery,
-  ModelCourseQueryVariables
+export type FetchModelCourseByIdLazyQueryHookResult = ReturnType<
+  typeof useFetchModelCourseByIdLazyQuery
 >;
-export const ModelCoursesDocument = gql`
-  query ModelCourses {
-    modelCourses(sort: ["createdAt:desc"]) {
-      data {
-        id
-        attributes {
-          title
-          spots(pagination: { limit: 1 }) {
-            data {
-              attributes {
-                name
-                photo {
-                  data {
-                    attributes {
-                      url
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
-/**
- * __useModelCoursesQuery__
- *
- * To run a query within a React component, call `useModelCoursesQuery` and pass it any options that fit your needs.
- * When your component renders, `useModelCoursesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useModelCoursesQuery({
- *   variables: {
- *   },
- * });
- */
-export function useModelCoursesQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    ModelCoursesQuery,
-    ModelCoursesQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<ModelCoursesQuery, ModelCoursesQueryVariables>(
-    ModelCoursesDocument,
-    options,
-  );
-}
-export function useModelCoursesLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    ModelCoursesQuery,
-    ModelCoursesQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<ModelCoursesQuery, ModelCoursesQueryVariables>(
-    ModelCoursesDocument,
-    options,
-  );
-}
-export type ModelCoursesQueryHookResult = ReturnType<
-  typeof useModelCoursesQuery
+export type FetchModelCourseByIdQueryResult = Apollo.QueryResult<
+  FetchModelCourseByIdQuery,
+  FetchModelCourseByIdQueryVariables
 >;
-export type ModelCoursesLazyQueryHookResult = ReturnType<
-  typeof useModelCoursesLazyQuery
->;
-export type ModelCoursesQueryResult = Apollo.QueryResult<
-  ModelCoursesQuery,
-  ModelCoursesQueryVariables
->;
-export const OriginalCourseDocument = gql`
-  query OriginalCourse($id: ID!) {
+export const FetchOriginalCourseByIdDocument = gql`
+  query FetchOriginalCourseById($id: ID!) {
     originalCourse(id: $id) {
       data {
         attributes {
@@ -313,57 +239,203 @@ export const OriginalCourseDocument = gql`
 `;
 
 /**
- * __useOriginalCourseQuery__
+ * __useFetchOriginalCourseByIdQuery__
  *
- * To run a query within a React component, call `useOriginalCourseQuery` and pass it any options that fit your needs.
- * When your component renders, `useOriginalCourseQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useFetchOriginalCourseByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFetchOriginalCourseByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useOriginalCourseQuery({
+ * const { data, loading, error } = useFetchOriginalCourseByIdQuery({
  *   variables: {
  *      id: // value for 'id'
  *   },
  * });
  */
-export function useOriginalCourseQuery(
+export function useFetchOriginalCourseByIdQuery(
   baseOptions: Apollo.QueryHookOptions<
-    OriginalCourseQuery,
-    OriginalCourseQueryVariables
+    FetchOriginalCourseByIdQuery,
+    FetchOriginalCourseByIdQueryVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<OriginalCourseQuery, OriginalCourseQueryVariables>(
-    OriginalCourseDocument,
-    options,
-  );
+  return Apollo.useQuery<
+    FetchOriginalCourseByIdQuery,
+    FetchOriginalCourseByIdQueryVariables
+  >(FetchOriginalCourseByIdDocument, options);
 }
-export function useOriginalCourseLazyQuery(
+export function useFetchOriginalCourseByIdLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
-    OriginalCourseQuery,
-    OriginalCourseQueryVariables
+    FetchOriginalCourseByIdQuery,
+    FetchOriginalCourseByIdQueryVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<OriginalCourseQuery, OriginalCourseQueryVariables>(
-    OriginalCourseDocument,
+  return Apollo.useLazyQuery<
+    FetchOriginalCourseByIdQuery,
+    FetchOriginalCourseByIdQueryVariables
+  >(FetchOriginalCourseByIdDocument, options);
+}
+export type FetchOriginalCourseByIdQueryHookResult = ReturnType<
+  typeof useFetchOriginalCourseByIdQuery
+>;
+export type FetchOriginalCourseByIdLazyQueryHookResult = ReturnType<
+  typeof useFetchOriginalCourseByIdLazyQuery
+>;
+export type FetchOriginalCourseByIdQueryResult = Apollo.QueryResult<
+  FetchOriginalCourseByIdQuery,
+  FetchOriginalCourseByIdQueryVariables
+>;
+export const FetchSpotByIdDocument = gql`
+  query FetchSpotById($id: ID!) {
+    spot(id: $id) {
+      data {
+        attributes {
+          name
+          description
+          photo {
+            data {
+              attributes {
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useFetchSpotByIdQuery__
+ *
+ * To run a query within a React component, call `useFetchSpotByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFetchSpotByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFetchSpotByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useFetchSpotByIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    FetchSpotByIdQuery,
+    FetchSpotByIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<FetchSpotByIdQuery, FetchSpotByIdQueryVariables>(
+    FetchSpotByIdDocument,
     options,
   );
 }
-export type OriginalCourseQueryHookResult = ReturnType<
-  typeof useOriginalCourseQuery
+export function useFetchSpotByIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    FetchSpotByIdQuery,
+    FetchSpotByIdQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<FetchSpotByIdQuery, FetchSpotByIdQueryVariables>(
+    FetchSpotByIdDocument,
+    options,
+  );
+}
+export type FetchSpotByIdQueryHookResult = ReturnType<
+  typeof useFetchSpotByIdQuery
 >;
-export type OriginalCourseLazyQueryHookResult = ReturnType<
-  typeof useOriginalCourseLazyQuery
+export type FetchSpotByIdLazyQueryHookResult = ReturnType<
+  typeof useFetchSpotByIdLazyQuery
 >;
-export type OriginalCourseQueryResult = Apollo.QueryResult<
-  OriginalCourseQuery,
-  OriginalCourseQueryVariables
+export type FetchSpotByIdQueryResult = Apollo.QueryResult<
+  FetchSpotByIdQuery,
+  FetchSpotByIdQueryVariables
 >;
-export const OriginalCoursesDocument = gql`
-  query OriginalCourses(
+export const ModelCoursesLookupDocument = gql`
+  query ModelCoursesLookup {
+    modelCourses(sort: ["createdAt:desc"]) {
+      data {
+        id
+        attributes {
+          title
+          spots(pagination: { limit: 1 }) {
+            data {
+              attributes {
+                name
+                photo {
+                  data {
+                    attributes {
+                      url
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useModelCoursesLookupQuery__
+ *
+ * To run a query within a React component, call `useModelCoursesLookupQuery` and pass it any options that fit your needs.
+ * When your component renders, `useModelCoursesLookupQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useModelCoursesLookupQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useModelCoursesLookupQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    ModelCoursesLookupQuery,
+    ModelCoursesLookupQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    ModelCoursesLookupQuery,
+    ModelCoursesLookupQueryVariables
+  >(ModelCoursesLookupDocument, options);
+}
+export function useModelCoursesLookupLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ModelCoursesLookupQuery,
+    ModelCoursesLookupQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    ModelCoursesLookupQuery,
+    ModelCoursesLookupQueryVariables
+  >(ModelCoursesLookupDocument, options);
+}
+export type ModelCoursesLookupQueryHookResult = ReturnType<
+  typeof useModelCoursesLookupQuery
+>;
+export type ModelCoursesLookupLazyQueryHookResult = ReturnType<
+  typeof useModelCoursesLookupLazyQuery
+>;
+export type ModelCoursesLookupQueryResult = Apollo.QueryResult<
+  ModelCoursesLookupQuery,
+  ModelCoursesLookupQueryVariables
+>;
+export const OriginalCoursesLookupDocument = gql`
+  query OriginalCoursesLookup(
     $filters: OriginalCourseFiltersInput!
     $pagination: PaginationArg!
   ) {
@@ -402,112 +474,58 @@ export const OriginalCoursesDocument = gql`
 `;
 
 /**
- * __useOriginalCoursesQuery__
+ * __useOriginalCoursesLookupQuery__
  *
- * To run a query within a React component, call `useOriginalCoursesQuery` and pass it any options that fit your needs.
- * When your component renders, `useOriginalCoursesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useOriginalCoursesLookupQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOriginalCoursesLookupQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useOriginalCoursesQuery({
+ * const { data, loading, error } = useOriginalCoursesLookupQuery({
  *   variables: {
  *      filters: // value for 'filters'
  *      pagination: // value for 'pagination'
  *   },
  * });
  */
-export function useOriginalCoursesQuery(
+export function useOriginalCoursesLookupQuery(
   baseOptions: Apollo.QueryHookOptions<
-    OriginalCoursesQuery,
-    OriginalCoursesQueryVariables
+    OriginalCoursesLookupQuery,
+    OriginalCoursesLookupQueryVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<OriginalCoursesQuery, OriginalCoursesQueryVariables>(
-    OriginalCoursesDocument,
-    options,
-  );
+  return Apollo.useQuery<
+    OriginalCoursesLookupQuery,
+    OriginalCoursesLookupQueryVariables
+  >(OriginalCoursesLookupDocument, options);
 }
-export function useOriginalCoursesLazyQuery(
+export function useOriginalCoursesLookupLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
-    OriginalCoursesQuery,
-    OriginalCoursesQueryVariables
+    OriginalCoursesLookupQuery,
+    OriginalCoursesLookupQueryVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<
-    OriginalCoursesQuery,
-    OriginalCoursesQueryVariables
-  >(OriginalCoursesDocument, options);
+    OriginalCoursesLookupQuery,
+    OriginalCoursesLookupQueryVariables
+  >(OriginalCoursesLookupDocument, options);
 }
-export type OriginalCoursesQueryHookResult = ReturnType<
-  typeof useOriginalCoursesQuery
+export type OriginalCoursesLookupQueryHookResult = ReturnType<
+  typeof useOriginalCoursesLookupQuery
 >;
-export type OriginalCoursesLazyQueryHookResult = ReturnType<
-  typeof useOriginalCoursesLazyQuery
+export type OriginalCoursesLookupLazyQueryHookResult = ReturnType<
+  typeof useOriginalCoursesLookupLazyQuery
 >;
-export type OriginalCoursesQueryResult = Apollo.QueryResult<
-  OriginalCoursesQuery,
-  OriginalCoursesQueryVariables
+export type OriginalCoursesLookupQueryResult = Apollo.QueryResult<
+  OriginalCoursesLookupQuery,
+  OriginalCoursesLookupQueryVariables
 >;
-export const SpotDocument = gql`
-  query Spot($id: ID!) {
-    spot(id: $id) {
-      data {
-        attributes {
-          name
-          description
-          photo {
-            data {
-              attributes {
-                url
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
-/**
- * __useSpotQuery__
- *
- * To run a query within a React component, call `useSpotQuery` and pass it any options that fit your needs.
- * When your component renders, `useSpotQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useSpotQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useSpotQuery(
-  baseOptions: Apollo.QueryHookOptions<SpotQuery, SpotQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<SpotQuery, SpotQueryVariables>(SpotDocument, options);
-}
-export function useSpotLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<SpotQuery, SpotQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<SpotQuery, SpotQueryVariables>(
-    SpotDocument,
-    options,
-  );
-}
-export type SpotQueryHookResult = ReturnType<typeof useSpotQuery>;
-export type SpotLazyQueryHookResult = ReturnType<typeof useSpotLazyQuery>;
-export type SpotQueryResult = Apollo.QueryResult<SpotQuery, SpotQueryVariables>;
-export const SpotListDocument = gql`
-  query SpotList($filters: SpotFiltersInput!, $pagination: PaginationArg!) {
+export const SpotsLookupDocument = gql`
+  query SpotsLookup($filters: SpotFiltersInput!, $pagination: PaginationArg!) {
     spots(filters: $filters, pagination: $pagination) {
       data {
         id
@@ -525,50 +543,53 @@ export const SpotListDocument = gql`
 `;
 
 /**
- * __useSpotListQuery__
+ * __useSpotsLookupQuery__
  *
- * To run a query within a React component, call `useSpotListQuery` and pass it any options that fit your needs.
- * When your component renders, `useSpotListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useSpotsLookupQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSpotsLookupQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useSpotListQuery({
+ * const { data, loading, error } = useSpotsLookupQuery({
  *   variables: {
  *      filters: // value for 'filters'
  *      pagination: // value for 'pagination'
  *   },
  * });
  */
-export function useSpotListQuery(
-  baseOptions: Apollo.QueryHookOptions<SpotListQuery, SpotListQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<SpotListQuery, SpotListQueryVariables>(
-    SpotListDocument,
-    options,
-  );
-}
-export function useSpotListLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    SpotListQuery,
-    SpotListQueryVariables
+export function useSpotsLookupQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    SpotsLookupQuery,
+    SpotsLookupQueryVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<SpotListQuery, SpotListQueryVariables>(
-    SpotListDocument,
+  return Apollo.useQuery<SpotsLookupQuery, SpotsLookupQueryVariables>(
+    SpotsLookupDocument,
     options,
   );
 }
-export type SpotListQueryHookResult = ReturnType<typeof useSpotListQuery>;
-export type SpotListLazyQueryHookResult = ReturnType<
-  typeof useSpotListLazyQuery
+export function useSpotsLookupLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    SpotsLookupQuery,
+    SpotsLookupQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<SpotsLookupQuery, SpotsLookupQueryVariables>(
+    SpotsLookupDocument,
+    options,
+  );
+}
+export type SpotsLookupQueryHookResult = ReturnType<typeof useSpotsLookupQuery>;
+export type SpotsLookupLazyQueryHookResult = ReturnType<
+  typeof useSpotsLookupLazyQuery
 >;
-export type SpotListQueryResult = Apollo.QueryResult<
-  SpotListQuery,
-  SpotListQueryVariables
+export type SpotsLookupQueryResult = Apollo.QueryResult<
+  SpotsLookupQuery,
+  SpotsLookupQueryVariables
 >;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -1865,11 +1886,11 @@ export type CategoriesQuery = {
   } | null;
 };
 
-export type ModelCourseQueryVariables = Exact<{
+export type FetchModelCourseByIdQueryVariables = Exact<{
   id: Scalars["ID"]["input"];
 }>;
 
-export type ModelCourseQuery = {
+export type FetchModelCourseByIdQuery = {
   __typename?: "Query";
   modelCourse?: {
     __typename?: "ModelCourseEntityResponse";
@@ -1904,48 +1925,11 @@ export type ModelCourseQuery = {
   } | null;
 };
 
-export type ModelCoursesQueryVariables = Exact<{ [key: string]: never }>;
-
-export type ModelCoursesQuery = {
-  __typename?: "Query";
-  modelCourses?: {
-    __typename?: "ModelCourseEntityResponseCollection";
-    data: Array<{
-      __typename?: "ModelCourseEntity";
-      id?: string | null;
-      attributes?: {
-        __typename?: "ModelCourse";
-        title: string;
-        spots?: {
-          __typename?: "SpotRelationResponseCollection";
-          data: Array<{
-            __typename?: "SpotEntity";
-            attributes?: {
-              __typename?: "Spot";
-              name: string;
-              photo?: {
-                __typename?: "UploadFileEntityResponse";
-                data?: {
-                  __typename?: "UploadFileEntity";
-                  attributes?: {
-                    __typename?: "UploadFile";
-                    url: string;
-                  } | null;
-                } | null;
-              } | null;
-            } | null;
-          }>;
-        } | null;
-      } | null;
-    }>;
-  } | null;
-};
-
-export type OriginalCourseQueryVariables = Exact<{
+export type FetchOriginalCourseByIdQueryVariables = Exact<{
   id: Scalars["ID"]["input"];
 }>;
 
-export type OriginalCourseQuery = {
+export type FetchOriginalCourseByIdQuery = {
   __typename?: "Query";
   originalCourse?: {
     __typename?: "OriginalCourseEntityResponse";
@@ -1980,12 +1964,75 @@ export type OriginalCourseQuery = {
   } | null;
 };
 
-export type OriginalCoursesQueryVariables = Exact<{
+export type FetchSpotByIdQueryVariables = Exact<{
+  id: Scalars["ID"]["input"];
+}>;
+
+export type FetchSpotByIdQuery = {
+  __typename?: "Query";
+  spot?: {
+    __typename?: "SpotEntityResponse";
+    data?: {
+      __typename?: "SpotEntity";
+      attributes?: {
+        __typename?: "Spot";
+        name: string;
+        description?: string | null;
+        photo?: {
+          __typename?: "UploadFileEntityResponse";
+          data?: {
+            __typename?: "UploadFileEntity";
+            attributes?: { __typename?: "UploadFile"; url: string } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  } | null;
+};
+
+export type ModelCoursesLookupQueryVariables = Exact<{ [key: string]: never }>;
+
+export type ModelCoursesLookupQuery = {
+  __typename?: "Query";
+  modelCourses?: {
+    __typename?: "ModelCourseEntityResponseCollection";
+    data: Array<{
+      __typename?: "ModelCourseEntity";
+      id?: string | null;
+      attributes?: {
+        __typename?: "ModelCourse";
+        title: string;
+        spots?: {
+          __typename?: "SpotRelationResponseCollection";
+          data: Array<{
+            __typename?: "SpotEntity";
+            attributes?: {
+              __typename?: "Spot";
+              name: string;
+              photo?: {
+                __typename?: "UploadFileEntityResponse";
+                data?: {
+                  __typename?: "UploadFileEntity";
+                  attributes?: {
+                    __typename?: "UploadFile";
+                    url: string;
+                  } | null;
+                } | null;
+              } | null;
+            } | null;
+          }>;
+        } | null;
+      } | null;
+    }>;
+  } | null;
+};
+
+export type OriginalCoursesLookupQueryVariables = Exact<{
   filters: OriginalCourseFiltersInput;
   pagination: PaginationArg;
 }>;
 
-export type OriginalCoursesQuery = {
+export type OriginalCoursesLookupQuery = {
   __typename?: "Query";
   originalCourses?: {
     __typename?: "OriginalCourseEntityResponseCollection";
@@ -2024,38 +2071,12 @@ export type OriginalCoursesQuery = {
   } | null;
 };
 
-export type SpotQueryVariables = Exact<{
-  id: Scalars["ID"]["input"];
-}>;
-
-export type SpotQuery = {
-  __typename?: "Query";
-  spot?: {
-    __typename?: "SpotEntityResponse";
-    data?: {
-      __typename?: "SpotEntity";
-      attributes?: {
-        __typename?: "Spot";
-        name: string;
-        description?: string | null;
-        photo?: {
-          __typename?: "UploadFileEntityResponse";
-          data?: {
-            __typename?: "UploadFileEntity";
-            attributes?: { __typename?: "UploadFile"; url: string } | null;
-          } | null;
-        } | null;
-      } | null;
-    } | null;
-  } | null;
-};
-
-export type SpotListQueryVariables = Exact<{
+export type SpotsLookupQueryVariables = Exact<{
   filters: SpotFiltersInput;
   pagination: PaginationArg;
 }>;
 
-export type SpotListQuery = {
+export type SpotsLookupQuery = {
   __typename?: "Query";
   spots?: {
     __typename?: "SpotEntityResponseCollection";
