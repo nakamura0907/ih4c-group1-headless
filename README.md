@@ -10,7 +10,9 @@
 ### タスク
 
 - Webのテストを作成する
+  - describe, itのnameのbest practicesを調べる
   - features/
   - app/
+  - テスト用にgenのignoreを外す？
 - テストをもとにコード修正
 - Reactにおける結合度・凝集度を調べる
