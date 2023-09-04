@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Flex } from "@/components/ui/Flex";
 import { TextInput } from "@/components/ui/Input";
-import { useCategorySelect } from "../../categories/useCategorySelect";
+import { useCategorySelector } from "@/features/categories";
 import { useForm } from "@/hooks/useMantine";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { searchParams } from "../../constants";
+import { searchParams } from "@/features/constants";
 
 type FormValues = {
   q?: string;
@@ -24,7 +24,8 @@ export const SpotsSearchBox = () => {
   const qSearchParam = searchParams.query.get(searchParamsObj);
   const categorySearchParam = searchParams.category.get(searchParamsObj);
 
-  const { current, CategorySelect } = useCategorySelect(categorySearchParam);
+  const { current, CategorySelector } =
+    useCategorySelector(categorySearchParam);
 
   const form = useForm<FormValues>({
     initialValues: {
@@ -51,7 +52,7 @@ export const SpotsSearchBox = () => {
           />
           <Button type="submit">検索</Button>
         </Flex>
-        <CategorySelect />
+        <CategorySelector />
       </form>
     </Container>
   );

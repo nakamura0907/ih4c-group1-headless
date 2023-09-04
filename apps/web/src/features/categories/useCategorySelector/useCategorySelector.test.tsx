@@ -1,8 +1,8 @@
 import "@testing-library/jest-dom";
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { useCategorySelect } from "@/features/categories/useCategorySelect";
-import { ApolloMockProvider } from "./mock";
+import { useCategorySelector } from "@/features/categories/useCategorySelector";
+import { ApolloMockProvider } from "@/helpers/test/mock";
 import { CategoriesDocument } from "@/gen/actions";
 
 describe("引数が存在しない", () => {
@@ -41,7 +41,7 @@ describe("初期値が与えられる", () => {
 });
 
 const Internal = ({ initialValue }: { initialValue?: string }) => {
-  const { current } = useCategorySelect(initialValue);
+  const { current } = useCategorySelector(initialValue);
   if (!current) return <p>Unknown</p>;
   return <p>{current}</p>;
 };
