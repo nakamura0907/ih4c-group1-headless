@@ -24,21 +24,23 @@ jest.mock("@/features/categories", () => ({
   CategorySelector: () => <div>CategorySelector</div>,
 });
 
-describe("検索ボタンが押下される", () => {
-  it("正しいURLにページ遷移する", () => {
-    // イベント準備
-    render(<SpotsSearchForm />);
+describe("@/features/spots/SpotsSearchForm", () => {
+  describe("検索ボタンが押下される", () => {
+    it("正しいURLにページ遷移する", () => {
+      // イベント準備
+      render(<SpotsSearchForm />);
 
-    const input = screen.getByPlaceholderText("XX博物館");
-    fireEvent.change(input, { target: { value: "testQuery" } });
+      const input = screen.getByPlaceholderText("XX博物館");
+      fireEvent.change(input, { target: { value: "testQuery" } });
 
-    // Clickイベント発火
-    const searchButton = screen.getByText("検索");
-    fireEvent.click(searchButton);
+      // Clickイベント発火
+      const searchButton = screen.getByText("検索");
+      fireEvent.click(searchButton);
 
-    // ページ遷移の引数が正しいこと
-    expect(pushMock).toHaveBeenCalledWith(
-      "/test-pathname?q=testQuery&category=testCategory&page=1",
-    );
+      // ページ遷移の引数が正しいこと
+      expect(pushMock).toHaveBeenCalledWith(
+        "/test-pathname?q=testQuery&category=testCategory&page=1",
+      );
+    });
   });
 });

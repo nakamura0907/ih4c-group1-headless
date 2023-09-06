@@ -7,6 +7,10 @@ import { SpotImage } from "../SpotImage";
 type SpotCardProps = {
   data: SpotEntity;
 };
+
+/**
+ * 観光スポットカードコンポーネント
+ */
 export const SpotCard: React.FC<SpotCardProps> = ({ data }) => {
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
@@ -26,6 +30,9 @@ export const SpotCard: React.FC<SpotCardProps> = ({ data }) => {
   );
 };
 
+/**
+ * 観光スポットカードコンテナコンポーネント
+ */
 export const SpotCardContainer: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
