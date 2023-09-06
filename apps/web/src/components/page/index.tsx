@@ -8,7 +8,7 @@ import {
   SpotCardContainer,
   SpotList,
   SpotListInnerProps,
-  SpotsSearchBox,
+  SpotsSearchForm,
 } from "@/features/spots";
 import React from "react";
 
@@ -29,7 +29,7 @@ const SpotListInner: React.FC<SpotListInnerProps> = ({ data }) => {
 export function Page() {
   return (
     <MainContainer>
-      <SpotsSearchBox />
+      <SpotsSearchForm />
       <SpotList>
         <SpotListInner />
       </SpotList>

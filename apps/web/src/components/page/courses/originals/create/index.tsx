@@ -13,7 +13,7 @@ import {
   SpotCardContainer,
   SpotList,
   SpotListInnerProps,
-  SpotsSearchBox,
+  SpotsSearchForm,
 } from "@/features/spots";
 import { MainContainer } from "@/components/template/MainContainer";
 import { Flex } from "@/components/ui/Flex";
@@ -120,7 +120,7 @@ export function Page() {
 
   return (
     <MainContainer>
-      <SpotsSearchBox />
+      <SpotsSearchForm />
       <SpotList>
         <SpotListInner
           onClick={handleSelectSpot}

@@ -10,7 +10,6 @@
 ### タスク
 
 - Webのテストを作成する
-  - describe, itのnameのbest practicesを調べる
   - features/
   - app/
 - テストをもとにコード修正
