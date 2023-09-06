@@ -6,7 +6,7 @@ import { ApolloMockProvider } from "@/helpers/test/mock";
 import { CategoriesDocument } from "@/gen/actions";
 
 describe("引数が存在しない", () => {
-  test("返り値のcurrentがunknown", async () => {
+  test("返り値のcurrentがunknownと一致する", async () => {
     render(
       <ApolloMockProvider mocks={mocks}>
         <Internal />
@@ -17,7 +17,7 @@ describe("引数が存在しない", () => {
 });
 describe("初期値が与えられる", () => {
   describe("初期値がカテゴリーの値と一致する", () => {
-    it("返り値のcurrentが引数の値", async () => {
+    it("返り値のcurrentが引数の値と一致する", async () => {
       render(
         <ApolloMockProvider mocks={mocks}>
           <Internal initialValue="1" />
@@ -28,7 +28,7 @@ describe("初期値が与えられる", () => {
     });
   });
   describe("初期値がカテゴリーの値と一致しない", () => {
-    it("返り値のcurrentがunknown", async () => {
+    it("返り値のcurrentがunknownと一致する", async () => {
       render(
         <ApolloMockProvider mocks={mocks}>
           <Internal initialValue="2" />
