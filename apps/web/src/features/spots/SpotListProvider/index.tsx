@@ -11,19 +11,21 @@ import {
 import { Center } from "@/components/ui/Center";
 import React from "react";
 
-const limit = 10;
-
 type TData = {
   spots: SpotEntityResponseCollection;
 };
-export type SpotListInnerProps = {
+export type SpotListResultsProps = {
   data?: TData;
 };
 
+const limit = 10;
+
 /**
- * 観光スポットリストコンポーネント
+ * 観光スポットリストプロバイダコンポーネント
  */
-export const SpotList: React.FC<React.PropsWithChildren> = ({ children }) => {
+export const SpotListProvider: React.FC<React.PropsWithChildren> = ({
+  children,
+}) => {
   const router = useRouter();
   const pathname = usePathname();
 
