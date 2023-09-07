@@ -3,7 +3,7 @@
 import { Pagination } from "@/components/ui/Pagination";
 import { notifications } from "@/components/ui/Notifications";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { searchParams } from "../../constants";
+import { searchParams } from "@/features/constants";
 import {
   SpotEntityResponseCollection,
   useSpotsLookupQuery,
