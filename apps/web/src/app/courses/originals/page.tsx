@@ -1,4 +1,4 @@
-import { Page } from "@/components/page/courses/originals";
+import { Page } from "@/app/courses/originals/_page";
 import { routes } from "@/config";
 
 export const metadata = {

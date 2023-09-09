@@ -1,4 +1,4 @@
-import { Page } from "@/components/page/courses/models/[slug]";
+import { Page } from "@/app/courses/models/[slug]/_page";
 
 export default function CoursesModelsDetail({
   params,

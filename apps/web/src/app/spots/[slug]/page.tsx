@@ -1,4 +1,4 @@
-import { Page } from "@/components/page/spots/[slug]";
+import { Page } from "./_page";
 
 export default function SpotsDetailPage({
   params,
