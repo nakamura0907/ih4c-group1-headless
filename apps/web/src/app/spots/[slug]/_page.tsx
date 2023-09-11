@@ -6,11 +6,11 @@ import { notifications } from "@/components/ui/Notifications";
 import { Text } from "@/components/ui/Text";
 import { Title } from "@/components/ui/Title";
 import { SpotImage } from "@/features/spots";
-import { useSpotQuery } from "@/gen/actions";
+import { useFetchSpotByIdQuery } from "@/gen/actions";
 import React from "react";
 
 export function Page({ params }: { params: { slug: string } }) {
-  const { data, loading, error } = useSpotQuery({
+  const { data, loading, error } = useFetchSpotByIdQuery({
     variables: {
       id: params.slug,
     },

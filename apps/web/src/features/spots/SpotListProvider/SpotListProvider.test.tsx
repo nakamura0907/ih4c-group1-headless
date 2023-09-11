@@ -1,0 +1,1 @@
+describe("@/features/spots/SpotListProvider", () => {});

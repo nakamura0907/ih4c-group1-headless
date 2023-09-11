@@ -6,13 +6,13 @@ import { routes } from "@/config";
 import {
   SpotCard,
   SpotCardContainer,
-  SpotList,
-  SpotListInnerProps,
-  SpotsSearchBox,
+  SpotListProvider,
+  SpotListResultsProps,
+  SpotsSearchForm,
 } from "@/features/spots";
 import React from "react";
 
-const SpotListInner: React.FC<SpotListInnerProps> = ({ data }) => {
+const SpotListInner: React.FC<SpotListResultsProps> = ({ data }) => {
   return (
     <SpotCardContainer>
       {data?.spots.data.map((value) => {
@@ -29,10 +29,10 @@ const SpotListInner: React.FC<SpotListInnerProps> = ({ data }) => {
 export function Page() {
   return (
     <MainContainer>
-      <SpotsSearchBox />
-      <SpotList>
+      <SpotsSearchForm />
+      <SpotListProvider>
         <SpotListInner />
-      </SpotList>
+      </SpotListProvider>
     </MainContainer>
   );
 }

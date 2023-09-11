@@ -3,24 +3,29 @@
 import { Pagination } from "@/components/ui/Pagination";
 import { notifications } from "@/components/ui/Notifications";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { searchParams } from "../../constants";
-import { SpotEntityResponseCollection, useSpotListQuery } from "@/gen/actions";
+import { searchParams } from "@/features/constants";
+import {
+  SpotEntityResponseCollection,
+  useSpotsLookupQuery,
+} from "@/gen/actions";
 import { Center } from "@/components/ui/Center";
 import React from "react";
-
-const limit = 10;
 
 type TData = {
   spots: SpotEntityResponseCollection;
 };
-export type SpotListInnerProps = {
+export type SpotListResultsProps = {
   data?: TData;
 };
 
+const limit = 10;
+
 /**
- * 観光スポットリストコンポーネント
+ * 観光スポットリストプロバイダコンポーネント
  */
-export const SpotList: React.FC<React.PropsWithChildren> = ({ children }) => {
+export const SpotListProvider: React.FC<React.PropsWithChildren> = ({
+  children,
+}) => {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -29,7 +34,7 @@ export const SpotList: React.FC<React.PropsWithChildren> = ({ children }) => {
   const categorySearchParam = searchParams.category.get(searchParamsObj);
   const pageSearchParam = searchParams.page.get(searchParamsObj);
 
-  const { data, loading, error } = useSpotListQuery({
+  const { data, loading, error } = useSpotsLookupQuery({
     variables: {
       filters: {
         and: qSearchParam.split(/\s+/).map((value) => {
@@ -71,6 +76,7 @@ export const SpotList: React.FC<React.PropsWithChildren> = ({ children }) => {
   });
 
   const handlePageChange = (page: number) => {
+    // FIXME: URLSearchParams
     const q = qSearchParam ? `q=${qSearchParam}` : "q=";
     const category = categorySearchParam
       ? `&category=${categorySearchParam}`

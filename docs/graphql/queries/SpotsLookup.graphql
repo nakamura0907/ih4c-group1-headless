@@ -1,4 +1,4 @@
-query SpotList($filters: SpotFiltersInput!, $pagination: PaginationArg!) {
+query SpotsLookup($filters: SpotFiltersInput!, $pagination: PaginationArg!) {
   spots(filters: $filters, pagination: $pagination) {
     data {
       id

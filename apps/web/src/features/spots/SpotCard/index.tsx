@@ -3,20 +3,23 @@ import { SimpleGrid } from "@/components/ui/Grid";
 import { Text } from "@/components/ui/Text";
 import { SpotEntity } from "@/gen/actions";
 import { SpotImage } from "../SpotImage";
+import { assembleSpotImageUrl } from "@/helpers/strapi";
 
 type SpotCardProps = {
   data: SpotEntity;
 };
+
+/**
+ * 観光スポットカードコンポーネント
+ */
 export const SpotCard: React.FC<SpotCardProps> = ({ data }) => {
+  const imageSrc = assembleSpotImageUrl(data);
+
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Card.Section>
         <SpotImage
-          src={
-            data.attributes?.photo?.data?.attributes?.url
-              ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${data.attributes?.photo?.data?.attributes?.url}`
-              : undefined
-          }
+          src={imageSrc}
           alt={data.attributes?.name ?? "観光スポット サムネイル"}
         />
       </Card.Section>
@@ -26,6 +29,9 @@ export const SpotCard: React.FC<SpotCardProps> = ({ data }) => {
   );
 };
 
+/**
+ * 観光スポットカードコンテナコンポーネント
+ */
 export const SpotCardContainer: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {

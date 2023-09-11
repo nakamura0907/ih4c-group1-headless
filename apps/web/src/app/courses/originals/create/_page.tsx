@@ -11,15 +11,15 @@ import { useRouter } from "next/navigation";
 import {
   SpotCard,
   SpotCardContainer,
-  SpotList,
-  SpotListInnerProps,
-  SpotsSearchBox,
+  SpotListProvider,
+  SpotListResultsProps,
+  SpotsSearchForm,
 } from "@/features/spots";
 import { MainContainer } from "@/components/template/MainContainer";
 import { Flex } from "@/components/ui/Flex";
 import { Badge } from "@/components/ui/Badge";
 
-type BaseSpotListInnerProps = SpotListInnerProps & {
+type BaseSpotListInnerProps = SpotListResultsProps & {
   onClick: (id: string) => void;
   selectedSpots: string[];
 };
@@ -120,13 +120,13 @@ export function Page() {
 
   return (
     <MainContainer>
-      <SpotsSearchBox />
-      <SpotList>
+      <SpotsSearchForm />
+      <SpotListProvider>
         <SpotListInner
           onClick={handleSelectSpot}
           selectedSpots={selectedSpots}
         />
-      </SpotList>
+      </SpotListProvider>
       <Container size="xs">
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <TextInput

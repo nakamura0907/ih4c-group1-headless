@@ -5,7 +5,7 @@ import { Link } from "@/components/ui/Link";
 import { Text } from "@/components/ui/Text";
 import { TextInput } from "@/components/ui/Input";
 import { notifications } from "@/components/ui/Notifications";
-import { useOriginalCoursesQuery } from "@/gen/actions";
+import { useOriginalCoursesLookupQuery } from "@/gen/actions";
 import { SpotCardContainer, SpotImage } from "@/features/spots";
 import { useForm } from "@/hooks/useMantine";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -38,7 +38,7 @@ export function Page() {
     },
   });
 
-  const { data, loading, error } = useOriginalCoursesQuery({
+  const { data, loading, error } = useOriginalCoursesLookupQuery({
     variables: {
       filters: {
         and: qSearchParam.split(/\s+/).map((value) => {

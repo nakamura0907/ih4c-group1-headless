@@ -6,12 +6,22 @@ type SpotImageProps = {
   src?: string;
   alt: string;
 };
-const DEFAULT_IMAGE = localImages.noImage.path;
+
+const DEFAULT_SRC = localImages.noImage.path;
+
+/**
+ * 観光スポット画像コンポーネント
+ */
 export const SpotImage: React.FC<SpotImageProps> = ({ src, alt }) => {
   const [imageSrc, setImageSrc] = React.useState(src);
+
+  const handleError = () => {
+    setImageSrc(DEFAULT_SRC);
+  };
+
   return (
     <Image
-      src={imageSrc || DEFAULT_IMAGE}
+      src={imageSrc || DEFAULT_SRC}
       alt={alt}
       width={1980}
       height={1150}
@@ -20,9 +30,7 @@ export const SpotImage: React.FC<SpotImageProps> = ({ src, alt }) => {
         aspectRatio: "1/1",
         objectFit: "contain",
       }}
-      onError={() => {
-        setImageSrc(DEFAULT_IMAGE);
-      }}
+      onError={handleError}
     />
   );
 };

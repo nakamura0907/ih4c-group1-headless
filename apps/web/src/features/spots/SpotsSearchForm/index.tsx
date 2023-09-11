@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Flex } from "@/components/ui/Flex";
 import { TextInput } from "@/components/ui/Input";
-import { useCategorySelect } from "../../categories/useCategorySelect";
+import { useCategorySelector } from "@/features/categories";
 import { useForm } from "@/hooks/useMantine";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { searchParams } from "../../constants";
+import { searchParams } from "@/features/constants";
 
 type FormValues = {
   q?: string;
@@ -16,25 +16,26 @@ type FormValues = {
 /**
  * 観光スポット検索フォームコンポーネント
  */
-export const SpotsSearchBox = () => {
+export const SpotsSearchForm = () => {
   const router = useRouter();
   const pathname = usePathname();
 
   const searchParamsObj = useSearchParams();
-  const qSearchParam = searchParams.query.get(searchParamsObj);
-  const categorySearchParam = searchParams.category.get(searchParamsObj);
+  const initialQuery = searchParams.query.get(searchParamsObj);
+  const initialCategory = searchParams.category.get(searchParamsObj);
 
-  const { current, CategorySelect } = useCategorySelect(categorySearchParam);
+  const { current: selectedCategory, CategorySelector } =
+    useCategorySelector(initialCategory);
 
   const form = useForm<FormValues>({
     initialValues: {
-      q: qSearchParam,
+      q: initialQuery,
     },
   });
 
-  const handleSubmit = (values: FormValues) => {
+  const handleSearch = (values: FormValues) => {
     const q = `q=${values.q}`;
-    const category = current ? `&category=${current}` : "";
+    const category = selectedCategory ? `&category=${selectedCategory}` : "";
     const query = `${q}${category}&page=1`;
 
     router.push(`${pathname}?${query}`);
@@ -42,7 +43,7 @@ export const SpotsSearchBox = () => {
 
   return (
     <Container size="xs" mb="lg">
-      <form onSubmit={form.onSubmit(handleSubmit)}>
+      <form onSubmit={form.onSubmit(handleSearch)}>
         <Flex>
           <TextInput
             placeholder="XX博物館"
@@ -51,7 +52,7 @@ export const SpotsSearchBox = () => {
           />
           <Button type="submit">検索</Button>
         </Flex>
-        <CategorySelect />
+        <CategorySelector />
       </form>
     </Container>
   );

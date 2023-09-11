@@ -1,4 +1,4 @@
-query OriginalCourses(
+query OriginalCoursesLookup(
   $filters: OriginalCourseFiltersInput!
   $pagination: PaginationArg!
 ) {

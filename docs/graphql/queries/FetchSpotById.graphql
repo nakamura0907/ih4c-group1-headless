@@ -1,4 +1,4 @@
-query Spot($id: ID!) {
+query FetchSpotById($id: ID!) {
   spot(id: $id) {
     data {
       attributes {

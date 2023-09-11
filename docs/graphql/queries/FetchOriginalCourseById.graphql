@@ -1,4 +1,4 @@
-query OriginalCourse($id: ID!) {
+query FetchOriginalCourseById($id: ID!) {
   originalCourse(id: $id) {
     data {
       attributes {
