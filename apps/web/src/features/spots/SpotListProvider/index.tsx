@@ -76,6 +76,7 @@ export const SpotListProvider: React.FC<React.PropsWithChildren> = ({
   });
 
   const handlePageChange = (page: number) => {
+    // FIXME: URLSearchParams
     const q = qSearchParam ? `q=${qSearchParam}` : "q=";
     const category = categorySearchParam
       ? `&category=${categorySearchParam}`
