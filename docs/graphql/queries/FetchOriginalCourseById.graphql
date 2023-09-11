@@ -1,0 +1,24 @@
+query FetchOriginalCourseById($id: ID!) {
+  originalCourse(id: $id) {
+    data {
+      attributes {
+        title
+        spots {
+          data {
+            id
+            attributes {
+              name
+              photo {
+                data {
+                  attributes {
+                    url
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

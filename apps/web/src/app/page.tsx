@@ -1,7 +1,5 @@
-export const useCategory = () => {
-  return {};
-};
+import { Page } from "@/app/_page";
 
 export default function Home() {
-  return <main className=""></main>;
+  return <Page />;
 }

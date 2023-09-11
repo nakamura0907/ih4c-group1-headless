@@ -1,0 +1,28 @@
+{
+  "name": "ih4c-group1-headless",
+  "version": "1.0.0",
+  "description": "## 計画",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "gen:graphql": "graphql-codegen --config codegen.yml",
+    "prepare": "husky install"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "workspaces": [
+    "apps/web"
+  ],
+  "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/typescript": "^4.0.1",
+    "@graphql-codegen/typescript-operations": "^4.0.1",
+    "@graphql-codegen/typescript-react-apollo": "^3.3.7",
+    "graphql": "^16.8.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.1"
+  }
+}

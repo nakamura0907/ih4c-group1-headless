@@ -4,7 +4,8 @@
   "info": {
     "singularName": "spot",
     "pluralName": "spots",
-    "displayName": "観光スポット"
+    "displayName": "観光スポット",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -32,6 +33,18 @@
       "relation": "manyToMany",
       "target": "api::original-course.original-course",
       "mappedBy": "spots"
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "photo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
     }
   }
 }
